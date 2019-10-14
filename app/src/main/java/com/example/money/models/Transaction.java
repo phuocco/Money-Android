@@ -31,6 +31,18 @@ public class Transaction {
     @Expose
     private Integer v;
 
+    public String getEvent() {
+        return event;
+    }
+
+    public void setEvent(String event) {
+        this.event = event;
+    }
+
+    @SerializedName("event")
+    @Expose
+    private String event;
+
     public String getId() {
         return id;
     }

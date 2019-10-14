@@ -38,6 +38,8 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.CustomViewHold
         holder.home_amount.setText(transactionList.get(position).getAmount());
         holder.home_category.setText(transactionList.get(position).getCategory());
         holder.home_note.setText(transactionList.get(position).getNote());
+        holder.home_date.setText(transactionList.get(position).getDate());
+        holder.home_event.setText(transactionList.get(position).getEvent());
     }
 
     @Override
@@ -46,13 +48,15 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.CustomViewHold
     }
 
     class CustomViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
-        TextView home_category,home_amount, home_note;
+        TextView home_category,home_amount, home_note,home_date,home_event;
         CustomViewHolder(final View itemView) {
             super(itemView);
             itemView.setOnClickListener(this);
             home_category = itemView.findViewById(R.id.home_category);
             home_amount = itemView.findViewById(R.id.home_amount);
             home_note = itemView.findViewById(R.id.home_note);
+            home_date = itemView.findViewById(R.id.home_date);
+            home_event = itemView.findViewById(R.id.home_event);
         }
 
         @Override
