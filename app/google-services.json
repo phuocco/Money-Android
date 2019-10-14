@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "54307107001",
+    "firebase_url": "https://money-phuoc.firebaseio.com",
+    "project_id": "money-phuoc",
+    "storage_bucket": "money-phuoc.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:54307107001:android:ce118c64fa02d148b6ab68",
+        "android_client_info": {
+          "package_name": "com.example.money"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "54307107001-tqkomd57pq55dv6o4aompf58ab88n5cj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD5Ty2QonfE3obHJPsadLIx4wOhI_4lZfk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "54307107001-tqkomd57pq55dv6o4aompf58ab88n5cj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

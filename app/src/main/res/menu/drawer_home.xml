@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item android:id="@+id/thismonth"
+            android:icon="@drawable/ic_navi"
+            android:title="This Month"/>
+        <item android:id="@+id/lastmonth"
+            android:icon="@drawable/ic_navi"
+            android:title="Last Month"/>
+        <item android:id="@+id/plan"
+            android:icon="@drawable/ic_navi"
+            android:title="Plan"/>
+    </group>
+
+<item android:title="ABC">
+    <menu>
+        <item android:id="@+id/nav_a"
+            android:icon="@drawable/ic_navi"
+            android:title="A"/>
+        <item android:id="@+id/nav_b"
+            android:icon="@drawable/ic_navi"
+            android:title="B"/>
+    </menu>
+</item>
+
+</menu>
