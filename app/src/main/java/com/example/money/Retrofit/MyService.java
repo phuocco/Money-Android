@@ -45,6 +45,8 @@ public interface MyService {
 //    @GET("/transaction/{id}")
 //    Call<Transaction> getTransaction(@Query("id") String id);
 
+    @GET("/transaction/{category}")
+    Call<Transaction> getTransactionByCategory(@Path("category") String category);
 
     @GET("/transaction/{id}")
     Call<Transaction> getTransactionById(@Path("id") String id);
