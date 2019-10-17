@@ -1,107 +1,124 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:gravity="center"
     android:orientation="vertical"
     android:background="@drawable/login_bg"
-    
     tools:context=".LoginActivity">
 
     <ImageView
+        android:id="@+id/logo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/logo"
         android:layout_gravity="center"
-        android:layout_marginTop="20dp"/>
-    <LinearLayout
-        android:background="@drawable/btn_bg"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp"
-        android:orientation="vertical">
+        android:layout_marginTop="20dp"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/logo" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Hello..."
-            android:textSize="30sp"
-            android:layout_gravity="center"
-            android:textColor="#3f4658"/>
+    <TextView
+              android:id="@+id/hello"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/logo"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:text="Hello..."
+              android:textSize="30sp"
+              android:layout_gravity="center"
+              android:textColor="#3f4658"/>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Signin your account!"
-            android:textSize="20sp"
-            android:layout_gravity="center"
-            android:textColor="#3f4658"/>
+          <TextView
+              android:id="@+id/signin"
+              android:layout_below="@id/hello"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:text="Signin your account!"
+              android:layout_centerHorizontal="true"
 
-        <TextView
-            android:layout_marginLeft="10dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Email"
-            android:textSize="15sp"
-            android:textColor="#3f4658"/>
-        <EditText
-            android:id="@+id/login_email"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:drawableRight="@drawable/ic"
-            android:layout_width="match_parent"
-            android:inputType="textEmailAddress"
-            android:layout_height="wrap_content"/>
-        <TextView
-            android:layout_marginLeft="10dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Password"
-            android:textSize="15sp"
-            android:textColor="#3f4658"/>
-        <EditText
-            android:id="@+id/login_password"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:drawableRight="@drawable/ic_pass"
-            android:layout_width="match_parent"
-            android:inputType="textPassword"
-            android:layout_height="wrap_content"/>
+              android:textSize="20sp"
+              android:layout_gravity="center"
+              android:textColor="#3f4658"/>
 
-        <TextView
-            android:layout_gravity="right"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Forgot password?"
-            android:textSize="15sp"
-            android:textColor="#3f4658"/>
+          <TextView
+              android:id="@+id/email"
+              android:layout_below="@id/signin"
+              android:layout_marginLeft="30dp"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:text="Email"
+              android:textSize="15sp"
+              android:textColor="#3f4658"/>
+          <EditText
+              android:layout_below="@id/email"
+              android:id="@+id/login_email"
+              android:layout_marginLeft="10dp"
+              android:layout_marginRight="10dp"
+              android:drawableRight="@drawable/ic"
+              android:layout_width="match_parent"
+              android:inputType="textEmailAddress"
+              android:layout_height="wrap_content"/>
+          <TextView
+              android:id="@+id/password"
+              android:layout_below="@id/login_email"
+              android:layout_marginLeft="30dp"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:text="Password"
+              android:textSize="15sp"
 
-        <Button
-            android:id="@+id/button_login"
-            android:layout_marginTop="20dp"
-            android:background="@drawable/btn_login"
-            android:layout_width="200dp"
-            android:layout_height="wrap_content"
-            android:textSize="20sp"
-            android:layout_gravity="center"
-            android:textColor="#ffffff"
-            android:text="Login"/>
+              android:textColor="#3f4658"/>
+          <EditText
+              android:layout_below="@id/password"
+              android:id="@+id/login_password"
+              android:layout_marginLeft="10dp"
+              android:layout_marginRight="10dp"
+              android:drawableRight="@drawable/ic_pass"
+              android:layout_width="match_parent"
+              android:inputType="textPassword"
+              android:layout_height="wrap_content"/>
 
-        <TextView
-            android:id="@+id/login_to_reg"
-            android:layout_marginTop="20dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="Don't have account?  Register here!"
-            android:textColor="#3f4658"
-            android:textSize="14sp"
-            android:textStyle="bold" />
+          <TextView
+              android:id="@+id/forgot"
+              android:layout_below="@id/login_password"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:text="Forgot password?"
+              android:layout_marginLeft="30dp"
+              android:textSize="15sp"
+              android:textColor="#3f4658"/>
 
-    </LinearLayout>
+          <Button
+              android:layout_below="@id/forgot"
+              android:id="@+id/button_login"
+              android:layout_marginTop="20dp"
+              android:background="@drawable/btn_login"
+              android:layout_width="200dp"
+              android:layout_height="wrap_content"
+              android:textSize="20sp"
+              android:layout_gravity="center"
+              android:textColor="#ffffff"
+              android:layout_centerHorizontal="true"
+
+              android:text="Login"/>
+
+          <TextView
+              android:layout_below="@id/button_login"
+              android:id="@+id/login_to_reg"
+              android:layout_marginTop="20dp"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_gravity="center"
+              android:text="Don't have account?  Register here!"
+              android:textColor="#3f4658"
+              android:textSize="14sp"
+              android:layout_centerHorizontal="true"
+
+              android:textStyle="bold" />
 
 
 
-</LinearLayout>
+
+
+</RelativeLayout>

@@ -44,14 +44,15 @@ public class AddIncomeActivity extends AppCompatActivity {
                 String note = ed_note.getText().toString();
                 String category = ed_category.getText().toString();
                 String type =  ed_type.getText().toString();
-                addTransaction(email,amount,note,category,type);
+                String photo = "";
+                addTransaction(email,amount,note,category,type,photo);
             }
         });
 
     }
 
-    private void addTransaction(String email, String amount, String note, String category, String type) {
-        myService.addTransaction(email,amount,note,category,type)
+    private void addTransaction(String email, String amount, String note, String category, String type,String photo) {
+        myService.addTransaction(email,amount,note,category,type,photo)
                 .enqueue(new Callback<Transaction>() {
                     @Override
                     public void onResponse(Call<Transaction> call, Response<Transaction> response) {

@@ -1,17 +1,38 @@
 package com.example.money.Transaction;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ProgressDialog;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.money.Home.TransactionCategoryActivity;
+import com.example.money.MainActivity;
 import com.example.money.R;
 import com.example.money.Retrofit.MyService;
 import com.example.money.Retrofit.RetrofitClient;
 import com.example.money.models.Transaction;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.OnProgressListener;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+import com.squareup.picasso.Picasso;
+
+import java.io.IOException;
+import java.util.UUID;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -22,49 +43,143 @@ public class AddExpenseActivity extends AppCompatActivity {
     EditText ed_email,ed_amount,ed_note, ed_category, ed_type;
     Button button_add_ex;
     MyService myService;
+    ImageView imageView;
+    TextView temp;
 
+    //firebase
+    FirebaseStorage storage;
+    StorageReference storageReference;
+    private final int PICK_IMAGE_REQUEST = 71;
+    Uri filePath;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_expense);
+        init();
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                chooseImage();
+            }
+        });
 
+
+        button_add_ex.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                uploadImage();
+            }
+        });
+    }
+    private void init(){
         Retrofit retrofitClient = RetrofitClient.getInstance();
         myService = retrofitClient.create(MyService.class);
-
+        storage = FirebaseStorage.getInstance();
+        storageReference = storage.getReference();
+        imageView = findViewById(R.id.image_add_expense);
         ed_email =  findViewById(R.id.add_ex_email);
         ed_amount =findViewById(R.id.add_ex_amount);
         ed_note =findViewById(R.id.add_ex_note);
         ed_category =findViewById(R.id.add_ex_category);
-       ed_type =findViewById(R.id.add_ex_type);
+        ed_type =findViewById(R.id.add_ex_type);
         button_add_ex = findViewById(R.id.button_add_ex);
-        button_add_ex.setOnClickListener(new View.OnClickListener() {
+        temp = findViewById(R.id.temp);
+        temp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(AddExpenseActivity.this, "sdfsdf", Toast.LENGTH_SHORT).show();
                 String email = ed_email.getText().toString();
                 String amount = ed_amount.getText().toString();
                 String note = ed_note.getText().toString();
                 String category = ed_category.getText().toString();
                 String type = ed_type.getText().toString();
-                addTransaction(email,amount,note,category,type);
+                String photo = "a";
+                addTransaction(email,amount,note,category,type,photo);
             }
         });
+    }
+    //choose image
+    private void chooseImage() {
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(Intent.createChooser(intent,"Select picture"),PICK_IMAGE_REQUEST);
+    }
+    //activity result
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data !=null && data.getData() != null){
+            filePath = data.getData();
+            try {
+                Bitmap bitmap =  MediaStore.Images.Media.getBitmap(getContentResolver(),filePath);
+                imageView.setImageBitmap(bitmap);
+            } catch (IOException e){
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private void uploadImage() {
+        if(filePath != null){
+            final ProgressDialog progressDialog = new ProgressDialog(this);
+            progressDialog.setTitle("uploading");
+            progressDialog.show();
+            final   StorageReference ref = storageReference.child("images/" + UUID.randomUUID().toString());
+            ref.putFile(filePath)
+                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                            ref.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                @Override
+                                public void onSuccess(Uri uri) {
+                                    progressDialog.dismiss();
+                                    String email = ed_email.getText().toString();
+                                    String amount = ed_amount.getText().toString();
+                                    String note = ed_note.getText().toString();
+                                    String category = ed_category.getText().toString();
+                                    String type = ed_type.getText().toString();
+                                    String photo = uri.toString();
+                                    temp.setText(photo);
+                                    Toast.makeText(AddExpenseActivity.this, ""+photo, Toast.LENGTH_SHORT).show();
+                                    addTransaction(email,amount,note,category,type,photo);
+
+                                }
+                            });
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Toast.makeText(AddExpenseActivity.this, "failllllll", Toast.LENGTH_SHORT).show();
+                        }
+                    })
+                    .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
+                            double progress = (100.0*taskSnapshot.getBytesTransferred()/taskSnapshot.getTotalByteCount());
+                            progressDialog.setMessage("uploaded "+(int)progress+"%");
+                        }
+                    });
+        }
+    }
+    private void initString(){
 
     }
 
-    private void addTransaction(String email, String amount, String note, String category, String type) {
-        myService.addTransaction(email,amount,note,category,type)
+    private void addTransaction(String email, String amount, String note, String category, String type,String photo) {
+        myService.addTransaction(email,amount,note,category,type,photo)
                 .enqueue(new Callback<Transaction>() {
                     @Override
                     public void onResponse(Call<Transaction> call, Response<Transaction> response) {
                         if(response.isSuccessful()){
-                            Toast.makeText(AddExpenseActivity.this, ""+response, Toast.LENGTH_SHORT).show();
+                            Toast.makeText(AddExpenseActivity.this, "success", Toast.LENGTH_SHORT).show();
+                            startActivity(new Intent(AddExpenseActivity.this, MainActivity.class));
                         }
                     }
 
                     @Override
                     public void onFailure(Call<Transaction> call, Throwable t) {
-
+                        Toast.makeText(AddExpenseActivity.this, "fail", Toast.LENGTH_SHORT).show();
                     }
                 });
     }

@@ -48,6 +48,19 @@
         android:text="Expense"
         android:visibility="invisible" />
 
+    <ImageView
+        android:id="@+id/image_add_expense"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        tools:srcCompat="@tools:sample/avatars" />
+
+    <TextView
+        android:id="@+id/temp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="TextView" />
+
     <Button
         android:id="@+id/button_add_ex"
         android:layout_width="match_parent"

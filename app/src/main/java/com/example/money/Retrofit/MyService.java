@@ -34,7 +34,8 @@ public interface MyService {
                         @Field("amount") String amount,
                         @Field("note") String note,
                         @Field("category") String category,
-                        @Field("type") String type);
+                        @Field("type") String type,
+                        @Field("photo") String photo);
 
     @GET("/transaction/")
     Call<List<Transaction>> getAllTransactions();

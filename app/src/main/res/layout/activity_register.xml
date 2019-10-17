@@ -8,123 +8,127 @@
     android:background="@drawable/login_bg"
     tools:context=".LoginActivity">
 
-    <ImageView
-        android:id="@+id/reg_logo"
-        android:layout_width="189dp"
-        android:layout_height="201dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true"
-        android:layout_gravity="center_vertical"
-        android:layout_marginStart="108dp"
-        android:layout_marginEnd="114dp"
-        android:foregroundGravity="center"
-        android:src="@drawable/logo" />
-
     <LinearLayout
-        android:id="@+id/reg_form"
-        android:layout_below="@+id/reg_logo"
-        android:background="@drawable/btn_bg"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp"
+        android:layout_height="match_parent"
         android:orientation="vertical">
+        <ImageView
+            android:id="@+id/reg_logo"
+            android:layout_width="189dp"
+            android:layout_height="201dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="108dp"
+            android:layout_marginEnd="114dp"
+            android:foregroundGravity="center"
+            android:src="@drawable/logo" />
+
+        <LinearLayout
+            android:id="@+id/reg_form"
+            android:layout_below="@+id/reg_logo"
+            android:background="@drawable/btn_bg"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_marginTop="7dp"
+                android:layout_marginLeft="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Email"
+                android:textSize="15sp"
+                android:textColor="#3f4658"/>
+            <EditText
+                android:id="@+id/reg_email"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:drawableRight="@drawable/ic"
+                android:layout_width="match_parent"
+                android:inputType="textEmailAddress"
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:layout_marginTop="7dp"
+                android:layout_marginLeft="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Username"
+                android:textSize="15sp"
+                android:textColor="#3f4658"/>
+            <EditText
+                android:id="@+id/reg_username"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:drawableRight="@drawable/ic"
+                android:layout_width="match_parent"
+                android:inputType="textEmailAddress"
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:layout_marginLeft="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Password"
+                android:textSize="15sp"
+                android:textColor="#3f4658"/>
+            <EditText
+                android:id="@+id/reg_password"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:drawableRight="@drawable/ic_pass"
+                android:layout_width="match_parent"
+                android:inputType="textPassword"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:layout_marginLeft="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Repeat Password"
+                android:textSize="15sp"
+                android:textColor="#3f4658"/>
+            <EditText
+                android:id="@+id/reg_repassword"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:drawableRight="@drawable/ic_pass"
+                android:layout_width="match_parent"
+                android:inputType="textPassword"
+                android:layout_height="wrap_content"/>
+
+            <Button
+                android:id="@+id/button_reg"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/btn_login"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:textSize="20sp"
+                android:layout_gravity="center"
+                android:textColor="#ffffff"
+                android:text="Register"/>
+
+
+
+        </LinearLayout>
 
         <TextView
-            android:layout_marginTop="7dp"
-            android:layout_marginLeft="10dp"
-            android:layout_width="wrap_content"
+            android:id="@+id/reg_to_login"
+            android:layout_width="249dp"
             android:layout_height="wrap_content"
-            android:text="Email"
-            android:textSize="15sp"
-            android:textColor="#3f4658"/>
-        <EditText
-            android:id="@+id/reg_email"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:drawableRight="@drawable/ic"
-            android:layout_width="match_parent"
-            android:inputType="textEmailAddress"
-            android:layout_height="wrap_content"/>
-        <TextView
-            android:layout_marginTop="7dp"
-            android:layout_marginLeft="10dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Username"
-            android:textSize="15sp"
-            android:textColor="#3f4658"/>
-        <EditText
-            android:id="@+id/reg_username"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:drawableRight="@drawable/ic"
-            android:layout_width="match_parent"
-            android:inputType="textEmailAddress"
-            android:layout_height="wrap_content"/>
-        <TextView
-            android:layout_marginLeft="10dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Password"
-            android:textSize="15sp"
-            android:textColor="#3f4658"/>
-        <EditText
-            android:id="@+id/reg_password"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:drawableRight="@drawable/ic_pass"
-            android:layout_width="match_parent"
-            android:inputType="textPassword"
-            android:layout_height="wrap_content"/>
-
-        <TextView
-            android:layout_marginLeft="10dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Repeat Password"
-            android:textSize="15sp"
-            android:textColor="#3f4658"/>
-        <EditText
-            android:id="@+id/reg_repassword"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:drawableRight="@drawable/ic_pass"
-            android:layout_width="match_parent"
-            android:inputType="textPassword"
-            android:layout_height="wrap_content"/>
-
-        <Button
-            android:id="@+id/button_reg"
-            android:layout_marginTop="20dp"
-            android:background="@drawable/btn_login"
-            android:layout_width="200dp"
-            android:layout_height="wrap_content"
-            android:textSize="20sp"
-            android:layout_gravity="center"
-            android:textColor="#ffffff"
-            android:text="Register"/>
-
-
-
+            android:layout_below="@id/reg_form"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginStart="67dp"
+            android:layout_marginTop="27dp"
+            android:layout_marginEnd="96dp"
+            android:textAlignment="center"
+            android:text="Already have account ? Click here!"
+            android:textColor="#3f4658"
+            android:textSize="14sp"
+            android:textStyle="bold" />
     </LinearLayout>
-
-    <TextView
-        android:id="@+id/reg_to_login"
-        android:layout_width="249dp"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/reg_form"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginStart="67dp"
-        android:layout_marginTop="27dp"
-        android:layout_marginEnd="96dp"
-        android:textAlignment="center"
-        android:text="Already have account ? Click here!"
-        android:textColor="#3f4658"
-        android:textSize="14sp"
-        android:textStyle="bold" />
-
 
 </RelativeLayout>

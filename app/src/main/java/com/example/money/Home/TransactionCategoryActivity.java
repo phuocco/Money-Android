@@ -64,7 +64,6 @@ public class TransactionCategoryActivity extends AppCompatActivity {
     }
 
 
-
     private void chooseImage() {
         Intent intent = new Intent();
         intent.setType("image/*");
