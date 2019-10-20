@@ -1,5 +1,6 @@
 package com.example.money.Retrofit;
 
+import com.example.money.models.Chart;
 import com.example.money.models.Transaction;
 
 import java.util.List;
@@ -51,4 +52,7 @@ public interface MyService {
 
     @GET("/transaction/{id}")
     Call<Transaction> getTransactionById(@Path("id") String id);
+
+    @GET("/transaction/chart")
+    Call<List<Chart>> getChart();
 }

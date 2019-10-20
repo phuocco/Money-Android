@@ -51,6 +51,9 @@ dependencies {
     implementation 'com.google.firebase:firebase-auth:19.1.0'
     //picasso
     implementation 'com.squareup.picasso:picasso:2.71828'
+    //mp chart
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
+
 
 }
 apply plugin: 'com.google.gms.google-services'

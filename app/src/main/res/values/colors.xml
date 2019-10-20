@@ -1,14 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <color name="colorPrimary">#bdbdbd</color>
-    <color name="colorPrimaryLight">#efefef</color>
+    <color name="colorPrimary">#DAB8B8</color>
+    <color name="colorPrimaryLight">#C04545</color>
     <color name="colorPrimaryDark">#8d8d8d</color>
     <color name="colorAccent">#8d8d8d</color>
     <color name="secondaryColor">#29b6f6</color>
-    <color name="secondaryLightColor">#73e8ff</color>
+    <color name="secondaryLightColor">#4CBDD3</color>
     <color name="secondaryDarkColor">#0086c3</color>
     <color name="primaryTextColor">#37474f</color>
     <color name="secondaryTextColor">#111111</color>
     <color name="card_bg_color">#f6f6f6</color>
+    <color name="red">#F70A0A</color>
+    <color name="blue">#3F51B5</color>
+    <color name="green">#4CAF50</color>
+    <color name="yellow">#FFEB3B</color>
+
 </resources>

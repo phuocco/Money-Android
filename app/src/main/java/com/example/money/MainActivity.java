@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import com.example.money.Home.ChartActivity;
 import com.example.money.Home.HomeActivity;
 import com.example.money.Home.TransactionCategoryActivity;
 import com.example.money.Transaction.AddExpenseActivity;
@@ -26,7 +27,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         in = findViewById(R.id.buttonin);
         home = findViewById(R.id.buttonhome);
 
-        startActivity(new Intent(MainActivity.this, TransactionCategoryActivity.class));
+        startActivity(new Intent(MainActivity.this, ChartActivity.class));
         login.setOnClickListener(this);
         reg.setOnClickListener(this);
         ex.setOnClickListener(this);
@@ -50,7 +51,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 startActivity(c);
                 break;
             case R.id.buttonin:
-                Intent d = new Intent(MainActivity.this, AddIncomeActivity.class);
+                Intent d = new Intent(MainActivity.this, ChartActivity.class);
                 startActivity(d);
                 break;
             case R.id.buttonhome:
