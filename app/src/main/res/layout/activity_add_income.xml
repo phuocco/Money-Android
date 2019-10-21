@@ -47,6 +47,12 @@
         android:text="Income"
         android:visibility="invisible" />
 
+    <TextView
+        android:id="@+id/add_in_date"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="TextView" />
+
     <Button
         android:id="@+id/button_add_in"
         android:layout_width="match_parent"

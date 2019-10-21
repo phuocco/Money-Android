@@ -7,6 +7,7 @@ import java.util.List;
 
 import io.reactivex.Observable;
 import retrofit2.Call;
+import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
@@ -33,9 +34,10 @@ public interface MyService {
     Call<Transaction> addTransaction(
                         @Field("email") String email,
                         @Field("amount") String amount,
-                        @Field("note") String note,
                         @Field("category") String category,
                         @Field("type") String type,
+                        @Field("note") String note,
+                        @Field("date") String date,
                         @Field("photo") String photo);
 
     @GET("/transaction/")
@@ -55,4 +57,11 @@ public interface MyService {
 
     @GET("/transaction/chart")
     Call<List<Chart>> getChart();
+
+//    @GET("/transaction/chart1/{month}/{year}")
+//    Call<List<Chart>> getChartByMonth( @Body("month") String month,
+//                                 @Body("year") String year);
+
+    @POST("/transaction/chart1")
+    Call<List<Chart>> getChartByMonth(@Body Chart chart);
 }

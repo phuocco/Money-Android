@@ -3,19 +3,21 @@ package com.example.money;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.example.money.Home.ChartActivity;
 import com.example.money.Home.HomeActivity;
-import com.example.money.Home.TransactionCategoryActivity;
 import com.example.money.Transaction.AddExpenseActivity;
-import com.example.money.Transaction.AddIncomeActivity;
-import com.example.money.Transaction.DetailTransactionActivity;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
     Button login, reg,ex,home,in;
+
+    public static final String SHARED_PREFS = "sharedPrefs";
+    public static final String EMAIL = "email";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,8 +28,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         ex = findViewById(R.id.buttonex);
         in = findViewById(R.id.buttonin);
         home = findViewById(R.id.buttonhome);
+        SharedPreferences sharedPreferences =  getSharedPreferences(SHARED_PREFS,MODE_PRIVATE);
+        String abc = sharedPreferences.getString(EMAIL,"");
+        Toast.makeText(this, ""+abc, Toast.LENGTH_SHORT).show();
 
-        startActivity(new Intent(MainActivity.this, ChartActivity.class));
+       // startActivity(new Intent(MainActivity.this, LoginActivity.class));
         login.setOnClickListener(this);
         reg.setOnClickListener(this);
         ex.setOnClickListener(this);
@@ -43,7 +48,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 startActivity(a);
                 break;
             case R.id.main_reg:
-                Intent b = new Intent(MainActivity.this, RegisterActivity.class);
+                Intent b = new Intent(MainActivity.this, ChartActivity.class);
                 startActivity(b);
                 break;
             case R.id.buttonex:
@@ -51,7 +56,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 startActivity(c);
                 break;
             case R.id.buttonin:
-                Intent d = new Intent(MainActivity.this, ChartActivity.class);
+                Intent d = new Intent(MainActivity.this, TempActivity.class);
                 startActivity(d);
                 break;
             case R.id.buttonhome:

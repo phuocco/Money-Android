@@ -60,13 +60,11 @@ public class ThisMonthFragment extends Fragment {
                     Toast.makeText(getActivity(), "success", Toast.LENGTH_SHORT).show();
                 }
             }
-
             @Override
             public void onFailure(Call<List<Transaction>> call, Throwable t) {
 
             }
         });
-
         return view;
     }
 }

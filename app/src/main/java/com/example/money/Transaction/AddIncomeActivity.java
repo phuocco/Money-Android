@@ -2,16 +2,22 @@ package com.example.money.Transaction;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.DatePickerDialog;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.money.R;
 import com.example.money.Retrofit.MyService;
 import com.example.money.Retrofit.RetrofitClient;
 import com.example.money.models.Transaction;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -22,6 +28,7 @@ public class AddIncomeActivity extends AppCompatActivity {
     EditText ed_email,ed_amount,ed_note, ed_category,ed_type;
     Button button_add_in;
     MyService myService;
+    TextView tv_add_date;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,6 +42,15 @@ public class AddIncomeActivity extends AppCompatActivity {
         ed_category =findViewById(R.id.add_in_category);
         ed_type =findViewById(R.id.add_in_type);
         button_add_in = findViewById(R.id.button_add_in);
+        tv_add_date =findViewById(R.id.add_in_date);
+
+        tv_add_date.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                pickDate();
+            }
+        });
+
 
         button_add_in.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -45,14 +61,33 @@ public class AddIncomeActivity extends AppCompatActivity {
                 String category = ed_category.getText().toString();
                 String type =  ed_type.getText().toString();
                 String photo = "";
-                addTransaction(email,amount,note,category,type,photo);
+                String date = "";
+                addTransaction(email,amount,category,type,note,date,photo);
             }
         });
 
     }
 
-    private void addTransaction(String email, String amount, String note, String category, String type,String photo) {
-        myService.addTransaction(email,amount,note,category,type,photo)
+
+    private void pickDate() {
+        final Calendar calendar = Calendar.getInstance();
+        int ngay =  calendar.get(Calendar.DATE);
+        int thang = calendar.get(Calendar.MONTH);
+        int nam = calendar.get(Calendar.YEAR);
+        DatePickerDialog datePickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
+                calendar.set(i,i1,i2);
+                SimpleDateFormat simpleDateFormat=  new SimpleDateFormat("yyyy-MM-dd");
+                tv_add_date.setText(simpleDateFormat.format(calendar.getTime()));
+            }
+        },nam,thang,ngay);
+        datePickerDialog.show();
+    }
+
+
+    private void addTransaction(String email, String amount,String category,String type, String note,String date,  String photo) {
+        myService.addTransaction(email,amount,category,type,note,date,photo)
                 .enqueue(new Callback<Transaction>() {
                     @Override
                     public void onResponse(Call<Transaction> call, Response<Transaction> response) {

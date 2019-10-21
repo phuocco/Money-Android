@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.money.Home.HomeActivity;
 import com.example.money.Retrofit.MyService;
 import com.example.money.Retrofit.RetrofitClient;
 
@@ -47,6 +48,7 @@ public class RegisterActivity extends AppCompatActivity {
 
         Retrofit retrofitClient = RetrofitClient.getInstance();
         myService = retrofitClient.create(MyService.class);
+
         button_reg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -74,7 +76,7 @@ public class RegisterActivity extends AppCompatActivity {
                     @Override
                     public void accept(String response) throws Exception {
                         Toast.makeText(RegisterActivity.this, "Success", Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(RegisterActivity.this,LoginActivity.class));
+                        startActivity(new Intent(RegisterActivity.this, HomeActivity.class));
                     }
                 })
         );

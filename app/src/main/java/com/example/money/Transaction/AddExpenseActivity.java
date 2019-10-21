@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -12,6 +13,7 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -32,6 +34,8 @@ import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.UUID;
 
 import retrofit2.Call;
@@ -44,7 +48,7 @@ public class AddExpenseActivity extends AppCompatActivity {
     Button button_add_ex;
     MyService myService;
     ImageView imageView;
-    TextView temp;
+    TextView temp, tv_add_date;
 
     //firebase
     FirebaseStorage storage;
@@ -62,7 +66,6 @@ public class AddExpenseActivity extends AppCompatActivity {
                 chooseImage();
             }
         });
-
 
         button_add_ex.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -83,20 +86,31 @@ public class AddExpenseActivity extends AppCompatActivity {
         ed_category =findViewById(R.id.add_ex_category);
         ed_type =findViewById(R.id.add_ex_type);
         button_add_ex = findViewById(R.id.button_add_ex);
-        temp = findViewById(R.id.temp);
-        temp.setOnClickListener(new View.OnClickListener() {
+        tv_add_date = findViewById(R.id.add_ex_date);
+        tv_add_date.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String email = ed_email.getText().toString();
-                String amount = ed_amount.getText().toString();
-                String note = ed_note.getText().toString();
-                String category = ed_category.getText().toString();
-                String type = ed_type.getText().toString();
-                String photo = "a";
-                addTransaction(email,amount,note,category,type,photo);
+                pickDate();
             }
         });
     }
+
+    private void pickDate() {
+        final Calendar calendar = Calendar.getInstance();
+        int ngay =  calendar.get(Calendar.DATE);
+        int thang = calendar.get(Calendar.MONTH);
+        int nam = calendar.get(Calendar.YEAR);
+        DatePickerDialog datePickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
+                calendar.set(i,i1,i2);
+                SimpleDateFormat simpleDateFormat=  new SimpleDateFormat("yyyy-MM-dd");
+                tv_add_date.setText(simpleDateFormat.format(calendar.getTime()));
+            }
+        },nam,thang,ngay);
+        datePickerDialog.show();
+    }
+
     //choose image
     private void chooseImage() {
         Intent intent = new Intent();
@@ -120,7 +134,17 @@ public class AddExpenseActivity extends AppCompatActivity {
     }
 
     private void uploadImage() {
-        if(filePath != null){
+        if(filePath == null){
+            String email = ed_email.getText().toString();
+            String amount = ed_amount.getText().toString();
+            String note = ed_note.getText().toString();
+            String category = ed_category.getText().toString();
+            String type = ed_type.getText().toString();
+            String date = tv_add_date.getText().toString();
+            String photo = "";
+            addTransaction(email,amount,category,type,note,date,photo);
+
+        } else {
             final ProgressDialog progressDialog = new ProgressDialog(this);
             progressDialog.setTitle("uploading");
             progressDialog.show();
@@ -138,10 +162,10 @@ public class AddExpenseActivity extends AppCompatActivity {
                                     String note = ed_note.getText().toString();
                                     String category = ed_category.getText().toString();
                                     String type = ed_type.getText().toString();
+                                    String date = tv_add_date.getText().toString();
                                     String photo = uri.toString();
-                                    temp.setText(photo);
-                                    Toast.makeText(AddExpenseActivity.this, ""+photo, Toast.LENGTH_SHORT).show();
-                                    addTransaction(email,amount,note,category,type,photo);
+                                    //   Toast.makeText(AddExpenseActivity.this, ""+photo, Toast.LENGTH_SHORT).show();
+                                    addTransaction(email,amount,category,type,note,date,photo);
 
                                 }
                             });
@@ -162,12 +186,9 @@ public class AddExpenseActivity extends AppCompatActivity {
                     });
         }
     }
-    private void initString(){
 
-    }
-
-    private void addTransaction(String email, String amount, String note, String category, String type,String photo) {
-        myService.addTransaction(email,amount,note,category,type,photo)
+    private void addTransaction(String email, String amount,String category, String type,String note,String date, String photo) {
+        myService.addTransaction(email,amount,category,type,note,date,photo)
                 .enqueue(new Callback<Transaction>() {
                     @Override
                     public void onResponse(Call<Transaction> call, Response<Transaction> response) {

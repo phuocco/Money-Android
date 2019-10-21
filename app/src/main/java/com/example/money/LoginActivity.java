@@ -3,6 +3,7 @@ package com.example.money;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -25,7 +26,8 @@ public class LoginActivity extends AppCompatActivity {
     Button button_login;
     CompositeDisposable compositeDisposable  = new CompositeDisposable();
     MyService myService;
-
+    public static final String SHARED_PREFS = "sharedPrefs";
+    public static final String EMAIL = "email";
     @Override
     protected void onStop() {
         compositeDisposable.clear();
@@ -43,6 +45,8 @@ public class LoginActivity extends AppCompatActivity {
         ed_email=findViewById(R.id.login_email);
         ed_password = findViewById(R.id.login_password);
         button_login = findViewById(R.id.button_login);
+
+
 
         Retrofit retrofitClient = RetrofitClient.getInstance();
         myService = retrofitClient.create(MyService.class);
@@ -69,8 +73,13 @@ public class LoginActivity extends AppCompatActivity {
             .subscribe(new Consumer<String>() {
                 @Override
                 public void accept(String response) throws Exception {
-                    Toast.makeText(LoginActivity.this, "success", Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(LoginActivity.this, HomeActivity.class));
+                    Toast.makeText(LoginActivity.this, "success"+response, Toast.LENGTH_SHORT).show();
+                    SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS,MODE_PRIVATE);
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putString(EMAIL,response);
+                    editor.apply();
+
+                //    startActivity(new Intent(LoginActivity.this, HomeActivity.class));
                 }
             }));
     }

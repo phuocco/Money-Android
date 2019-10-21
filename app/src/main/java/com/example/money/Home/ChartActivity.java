@@ -2,14 +2,19 @@ package com.example.money.Home;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.DatePickerDialog;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.DatePicker;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.money.R;
 import com.example.money.Retrofit.MyService;
 import com.example.money.Retrofit.RetrofitClient;
 import com.example.money.models.Chart;
+import com.example.money.models.Transaction;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.data.PieData;
@@ -17,7 +22,9 @@ import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
 import com.github.mikephil.charting.utils.ColorTemplate;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import retrofit2.Call;
@@ -29,21 +36,66 @@ public class ChartActivity extends AppCompatActivity {
     PieChart pieChart;
     MyService myService;
     RetrofitClient retrofitClient;
+    TextView selectTime,chartTemp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chart);
-        getChart();
-    }
-
-    private void getChart() {
+        //retrofit
         Retrofit retrofitClient = RetrofitClient.getInstance();
         myService = retrofitClient.create(MyService.class);
-        Call<List<Chart>> call = myService.getChart();
-        call.enqueue(new Callback<List<Chart>>() {
+
+        chartTemp = findViewById(R.id.chart_temp);
+        selectTime =  findViewById(R.id.chart_select_time);
+        final Calendar calendar = Calendar.getInstance();
+        final int day = calendar.get(Calendar.DAY_OF_MONTH);
+       final  int month = calendar.get(Calendar.MONTH);
+      final  int year = calendar.get(Calendar.YEAR);
+        Toast.makeText(this, ""+(month+1) + "  "+ year, Toast.LENGTH_SHORT).show();
+        selectTime.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                pickDate();
+            }
+        });
+        getChartByMonth(String.valueOf(month),String.valueOf(year));
+    }
+
+    private void pickDate() {
+        final Calendar calendar = Calendar.getInstance();
+        final int day = calendar.get(Calendar.DAY_OF_MONTH);
+        final  int month = calendar.get(Calendar.MONTH) + 1;
+        final  int year = calendar.get(Calendar.YEAR);
+        DatePickerDialog datePickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
+                calendar.set(i,i1,i2);
+                Toast.makeText(ChartActivity.this, "year: "+i + "   month "+(i1+1), Toast.LENGTH_SHORT).show();
+                SimpleDateFormat simpleDateFormat=  new SimpleDateFormat("yyyy-MM");
+                selectTime.setText(simpleDateFormat.format(calendar.getTime()));
+                String selectYear = String.valueOf(i);
+                String selectMonth =  String.valueOf((i1+1));
+                getChartByMonth(selectYear,selectMonth);
+            }
+        },year,month,day);
+        datePickerDialog.show();
+    }
+
+//    private void getChartByMonth(String selectYear, String selectMonth) {
+//        Retrofit retrofitClient = RetrofitClient.getInstance();
+//        myService = retrofitClient.create(MyService.class);
+//    }
+
+    private void getChartByMonth(String selectYear, String selectMonth) {
+        Chart chart = new Chart(selectMonth,selectYear);
+
+        myService.getChartByMonth(chart)
+        .enqueue(new Callback<List<Chart>>() {
             @Override
             public void onResponse(Call<List<Chart>> call, Response<List<Chart>> response) {
+
+                chartTemp.setText(response.toString());
                 List<PieEntry> pieEntries =  new ArrayList<>();
                 for (Chart chart: response.body()){
                     pieEntries.add(new PieEntry(chart.getSum(),chart.getId()));
@@ -53,22 +105,10 @@ public class ChartActivity extends AppCompatActivity {
                 pieDataSet.setColors(ColorTemplate.JOYFUL_COLORS);
                 PieData pieData = new PieData(pieDataSet);
                 pieChart = findViewById(R.id.chart);
-
-              //  pieDataSet.setColors(ColorTemplate.COLORFUL_COLORS);
-                
                 pieChart.setData(pieData);
                 Description description = new Description();
                 description.setText("aaa");
                 pieChart.setDescription(description);
-
-                pieChart.setDrawHoleEnabled(true);
-                pieChart.setHoleRadius(50f);
-
-                // enable rotation of the chart by touch
-                pieChart.setRotationAngle(0);
-                pieChart.setRotationEnabled(false);
-                pieChart.setDrawCenterText(true);
-
 
                 pieChart.invalidate();
             }
