@@ -1,6 +1,8 @@
 package com.example.money.Home;
 
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -10,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.example.money.Adapter.HomeAdapter;
@@ -17,6 +20,7 @@ import com.example.money.R;
 import com.example.money.Retrofit.MyService;
 import com.example.money.Retrofit.RetrofitClient;
 import com.example.money.models.Transaction;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.List;
 
@@ -31,8 +35,12 @@ import retrofit2.Retrofit;
 public class ThisMonthFragment extends Fragment {
     HomeAdapter homeAdapter;
     private RecyclerView myRecyclerView;
+    FloatingActionButton floatingActionButton;
+    RelativeLayout this_month_layout;
     private MyService myService;
     RetrofitClient retrofitClient;
+    public static final String SHARED_PREFS = "sharedPrefs";
+    boolean isDark =  false;
 
     public ThisMonthFragment() {
         // Required empty public constructor
@@ -42,8 +50,18 @@ public class ThisMonthFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
         final View view = inflater.inflate(R.layout.fragment_this_month, container, false);
+        floatingActionButton = view.findViewById(R.id.icon_fab);
+        this_month_layout = view.findViewById(R.id.this_month_layout);
+
+        isDark = getThemeStatePref();
+        if (isDark){
+            this_month_layout.setBackgroundColor(getResources().getColor(R.color.black));
+        } else {
+            this_month_layout.setBackgroundColor(getResources().getColor(R.color.white));
+        }
+
+
         myRecyclerView = view.findViewById(R.id.rv_thismonth);
         Retrofit retrofitClient = RetrofitClient.getInstance();
         myService = retrofitClient.create(MyService.class);
@@ -52,12 +70,27 @@ public class ThisMonthFragment extends Fragment {
             @Override
             public void onResponse(Call<List<Transaction>> call, Response<List<Transaction>> response) {
                 if (response.isSuccessful()){
-                    List<Transaction> transactionList = response.body();
-                    HomeAdapter homeAdapter = new HomeAdapter(transactionList);
+                  final  List<Transaction> transactionList = response.body();
+                    HomeAdapter homeAdapter = new HomeAdapter(transactionList,isDark);
                     RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
                     myRecyclerView.setLayoutManager(layoutManager);
                     myRecyclerView.setAdapter(homeAdapter);
                     Toast.makeText(getActivity(), "success", Toast.LENGTH_SHORT).show();
+
+                    floatingActionButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            isDark = !isDark;
+                            if (isDark){
+                                this_month_layout.setBackgroundColor(getResources().getColor(R.color.black));
+                            } else {
+                                this_month_layout.setBackgroundColor(getResources().getColor(R.color.white));
+                            }
+                            HomeAdapter homeAdapter = new HomeAdapter(transactionList,isDark);
+                            myRecyclerView.setAdapter(homeAdapter);
+                            saveThemeStatePref(isDark);
+                        }
+                    });
                 }
             }
             @Override
@@ -65,7 +98,20 @@ public class ThisMonthFragment extends Fragment {
 
             }
         });
+
         return view;
+    }
+
+    private void saveThemeStatePref(boolean isDark) {
+        SharedPreferences preferences = getContext().getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putBoolean("isDark",isDark);
+        editor.apply();
+    }
+    private boolean getThemeStatePref(){
+        SharedPreferences preferences = getContext().getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
+        boolean isDark = preferences.getBoolean("isDark",false);
+        return isDark;
     }
 }
 
