@@ -31,6 +31,10 @@ public class Transaction {
     @Expose
     private Integer v;
 
+    @SerializedName("photo")
+    @Expose
+    private String photo;
+
     public String getEvent() {
         return event;
     }
@@ -105,6 +109,14 @@ public class Transaction {
 
     public void setV(Integer v) {
         this.v = v;
+    }
+
+    public String getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(String photo) {
+        this.photo = photo;
     }
 
 }

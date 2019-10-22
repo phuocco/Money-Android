@@ -52,7 +52,7 @@ public interface MyService {
     @GET("/transaction/{category}")
     Call<Transaction> getTransactionByCategory(@Path("category") String category);
 
-    @GET("/transaction/{id}")
+    @GET("/transaction/id/{id}")
     Call<Transaction> getTransactionById(@Path("id") String id);
 
     @GET("/transaction/chart")

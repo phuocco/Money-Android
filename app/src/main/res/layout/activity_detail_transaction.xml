@@ -1,31 +1,112 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
+    android:background="@drawable/gradient_main"
     tools:context=".Transaction.DetailTransactionActivity">
 
-    <TextView
-        android:id="@+id/detail_id"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="TextView" />
 
-    <TextView
-        android:id="@+id/detail_amount"
+    <LinearLayout
+        android:id="@+id/detail_linear"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="TextView" />
-    <TextView
-        android:id="@+id/detail_note"
+        android:layout_marginTop="30dp"
+
+        android:paddingLeft="15dp"
+        android:background="@drawable/card_detail"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/detail_amount"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="24sp"
+            android:paddingTop="5dp"
+            android:gravity="center_vertical"
+            android:paddingBottom="5dp"
+            android:drawableStart="@drawable/amount"
+            android:drawablePadding="20dp"
+            android:text="Amount" />
+        <TextView
+            android:id="@+id/detail_category"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="24sp"
+            android:paddingTop="5dp"
+            android:gravity="center_vertical"
+            android:paddingBottom="5dp"
+            android:drawableStart="@drawable/category"
+            android:drawablePadding="20dp"
+            android:text="Category" />
+
+        <TextView
+            android:id="@+id/detail_date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="24sp"
+            android:paddingTop="5dp"
+            android:gravity="center_vertical"
+            android:paddingBottom="5dp"
+            android:drawableStart="@drawable/date"
+            android:drawablePadding="20dp"
+            android:text="Date" />
+        <TextView
+            android:id="@+id/detail_remind"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="24sp"
+            android:paddingTop="5dp"
+            android:gravity="center_vertical"
+            android:paddingBottom="5dp"
+            android:drawableStart="@drawable/remind"
+            android:drawablePadding="20dp"
+            android:text="Remind: " />
+        <TextView
+            android:id="@+id/detail_note"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:singleLine="false"
+            android:maxLines="3"
+            android:textSize="24sp"
+            android:paddingTop="5dp"
+            android:gravity="center_vertical"
+            android:paddingBottom="5dp"
+            android:drawableStart="@drawable/note"
+            android:drawablePadding="20dp"
+            android:text="Note: " />
+
+        <TextView
+            android:id="@+id/detail_id"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="24sp"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:text="id" />
+
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/detail_photo"
         android:layout_width="match_parent"
+        android:layout_height="170dp"
+        android:layout_below="@id/detail_linear"
+        android:layout_gravity="center"
+        android:layout_marginTop="44dp"
+        />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/icon_fab"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView" />
-    <TextView
-        android:id="@+id/detail_category"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="TextView" />
-</LinearLayout>
+        android:src="@drawable/ic_edit"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="21dp"
+        android:layout_marginBottom="21dp" />
+
+
+
+</RelativeLayout>
