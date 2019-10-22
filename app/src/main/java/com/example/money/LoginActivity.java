@@ -9,6 +9,8 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.money.Home.HomeActivity;
@@ -23,7 +25,8 @@ import retrofit2.Retrofit;
 
 public class LoginActivity extends AppCompatActivity {
     EditText ed_email,ed_password;
-    Button button_login;
+    RelativeLayout button_login;
+    TextView login_register;
     CompositeDisposable compositeDisposable  = new CompositeDisposable();
     MyService myService;
     public static final String SHARED_PREFS = "sharedPrefs";
@@ -45,8 +48,7 @@ public class LoginActivity extends AppCompatActivity {
         ed_email=findViewById(R.id.login_email);
         ed_password = findViewById(R.id.login_password);
         button_login = findViewById(R.id.button_login);
-
-
+        login_register = findViewById(R.id.login_register);
 
         Retrofit retrofitClient = RetrofitClient.getInstance();
         myService = retrofitClient.create(MyService.class);
@@ -54,6 +56,12 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 loginUser(ed_email.getText().toString(), ed_password.getText().toString());
+            }
+        });
+        login_register.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(LoginActivity.this,RegisterActivity.class));
             }
         });
     }

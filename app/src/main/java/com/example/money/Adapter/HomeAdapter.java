@@ -2,6 +2,7 @@ package com.example.money.Adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +16,12 @@ import com.example.money.R;
 import com.example.money.Transaction.DetailTransactionActivity;
 import com.example.money.models.Transaction;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.CustomViewHolder>{
     Transaction transaction;
@@ -35,11 +41,22 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.CustomViewHold
 
     @Override
     public void onBindViewHolder(@NonNull CustomViewHolder holder, int position) {
-        holder.home_amount.setText(transactionList.get(position).getAmount());
+        DateFormat outputFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.US);
+        DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSX", Locale.US);
+
+        String inputText = transactionList.get(position).getDate();
+        try {
+            Date date = inputFormat.parse(inputText);
+            String outputText = outputFormat.format(date);
+            holder.home_date.setText(outputText);
+        } catch (ParseException ex) {
+            Log.v("Exception", ex.getLocalizedMessage());
+        }
+
+        holder.home_amount.setText(transactionList.get(position).getAmount()+" $");
         holder.home_category.setText(transactionList.get(position).getCategory());
-        holder.home_note.setText(transactionList.get(position).getNote());
-        holder.home_date.setText(transactionList.get(position).getDate());
-        holder.home_event.setText(transactionList.get(position).getEvent());
+//        holder.home_note.setText(transactionList.get(position).getNote());
+//        holder.home_event.setText(transactionList.get(position).getEvent());
     }
 
     @Override
@@ -49,14 +66,16 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.CustomViewHold
 
     class CustomViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         TextView home_category,home_amount, home_note,home_date,home_event;
+
+
         CustomViewHolder(final View itemView) {
             super(itemView);
             itemView.setOnClickListener(this);
             home_category = itemView.findViewById(R.id.home_category);
             home_amount = itemView.findViewById(R.id.home_amount);
-            home_note = itemView.findViewById(R.id.home_note);
+//            home_note = itemView.findViewById(R.id.home_note);
             home_date = itemView.findViewById(R.id.home_date);
-            home_event = itemView.findViewById(R.id.home_event);
+//            home_event = itemView.findViewById(R.id.home_event);
         }
 
         @Override

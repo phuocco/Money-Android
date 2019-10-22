@@ -12,6 +12,7 @@ import android.widget.Toast;
 import com.example.money.Home.ChartActivity;
 import com.example.money.Home.HomeActivity;
 import com.example.money.Transaction.AddExpenseActivity;
+import com.example.money.Transaction.AddIncomeActivity;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
     Button login, reg,ex,home,in;
@@ -48,7 +49,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 startActivity(a);
                 break;
             case R.id.main_reg:
-                Intent b = new Intent(MainActivity.this, ChartActivity.class);
+                Intent b = new Intent(MainActivity.this, RegisterActivity.class);
                 startActivity(b);
                 break;
             case R.id.buttonex:
@@ -56,7 +57,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 startActivity(c);
                 break;
             case R.id.buttonin:
-                Intent d = new Intent(MainActivity.this, TempActivity.class);
+                Intent d = new Intent(MainActivity.this, ChartActivity.class);
                 startActivity(d);
                 break;
             case R.id.buttonhome:

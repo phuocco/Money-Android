@@ -8,6 +8,8 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.money.Home.HomeActivity;
@@ -21,8 +23,9 @@ import io.reactivex.schedulers.Schedulers;
 import retrofit2.Retrofit;
 
 public class RegisterActivity extends AppCompatActivity {
-    Button button_reg;
+    RelativeLayout button_reg;
     EditText reg_email, reg_username, reg_password;
+    TextView register_login;
     String email,username,password;
     CompositeDisposable compositeDisposable  = new CompositeDisposable();
     MyService myService;
@@ -45,10 +48,16 @@ public class RegisterActivity extends AppCompatActivity {
         reg_username = findViewById(R.id.reg_username);
         reg_password = findViewById(R.id.reg_password);
         button_reg =  findViewById(R.id.button_reg);
-
+        register_login = findViewById(R.id.register_login);
         Retrofit retrofitClient = RetrofitClient.getInstance();
         myService = retrofitClient.create(MyService.class);
 
+        register_login.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(RegisterActivity.this,LoginActivity.class));
+            }
+        });
         button_reg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
