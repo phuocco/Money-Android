@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
@@ -19,6 +20,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.money.Constants;
 import com.example.money.Home.TransactionCategoryActivity;
 import com.example.money.MainActivity;
 import com.example.money.R;
@@ -31,7 +33,6 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
-import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -48,7 +49,7 @@ public class AddExpenseActivity extends AppCompatActivity {
     Button button_add_ex;
     MyService myService;
     ImageView imageView;
-    TextView temp, tv_add_date;
+    TextView tv_add_date;
 
     //firebase
     FirebaseStorage storage;
@@ -77,10 +78,11 @@ public class AddExpenseActivity extends AppCompatActivity {
     private void init(){
         Retrofit retrofitClient = RetrofitClient.getInstance();
         myService = retrofitClient.create(MyService.class);
+
         storage = FirebaseStorage.getInstance();
         storageReference = storage.getReference();
         imageView = findViewById(R.id.image_add_expense);
-        ed_email =  findViewById(R.id.add_ex_email);
+
         ed_amount =findViewById(R.id.add_ex_amount);
         ed_note =findViewById(R.id.add_ex_note);
         ed_category =findViewById(R.id.add_ex_category);
@@ -111,6 +113,7 @@ public class AddExpenseActivity extends AppCompatActivity {
         datePickerDialog.show();
     }
 
+
     //choose image
     private void chooseImage() {
         Intent intent = new Intent();
@@ -135,7 +138,9 @@ public class AddExpenseActivity extends AppCompatActivity {
 
     private void uploadImage() {
         if(filePath == null){
-            String email = ed_email.getText().toString();
+            SharedPreferences sharedPreferences =  getSharedPreferences(Constants.SHARED_PREFS,MODE_PRIVATE);
+            String email = sharedPreferences.getString(Constants.EMAIL,null);
+            email = email.replace("\"", "");
             String amount = ed_amount.getText().toString();
             String note = ed_note.getText().toString();
             String category = ed_category.getText().toString();
@@ -143,7 +148,6 @@ public class AddExpenseActivity extends AppCompatActivity {
             String date = tv_add_date.getText().toString();
             String photo = "";
             addTransaction(email,amount,category,type,note,date,photo);
-
         } else {
             final ProgressDialog progressDialog = new ProgressDialog(this);
             progressDialog.setTitle("uploading");
@@ -157,11 +161,15 @@ public class AddExpenseActivity extends AppCompatActivity {
                                 @Override
                                 public void onSuccess(Uri uri) {
                                     progressDialog.dismiss();
-                                    String email = ed_email.getText().toString();
+                                   // String email = ed_email.getText().toString();
+                                    //shared email
+                                    SharedPreferences sharedPreferences =  getSharedPreferences(Constants.SHARED_PREFS,MODE_PRIVATE);
+                                    String email = sharedPreferences.getString(Constants.EMAIL,null);
+                                    email = email.replace("\"", "");
                                     String amount = ed_amount.getText().toString();
                                     String note = ed_note.getText().toString();
                                     String category = ed_category.getText().toString();
-                                    String type = ed_type.getText().toString();
+                                    String type = "Expense";
                                     String date = tv_add_date.getText().toString();
                                     String photo = uri.toString();
                                     //   Toast.makeText(AddExpenseActivity.this, ""+photo, Toast.LENGTH_SHORT).show();

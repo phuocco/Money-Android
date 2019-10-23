@@ -1,23 +1,42 @@
 package com.example.money.Transaction;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.DatePickerDialog;
+import android.app.ProgressDialog;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.money.Constants;
+import com.example.money.MainActivity;
 import com.example.money.R;
 import com.example.money.Retrofit.MyService;
 import com.example.money.Retrofit.RetrofitClient;
 import com.example.money.models.Transaction;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.OnProgressListener;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.UUID;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -28,46 +47,58 @@ public class AddIncomeActivity extends AppCompatActivity {
     EditText ed_email,ed_amount,ed_note, ed_category,ed_type;
     Button button_add_in;
     MyService myService;
+    ImageView imageView;
     TextView tv_add_date;
+
+    //firebase
+    FirebaseStorage storage;
+    StorageReference storageReference;
+    private final int PICK_IMAGE_REQUEST = 71;
+    Uri filePath;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_income);
+        init();
+
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                chooseImage();
+            }
+        });
+
+        button_add_in.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+               uploadImage();
+            }
+        });
+
+    }
+
+    private void init(){
         Retrofit retrofitClient = RetrofitClient.getInstance();
         myService = retrofitClient.create(MyService.class);
 
-        ed_email =  findViewById(R.id.add_in_email);
+        storage = FirebaseStorage.getInstance();
+        storageReference = storage.getReference();
+        imageView = findViewById(R.id.image_add_income);
+
         ed_amount =findViewById(R.id.add_in_amount);
         ed_note =findViewById(R.id.add_in_note);
         ed_category =findViewById(R.id.add_in_category);
         ed_type =findViewById(R.id.add_in_type);
         button_add_in = findViewById(R.id.button_add_in);
         tv_add_date =findViewById(R.id.add_in_date);
-
         tv_add_date.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 pickDate();
             }
         });
-
-
-        button_add_in.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String email = ed_email.getText().toString();
-                String amount = ed_amount.getText().toString();
-                String note = ed_note.getText().toString();
-                String category = ed_category.getText().toString();
-                String type =  ed_type.getText().toString();
-                String photo = "";
-                String date = "";
-                addTransaction(email,amount,category,type,note,date,photo);
-            }
-        });
-
     }
-
 
     private void pickDate() {
         final Calendar calendar = Calendar.getInstance();
@@ -85,6 +116,87 @@ public class AddIncomeActivity extends AppCompatActivity {
         datePickerDialog.show();
     }
 
+    //choose image
+    private void chooseImage() {
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(Intent.createChooser(intent,"Select picture"),PICK_IMAGE_REQUEST);
+    }
+    //activity result
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data !=null && data.getData() != null){
+            filePath = data.getData();
+            try {
+                Bitmap bitmap =  MediaStore.Images.Media.getBitmap(getContentResolver(),filePath);
+                imageView.setImageBitmap(bitmap);
+            } catch (IOException e){
+                e.printStackTrace();
+            }
+        }
+    }
+
+
+    //upload image
+    private void uploadImage() {
+        if(filePath == null){
+            SharedPreferences sharedPreferences =  getSharedPreferences(Constants.SHARED_PREFS,MODE_PRIVATE);
+            String email = sharedPreferences.getString(Constants.EMAIL,"");
+            email = email.replace("\"", "");
+            String amount = ed_amount.getText().toString();
+            String note = ed_note.getText().toString();
+            String category = ed_category.getText().toString();
+            String type = ed_type.getText().toString();
+            String date = tv_add_date.getText().toString();
+            String photo = "";
+            addTransaction(email,amount,category,type,note,date,photo);
+        } else {
+            final ProgressDialog progressDialog = new ProgressDialog(this);
+            progressDialog.setTitle("uploading");
+            progressDialog.show();
+            final   StorageReference ref = storageReference.child("images/" + UUID.randomUUID().toString());
+            ref.putFile(filePath)
+                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                            ref.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                @Override
+                                public void onSuccess(Uri uri) {
+                                    progressDialog.dismiss();
+                                    // String email = ed_email.getText().toString();
+                                    //shared email
+                                    SharedPreferences sharedPreferences =  getSharedPreferences(Constants.SHARED_PREFS,MODE_PRIVATE);
+                                    String email = sharedPreferences.getString(Constants.EMAIL,"");
+                                    email = email.replace("\"", "");
+                                    String amount = ed_amount.getText().toString();
+                                    String note = ed_note.getText().toString();
+                                    String category = ed_category.getText().toString();
+                                    String type = "Income";
+                                    String date = tv_add_date.getText().toString();
+                                    String photo = uri.toString();
+                                    //   Toast.makeText(AddExpenseActivity.this, ""+photo, Toast.LENGTH_SHORT).show();
+                                    addTransaction(email,amount,category,type,note,date,photo);
+                                }
+                            });
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Toast.makeText(AddIncomeActivity.this, "failllllll", Toast.LENGTH_SHORT).show();
+                        }
+                    })
+                    .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
+                            double progress = (100.0*taskSnapshot.getBytesTransferred()/taskSnapshot.getTotalByteCount());
+                            progressDialog.setMessage("uploaded "+(int)progress+"%");
+                        }
+                    });
+        }
+    }
 
     private void addTransaction(String email, String amount,String category,String type, String note,String date,  String photo) {
         myService.addTransaction(email,amount,category,type,note,date,photo)
@@ -93,6 +205,8 @@ public class AddIncomeActivity extends AppCompatActivity {
                     public void onResponse(Call<Transaction> call, Response<Transaction> response) {
                         if(response.isSuccessful()){
                             Toast.makeText(AddIncomeActivity.this, ""+response, Toast.LENGTH_SHORT).show();
+                            startActivity(new Intent(AddIncomeActivity.this, MainActivity.class));
+
                         }
                     }
 

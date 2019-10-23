@@ -66,7 +66,7 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-    private void loginUser(String email, String password) {
+    private void loginUser(final String email, String password) {
         if(TextUtils.isEmpty(email)){
             Toast.makeText(this, "Fill email", Toast.LENGTH_SHORT).show();
             return;
@@ -81,11 +81,18 @@ public class LoginActivity extends AppCompatActivity {
             .subscribe(new Consumer<String>() {
                 @Override
                 public void accept(String response) throws Exception {
-                    Toast.makeText(LoginActivity.this, "success"+response, Toast.LENGTH_SHORT).show();
-                    SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS,MODE_PRIVATE);
-                    SharedPreferences.Editor editor = sharedPreferences.edit();
-                    editor.putString(EMAIL,response);
-                    editor.apply();
+                        response= response.replace("\"", "");
+                        if(response.equals(ed_email.getText().toString())){
+                        Toast.makeText(LoginActivity.this, "success :"+response, Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(LoginActivity.this,HomeActivity.class));
+                        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS,MODE_PRIVATE);
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        editor.putString(EMAIL,response);
+                        editor.apply();
+                    } else {
+                        Toast.makeText(LoginActivity.this, "wrong pass", Toast.LENGTH_SHORT).show();
+                    }
+
 
                 //    startActivity(new Intent(LoginActivity.this, HomeActivity.class));
                 }

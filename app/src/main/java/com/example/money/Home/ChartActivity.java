@@ -49,17 +49,47 @@ public class ChartActivity extends AppCompatActivity {
         chartTemp = findViewById(R.id.chart_temp);
         selectTime =  findViewById(R.id.chart_select_time);
         final Calendar calendar = Calendar.getInstance();
-        final int day = calendar.get(Calendar.DAY_OF_MONTH);
-       final  int month = calendar.get(Calendar.MONTH);
-      final  int year = calendar.get(Calendar.YEAR);
-        Toast.makeText(this, ""+(month+1) + "  "+ year, Toast.LENGTH_SHORT).show();
+        final  int month = calendar.get(Calendar.MONTH)+1;
+        final  int year = calendar.get(Calendar.YEAR);
+        Toast.makeText(this, ""+(month) + "  "+ year, Toast.LENGTH_SHORT).show();
         selectTime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 pickDate();
             }
         });
-        getChartByMonth(String.valueOf(month),String.valueOf(year));
+        selectTime.setText(month + " "+year);
+        String selectMonth = String.valueOf(month);
+        String selectYear= String.valueOf(year);
+        Chart chart = new Chart(selectMonth,selectYear);
+        myService.getChartByMonth(chart)
+                .enqueue(new Callback<List<Chart>>() {
+                    @Override
+                    public void onResponse(Call<List<Chart>> call, Response<List<Chart>> response) {
+
+                        chartTemp.setText(response.toString());
+                        List<PieEntry> pieEntries =  new ArrayList<>();
+                        for (Chart chart: response.body()){
+                            pieEntries.add(new PieEntry(chart.getSum(),chart.getId()));
+                        }
+                        PieDataSet pieDataSet = new PieDataSet(pieEntries,"Sum per cate");
+                        pieDataSet.setColors(ColorTemplate.JOYFUL_COLORS);
+                        PieData pieData = new PieData(pieDataSet);
+                        pieChart = findViewById(R.id.chart);
+                        pieChart.setData(pieData);
+                        Description description = new Description();
+                        description.setText("aaa");
+                        pieChart.setDescription(description);
+                        pieChart.invalidate();
+                    }
+                    @Override
+                    public void onFailure(Call<List<Chart>> call, Throwable t) {
+
+                    }
+                });
+
+
+       // getChartByMonth(selectMonth,selectYear);
     }
 
     private void pickDate() {
@@ -82,41 +112,35 @@ public class ChartActivity extends AppCompatActivity {
         datePickerDialog.show();
     }
 
-//    private void getChartByMonth(String selectYear, String selectMonth) {
-//        Retrofit retrofitClient = RetrofitClient.getInstance();
-//        myService = retrofitClient.create(MyService.class);
-//    }
+
 
     private void getChartByMonth(String selectYear, String selectMonth) {
         Chart chart = new Chart(selectMonth,selectYear);
-
         myService.getChartByMonth(chart)
-        .enqueue(new Callback<List<Chart>>() {
-            @Override
-            public void onResponse(Call<List<Chart>> call, Response<List<Chart>> response) {
+                .enqueue(new Callback<List<Chart>>() {
+                    @Override
+                    public void onResponse(Call<List<Chart>> call, Response<List<Chart>> response) {
 
-                chartTemp.setText(response.toString());
-                List<PieEntry> pieEntries =  new ArrayList<>();
-                for (Chart chart: response.body()){
-                    pieEntries.add(new PieEntry(chart.getSum(),chart.getId()));
-                }
+                        chartTemp.setText(response.toString());
+                        List<PieEntry> pieEntries =  new ArrayList<>();
+                        for (Chart chart: response.body()){
+                            pieEntries.add(new PieEntry(chart.getSum(),chart.getId()));
+                        }
+                        PieDataSet pieDataSet = new PieDataSet(pieEntries,"Sum per cate");
+                        pieDataSet.setColors(ColorTemplate.JOYFUL_COLORS);
+                        PieData pieData = new PieData(pieDataSet);
+                        pieChart = findViewById(R.id.chart);
+                        pieChart.setData(pieData);
+                        Description description = new Description();
+                        description.setText("aaa");
+                        pieChart.setDescription(description);
 
-                PieDataSet pieDataSet = new PieDataSet(pieEntries,"Sum per cate");
-                pieDataSet.setColors(ColorTemplate.JOYFUL_COLORS);
-                PieData pieData = new PieData(pieDataSet);
-                pieChart = findViewById(R.id.chart);
-                pieChart.setData(pieData);
-                Description description = new Description();
-                description.setText("aaa");
-                pieChart.setDescription(description);
+                        pieChart.invalidate();
+                    }
+                    @Override
+                    public void onFailure(Call<List<Chart>> call, Throwable t) {
 
-                pieChart.invalidate();
-            }
-
-            @Override
-            public void onFailure(Call<List<Chart>> call, Throwable t) {
-
-            }
-        });
+                    }
+                });
     }
 }

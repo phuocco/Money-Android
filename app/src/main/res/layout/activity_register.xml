@@ -46,7 +46,7 @@
         android:drawableStart="@drawable/username"
         android:ems="10"
         android:hint="Username"
-        android:inputType="textPassword" />
+        android:inputType="textPersonName" />
 
     <EditText
         android:id="@+id/reg_password"

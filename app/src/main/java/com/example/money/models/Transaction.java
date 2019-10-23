@@ -30,10 +30,22 @@ public class Transaction {
     @SerializedName("__v")
     @Expose
     private Integer v;
-
     @SerializedName("photo")
     @Expose
     private String photo;
+
+    private String reqEmail;
+    private String month;
+    private String year;
+    public Transaction(String reqEmail) {
+        this.reqEmail = reqEmail;
+    }
+
+    public Transaction(String reqEmail, String month, String year) {
+        this.reqEmail = reqEmail;
+        this.month = month;
+        this.year = year;
+    }
 
     public String getEvent() {
         return event;

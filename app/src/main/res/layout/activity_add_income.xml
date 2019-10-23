@@ -11,6 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
+        android:visibility="invisible"
         android:inputType="textPersonName"
         android:text="vodanh.2901@gmail.com" />
 
@@ -51,7 +52,15 @@
         android:id="@+id/add_in_date"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="TextView" />
+        android:ems="10"
+        android:text="datee" />
+
+    <ImageView
+        android:id="@+id/image_add_income"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        tools:srcCompat="@tools:sample/avatars" />
 
     <Button
         android:id="@+id/button_add_in"

@@ -66,7 +66,7 @@ public class DetailTransactionActivity extends AppCompatActivity {
                 //id.setText(transaction.getId());
                 amount.setText("Amount: "+transaction.getAmount());
                 category.setText("Category: "+transaction.getCategory());
-
+                id.setText(transaction.getEmail());
                 if(transaction.getNote()==null){
                     note.setText("Note: ");
                 } else {

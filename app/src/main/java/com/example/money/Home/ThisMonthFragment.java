@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,18 +17,22 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.example.money.Adapter.HomeAdapter;
+import com.example.money.Constants;
 import com.example.money.R;
 import com.example.money.Retrofit.MyService;
 import com.example.money.Retrofit.RetrofitClient;
 import com.example.money.models.Transaction;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.util.Calendar;
 import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
+
+import static android.content.Context.MODE_PRIVATE;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -39,7 +44,6 @@ public class ThisMonthFragment extends Fragment {
     RelativeLayout this_month_layout;
     private MyService myService;
     RetrofitClient retrofitClient;
-    public static final String SHARED_PREFS = "sharedPrefs";
     boolean isDark =  false;
 
     public ThisMonthFragment() {
@@ -62,15 +66,21 @@ public class ThisMonthFragment extends Fragment {
         }
 
 
+
+        SharedPreferences sharedPreferences =  getContext().getSharedPreferences(Constants.SHARED_PREFS,MODE_PRIVATE);
+        String email = sharedPreferences.getString(Constants.EMAIL,null).replace("\"", "");
+        Transaction transaction =  new Transaction(email);
         myRecyclerView = view.findViewById(R.id.rv_thismonth);
         Retrofit retrofitClient = RetrofitClient.getInstance();
         myService = retrofitClient.create(MyService.class);
-        Call<List<Transaction>> call = myService.getAllTransactions();
+        Call<List<Transaction>> call = myService.getAllTransactions(transaction);
         call.enqueue(new Callback<List<Transaction>>() {
             @Override
             public void onResponse(Call<List<Transaction>> call, Response<List<Transaction>> response) {
                 if (response.isSuccessful()){
                   final  List<Transaction> transactionList = response.body();
+                    Log.d("test",response.toString());
+                    Toast.makeText(getActivity(), ""+response, Toast.LENGTH_SHORT).show();
                     HomeAdapter homeAdapter = new HomeAdapter(transactionList,isDark);
                     RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
                     myRecyclerView.setLayoutManager(layoutManager);
@@ -98,19 +108,18 @@ public class ThisMonthFragment extends Fragment {
 
             }
         });
-
         return view;
     }
 
     private void saveThemeStatePref(boolean isDark) {
-        SharedPreferences preferences = getContext().getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
+        SharedPreferences preferences = getContext().getSharedPreferences(Constants.SHARED_PREFS, MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
         editor.putBoolean("isDark",isDark);
         editor.apply();
     }
     private boolean getThemeStatePref(){
-        SharedPreferences preferences = getContext().getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
-        boolean isDark = preferences.getBoolean("isDark",false);
+        SharedPreferences preferences = getContext().getSharedPreferences(Constants.SHARED_PREFS, MODE_PRIVATE);
+        boolean isDark = preferences.getBoolean(Constants.ISDARK,false);
         return isDark;
     }
 }

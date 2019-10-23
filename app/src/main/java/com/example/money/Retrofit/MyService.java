@@ -39,9 +39,12 @@ public interface MyService {
                         @Field("note") String note,
                         @Field("date") String date,
                         @Field("photo") String photo);
-
-    @GET("/transaction/")
-    Call<List<Transaction>> getAllTransactions();
+    //this month
+    @POST("/transaction/")
+    Call<List<Transaction>> getAllTransactions(@Body Transaction transaction);
+    //last month
+    @POST("/transaction/email/")
+    Call<List<Transaction>> getAllTransactionsByEmail(@Body Transaction transaction);
 
     @GET("/transaction/plan")
     Call<List<Transaction>> getAllPlanTransactions();
@@ -55,13 +58,11 @@ public interface MyService {
     @GET("/transaction/id/{id}")
     Call<Transaction> getTransactionById(@Path("id") String id);
 
-    @GET("/transaction/chart")
-    Call<List<Chart>> getChart();
 
 //    @GET("/transaction/chart1/{month}/{year}")
 //    Call<List<Chart>> getChartByMonth( @Body("month") String month,
 //                                 @Body("year") String year);
 
-    @POST("/transaction/chart1")
+    @POST("/transaction/chart")
     Call<List<Chart>> getChartByMonth(@Body Chart chart);
 }

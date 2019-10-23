@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.money.Home.ChartActivity;
@@ -16,7 +17,7 @@ import com.example.money.Transaction.AddIncomeActivity;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
     Button login, reg,ex,home,in;
-
+    TextView tv;
     public static final String SHARED_PREFS = "sharedPrefs";
     public static final String EMAIL = "email";
 
@@ -29,9 +30,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         ex = findViewById(R.id.buttonex);
         in = findViewById(R.id.buttonin);
         home = findViewById(R.id.buttonhome);
+        tv = findViewById(R.id.textView2);
         SharedPreferences sharedPreferences =  getSharedPreferences(SHARED_PREFS,MODE_PRIVATE);
-        String abc = sharedPreferences.getString(EMAIL,"");
-        Toast.makeText(this, ""+abc, Toast.LENGTH_SHORT).show();
+        String abc = sharedPreferences.getString(EMAIL,null).replace("\"", "");
+        abc = abc.replace("\"", "");
+        tv.setText(abc);
+       // Toast.makeText(this, ""+abc, Toast.LENGTH_SHORT).show();
 
        // startActivity(new Intent(MainActivity.this, LoginActivity.class));
         login.setOnClickListener(this);
@@ -57,7 +61,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 startActivity(c);
                 break;
             case R.id.buttonin:
-                Intent d = new Intent(MainActivity.this, ChartActivity.class);
+                Intent d = new Intent(MainActivity.this, AddIncomeActivity.class);
                 startActivity(d);
                 break;
             case R.id.buttonhome:

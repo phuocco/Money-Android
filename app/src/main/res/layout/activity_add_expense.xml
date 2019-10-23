@@ -12,6 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
+        android:visibility="invisible"
         android:inputType="textPersonName"
         android:text="vodanh.2901@gmail.com" />
 
