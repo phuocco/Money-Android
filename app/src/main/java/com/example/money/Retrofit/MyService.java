@@ -14,7 +14,6 @@ import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
-import retrofit2.http.Query;
 
 public interface MyService {
 
@@ -42,12 +41,18 @@ public interface MyService {
     //this month
     @POST("/transaction/")
     Call<List<Transaction>> getAllTransactions(@Body Transaction transaction);
+
+
+    @POST("/transaction/getAll")
+    Call<List<Transaction>> getAll(@Body Transaction transaction);
+
+    @GET("/transaction/plan")
+    Call<List<Transaction>> getAllPlanTransactions();
+
     //last month
     @POST("/transaction/email/")
     Call<List<Transaction>> getAllTransactionsByEmail(@Body Transaction transaction);
 
-    @GET("/transaction/plan")
-    Call<List<Transaction>> getAllPlanTransactions();
 
 //    @GET("/transaction/{id}")
 //    Call<Transaction> getTransaction(@Query("id") String id);
@@ -55,9 +60,14 @@ public interface MyService {
     @GET("/transaction/{category}")
     Call<Transaction> getTransactionByCategory(@Path("category") String category);
 
+
+    //get transaction by id
     @GET("/transaction/id/{id}")
     Call<Transaction> getTransactionById(@Path("id") String id);
 
+    //delete transaction by id
+    @DELETE("/transaction/id/{id}")
+    Call<Transaction> deleteTransactionById(@Path("id") String id);
 
 //    @GET("/transaction/chart1/{month}/{year}")
 //    Call<List<Chart>> getChartByMonth( @Body("month") String month,

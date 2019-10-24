@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 startActivity(a);
                 break;
             case R.id.main_reg:
-                Intent b = new Intent(MainActivity.this, RegisterActivity.class);
+                Intent b = new Intent(MainActivity.this, TestActivity.class);
                 startActivity(b);
                 break;
             case R.id.buttonex:

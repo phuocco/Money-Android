@@ -1,24 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <color name="colorPrimary">#2A3c58</color>
-    <color name="colorPrimaryLight">#C04545</color>
-    <color name="colorPrimaryDark">#8d8d8d</color>
+<!--    primary-->
+    <color name="colorPrimary">#42a5f5</color>
+    <color name="colorPrimaryLight">#80d6ff</color>
+    <color name="colorPrimaryDark">#0077c2</color>
+
+
     <color name="colorAccent">#39356B</color>
-    <color name="secondaryColor">#29b6f6</color>
-    <color name="secondaryLightColor">#4CBDD3</color>
-    <color name="secondaryDarkColor">#0086c3</color>
-    <color name="primaryTextColor">#37474f</color>
-    <color name="secondaryTextColor">#111111</color>
+
+<!--    secondary-->
+    <color name="colorSecondary">#e0e0e0</color>
+    <color name="colorSecondaryLight">#ffffff</color>
+    <color name="colorSecondaryDark">#aeaeae</color>
+<!--text -->
+    <color name="colorPrimaryText">#000000</color>
+    <color name="colorSecondaryText">#000000</color>
     <color name="red">#F70A0A</color>
     <color name="blue">#3F51B5</color>
     <color name="green">#4CAF50</color>
     <color name="yellow">#FFEB3B</color>
-    <color name="category">#9F5E9EEC</color>
+    <color name="category">#5B5E8EDD</color>
     <color name="card_bg_color">#E7D6D6</color>
     <color name="card_bg_dark_color">#65163C2E</color>
-    <color name="amount">#4D40C9</color>
-    <color name="date">#746ACE</color>
+    <color name="amount">#BC4D40C9</color>
+    <color name="date">#CD746ACE</color>
 
     <color name="white">#FFFFFF</color>
     <color name="black">#000000</color>

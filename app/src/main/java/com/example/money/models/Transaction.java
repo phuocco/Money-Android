@@ -34,11 +34,19 @@ public class Transaction {
     @Expose
     private String photo;
 
+
+
     private String reqEmail;
     private String month;
     private String year;
+
     public Transaction(String reqEmail) {
         this.reqEmail = reqEmail;
+    }
+
+    public Transaction(String month, String year) {
+        this.month = month;
+        this.year = year;
     }
 
     public Transaction(String reqEmail, String month, String year) {
@@ -130,5 +138,6 @@ public class Transaction {
     public void setPhoto(String photo) {
         this.photo = photo;
     }
+
 
 }
