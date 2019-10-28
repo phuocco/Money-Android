@@ -14,6 +14,7 @@ import com.example.money.Home.ChartActivity;
 import com.example.money.Home.HomeActivity;
 import com.example.money.Transaction.AddExpenseActivity;
 import com.example.money.Transaction.AddIncomeActivity;
+import com.example.money.Transaction.EditTransactionActivity;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
     Button login, reg,ex,home,in;
@@ -32,12 +33,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         home = findViewById(R.id.buttonhome);
         tv = findViewById(R.id.textView2);
         SharedPreferences sharedPreferences =  getSharedPreferences(SHARED_PREFS,MODE_PRIVATE);
-        String abc = sharedPreferences.getString(EMAIL,null).replace("\"", "");
+        String abc = sharedPreferences.getString(EMAIL,"").replace("\"", "");
         abc = abc.replace("\"", "");
         tv.setText(abc);
        // Toast.makeText(this, ""+abc, Toast.LENGTH_SHORT).show();
 
-       // startActivity(new Intent(MainActivity.this, LoginActivity.class));
+        startActivity(new Intent(MainActivity.this, EditTransactionActivity.class));
         login.setOnClickListener(this);
         reg.setOnClickListener(this);
         ex.setOnClickListener(this);

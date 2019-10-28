@@ -40,6 +40,24 @@ public class Transaction {
     private String month;
     private String year;
 
+    private String eAmount;
+    private String eCategory;
+    private String eNote;
+    private String eType;
+    private String eDate;
+
+    public Transaction(String eAmount, String eCategory, String eNote, String eDate, String eType) {
+        this.eAmount = eAmount;
+        this.eCategory = eCategory;
+        this.eNote = eNote;
+        this.eDate = eDate;
+        this.eType = eType;
+    }
+
+
+
+
+
     public Transaction(String reqEmail) {
         this.reqEmail = reqEmail;
     }

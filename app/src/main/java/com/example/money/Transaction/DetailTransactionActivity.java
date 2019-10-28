@@ -2,7 +2,9 @@ package com.example.money.Transaction;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -13,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.money.Constants;
 import com.example.money.R;
 import com.example.money.Retrofit.MyService;
 import com.example.money.Retrofit.RetrofitClient;
@@ -38,7 +41,7 @@ public class DetailTransactionActivity extends AppCompatActivity {
     private FloatingActionButton fab_main, fab1_mail, fab2_share;
     private Animation fab_open, fab_close, fab_clock, fab_anticlock;
     TextView textview_mail, textview_share;
-
+    Context context;
     boolean isOpen = false;
 
     @Override
@@ -46,13 +49,15 @@ public class DetailTransactionActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail_transaction);
 
-        fab();
+
+
         //init
        init();
         //back button
         assert getSupportActionBar() != null;   //null check
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
        getDetail();
+        fab();
     }
 
     private void fab() {
@@ -93,6 +98,19 @@ public class DetailTransactionActivity extends AppCompatActivity {
 
             }
         });
+        fab1_mail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = getIntent();
+                String transactionId = intent.getStringExtra("TransactionID");
+                SharedPreferences sharedPreferences = getSharedPreferences(Constants.SHARED_PREFS,MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putString(Constants.ID,transactionId);
+                editor.apply();
+                startActivity(new Intent(DetailTransactionActivity.this,EditTransactionActivity.class));
+
+            }
+        });
     }
 
     private void getDetail() {
@@ -107,16 +125,22 @@ public class DetailTransactionActivity extends AppCompatActivity {
         call.enqueue(new Callback<Transaction>() {
             @Override
             public void onResponse(Call<Transaction> call, Response<Transaction> response) {
+
                 Transaction transaction = response.body();
+                SharedPreferences sharedPreferences = getSharedPreferences(Constants.SHARED_PREFS,MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putString(Constants.ID,transactionId);
+                editor.apply();
+
                 // Toast.makeText(DetailTransactionActivity.this, ""+transaction.getId(), Toast.LENGTH_SHORT).show();
                 //id.setText(transaction.getId());
-                amount.setText("Amount: "+transaction.getAmount());
-                category.setText("Category: "+transaction.getCategory());
+                amount.setText(transaction.getAmount());
+                category.setText(transaction.getCategory());
                 id.setText(transaction.getEmail());
                 if(transaction.getNote()==null){
-                    note.setText("Note: ");
+                    note.setText("");
                 } else {
-                    note.setText("Note: "+transaction.getNote());
+                    note.setText(transaction.getNote());
                 }
                 //date format
                 DateFormat outputFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.US);

@@ -13,6 +13,7 @@ import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Path;
 
 public interface MyService {
@@ -63,8 +64,16 @@ public interface MyService {
 
     //get transaction by id
     @GET("/transaction/id/{id}")
-    Call<Transaction> getTransactionById(@Path("id") String id);
+    Call<Transaction> getTransactionById(@Path("id") String id );
 
+    @PUT("/transaction/id/update/{id}")
+    @FormUrlEncoded
+    Call<Transaction> updateTransaction(@Path("id") String id,
+                                        @Field("amount") String amount,
+                                        @Field("category") String category,
+                                        @Field("type") String type,
+                                        @Field("note") String note,
+                                        @Field("date") String date);
     //delete transaction by id
     @DELETE("/transaction/id/{id}")
     Call<Transaction> deleteTransactionById(@Path("id") String id);
