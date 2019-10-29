@@ -25,5 +25,8 @@
             android:title="B"/>
     </menu>
 </item>
+    <item android:id="@+id/settings"
+        android:icon="@drawable/ic_navi"
+        android:title="Settings"/>
 
 </menu>

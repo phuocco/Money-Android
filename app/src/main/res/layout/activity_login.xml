@@ -21,9 +21,8 @@
     <EditText
         android:id="@+id/login_email"
         android:layout_width="301dp"
-        android:layout_height="50dp"
+        android:layout_height="wrap_content"
         android:layout_above="@+id/login_password"
-        android:layout_below="@id/imageView"
         android:layout_centerHorizontal="true"
         android:layout_marginStart="50dp"
         android:layout_marginTop="130dp"
@@ -39,7 +38,7 @@
     <EditText
         android:id="@+id/login_password"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="wrap_content"
         android:layout_alignStart="@+id/login_email"
         android:layout_alignBottom="@+id/cardView"
         android:layout_marginStart="2dp"

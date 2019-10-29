@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         tv.setText(abc);
        // Toast.makeText(this, ""+abc, Toast.LENGTH_SHORT).show();
 
-        startActivity(new Intent(MainActivity.this, EditTransactionActivity.class));
+       // startActivity(new Intent(MainActivity.this, SettingsActivity.class));
         login.setOnClickListener(this);
         reg.setOnClickListener(this);
         ex.setOnClickListener(this);
@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 startActivity(a);
                 break;
             case R.id.main_reg:
-                Intent b = new Intent(MainActivity.this, TestActivity.class);
+                Intent b = new Intent(MainActivity.this, RegisterActivity.class);
                 startActivity(b);
                 break;
             case R.id.buttonex:

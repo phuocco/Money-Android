@@ -2,6 +2,8 @@ package com.example.money.Adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +16,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.money.Constants;
 import com.example.money.Home.HomeActivity;
 import com.example.money.R;
 import com.example.money.Transaction.DetailTransactionActivity;
@@ -26,20 +29,17 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+import static android.content.Context.MODE_PRIVATE;
+
 public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.CustomViewHolder>{
     Transaction transaction;
     Context mContext;
     private List<Transaction> transactionList;
-    boolean isDark = false;
 
     public HomeAdapter(List<Transaction> transactionList) {
         this.transactionList = transactionList;
     }
 
-    public HomeAdapter(List<Transaction> transactionList, boolean isDark) {
-        this.transactionList = transactionList;
-        this.isDark = isDark;
-    }
 
     @NonNull
     @Override
@@ -66,6 +66,9 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.CustomViewHold
         }
         holder.card_transaction.setAnimation(AnimationUtils.loadAnimation(mContext,R.anim.fade_scale_animation));
         holder.home_amount.setText(transactionList.get(position).getAmount()+" $");
+        if("Expense".equals(transactionList.get(position).getType())){
+            holder.home_amount.setTextColor(Color.RED);
+        }
         holder.home_category.setText(transactionList.get(position).getCategory());
 //        holder.home_note.setText(transactionList.get(position).getNote());
 //        holder.home_event.setText(transactionList.get(position).getEvent());
@@ -89,7 +92,8 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.CustomViewHold
             home_date = itemView.findViewById(R.id.home_date);
 //            home_note = itemView.findViewById(R.id.home_note);
 //            home_event = itemView.findViewById(R.id.home_event);
-
+            SharedPreferences preferences = itemView.getContext().getSharedPreferences(Constants.SHARED_PREFS, MODE_PRIVATE);
+            boolean isDark = preferences.getBoolean(Constants.ISDARK,false);
             if(isDark){
                 setDarkTheme();
             }

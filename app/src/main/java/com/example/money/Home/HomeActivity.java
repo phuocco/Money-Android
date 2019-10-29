@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.view.MenuItem;
 
 import com.example.money.R;
+import com.example.money.SettingsActivity;
 import com.google.android.material.navigation.NavigationView;
 
 public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -66,6 +67,9 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 break;
             case R.id.nav_a:
                 startActivity(new Intent(HomeActivity.this,ChartActivity.class));
+                break;
+            case R.id.settings:
+                startActivity(new Intent(HomeActivity.this, SettingsActivity.class));
                 break;
         }
         drawer.closeDrawer(GravityCompat.START);
