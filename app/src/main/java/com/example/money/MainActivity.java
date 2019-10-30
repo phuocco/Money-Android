@@ -39,9 +39,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         email = email.replace("\"", "");
         if(email != null && email.isEmpty()){
             startActivity(new Intent(MainActivity.this,LoginActivity.class));
+            finish();
         } else {
             startActivity(new Intent(MainActivity.this,HomeActivity.class));
-
+            finish();
         }
         tv.setText(email);
        // Toast.makeText(this, ""+abc, Toast.LENGTH_SHORT).show();

@@ -11,35 +11,25 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:paddingTop="30dp"
+
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHeight_percent="1"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <TextView
-            android:id="@+id/textView4"
-            android:layout_width="0dp"
-            android:layout_height="30dp"
-            android:layout_marginTop="36dp"
-            android:gravity="center_vertical|center_horizontal"
-            android:text="Add Expense"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintWidth_percent="0.8" />
 
         <EditText
             android:id="@+id/add_ex_amount"
             android:layout_width="0dp"
             android:layout_height="45dp"
-            android:layout_marginTop="24dp"
             android:ems="10"
             android:hint="Amount"
             android:inputType="number"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView4"
+            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintWidth_percent="0.8" />
 
         <EditText
@@ -73,7 +63,7 @@
             android:layout_width="0dp"
             android:layout_height="45dp"
             android:layout_marginTop="30dp"
-            android:hint="Date"
+            android:hint="@string/date"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/add_ex_category"
@@ -95,9 +85,9 @@
             android:layout_width="0dp"
             android:layout_height="45dp"
             android:layout_marginTop="40dp"
-            android:text="Add Expense"
             app:cardBackgroundColor="@color/colorAccent"
             app:cardCornerRadius="25dp"
+            app:cardElevation="10dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.497"
@@ -110,7 +100,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center_vertical|center_horizontal"
-                android:text="Add Expense" />
+                android:text="@string/add_expense" />
         </androidx.cardview.widget.CardView>
 
         <EditText
@@ -119,7 +109,7 @@
             android:layout_height="0dp"
             android:ems="10"
             android:inputType="textPersonName"
-            android:text="Name"
+            android:text="Expense"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
