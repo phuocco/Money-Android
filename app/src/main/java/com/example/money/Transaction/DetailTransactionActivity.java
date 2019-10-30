@@ -16,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.money.Constants;
+import com.example.money.Home.HomeActivity;
 import com.example.money.R;
 import com.example.money.Retrofit.MyService;
 import com.example.money.Retrofit.RetrofitClient;
@@ -38,9 +39,9 @@ public class DetailTransactionActivity extends AppCompatActivity {
     TextView id,amount,category,note,date,remind;
     ImageView photo;
     MyService myService;
-    private FloatingActionButton fab_main, fab1_mail, fab2_share;
+    private FloatingActionButton fab_main, fab1_edit, fab2_share, fab3_delete;
     private Animation fab_open, fab_close, fab_clock, fab_anticlock;
-    TextView textview_mail, textview_share;
+    TextView textview_edit, textview_share, textview_delete;
     Context context;
     boolean isOpen = false;
 
@@ -62,43 +63,52 @@ public class DetailTransactionActivity extends AppCompatActivity {
 
     private void fab() {
         fab_main = findViewById(R.id.fab);
-        fab1_mail = findViewById(R.id.fab1);
+        fab1_edit = findViewById(R.id.fab1);
         fab2_share = findViewById(R.id.fab2);
+        fab3_delete = findViewById(R.id.fab3);
         fab_close = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_close);
         fab_open = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_open);
         fab_clock = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_rotate_clock);
         fab_anticlock = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_rotate_anticlock);
 
-        textview_mail = (TextView) findViewById(R.id.textview_mail);
+        textview_edit = (TextView) findViewById(R.id.textview_edit);
         textview_share = (TextView) findViewById(R.id.textview_share);
+        textview_delete = (TextView) findViewById(R.id.textview_delete);
         fab_main.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
                 if (isOpen) {
 
-                    textview_mail.setVisibility(View.INVISIBLE);
+                    textview_edit.setVisibility(View.INVISIBLE);
                     textview_share.setVisibility(View.INVISIBLE);
+                    textview_delete.setVisibility(View.INVISIBLE);
+
                     fab2_share.startAnimation(fab_close);
-                    fab1_mail.startAnimation(fab_close);
+                    fab1_edit.startAnimation(fab_close);
+                    fab3_delete.startAnimation(fab_close);
                     fab_main.startAnimation(fab_anticlock);
                     fab2_share.setClickable(false);
-                    fab1_mail.setClickable(false);
+                    fab1_edit.setClickable(false);
+                    fab3_delete.setClickable(false);
                     isOpen = false;
                 } else {
-                    textview_mail.setVisibility(View.VISIBLE);
+                    textview_edit.setVisibility(View.VISIBLE);
                     textview_share.setVisibility(View.VISIBLE);
+                    textview_delete.setVisibility(View.VISIBLE);
                     fab2_share.startAnimation(fab_open);
-                    fab1_mail.startAnimation(fab_open);
+                    fab1_edit.startAnimation(fab_open);
+                    fab3_delete.startAnimation(fab_open);
                     fab_main.startAnimation(fab_clock);
                     fab2_share.setClickable(true);
-                    fab1_mail.setClickable(true);
+                    fab1_edit.setClickable(true);
+                    fab3_delete.setClickable(true);
                     isOpen = true;
                 }
 
             }
         });
-        fab1_mail.setOnClickListener(new View.OnClickListener() {
+        fab1_edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = getIntent();
@@ -109,6 +119,28 @@ public class DetailTransactionActivity extends AppCompatActivity {
                 editor.apply();
                 startActivity(new Intent(DetailTransactionActivity.this,EditTransactionActivity.class));
 
+            }
+        });
+        fab3_delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //delete
+                Intent intent = getIntent();
+                final String transactionId = intent.getStringExtra("TransactionID");
+                myService.deleteTransactionById(transactionId)
+                        .enqueue(new Callback<Transaction>() {
+                            @Override
+                            public void onResponse(Call<Transaction> call, Response<Transaction> response) {
+                                Toast.makeText(DetailTransactionActivity.this, "Success", Toast.LENGTH_SHORT).show();
+                              //  finishAffinity();
+                                startActivity(new Intent(DetailTransactionActivity.this, HomeActivity.class));
+                            }
+
+                            @Override
+                            public void onFailure(Call<Transaction> call, Throwable t) {
+                                Toast.makeText(DetailTransactionActivity.this, "fail", Toast.LENGTH_SHORT).show();
+                            }
+                        });
             }
         });
     }
@@ -136,7 +168,7 @@ public class DetailTransactionActivity extends AppCompatActivity {
                 //id.setText(transaction.getId());
                 amount.setText(transaction.getAmount());
                 category.setText(transaction.getCategory());
-                id.setText(transaction.getEmail());
+                id.setText(transaction.getId());
                 if(transaction.getNote()==null){
                     note.setText("");
                 } else {

@@ -14,10 +14,13 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -36,7 +39,9 @@ import com.google.firebase.storage.UploadTask;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 import java.util.UUID;
 
 import retrofit2.Call;
@@ -45,11 +50,13 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 
 public class AddIncomeActivity extends AppCompatActivity {
-    EditText ed_email,ed_amount,ed_note, ed_category,ed_type;
+    EditText ed_email,ed_amount,ed_note, ed_type;
     CardView button_add_in;
     MyService myService;
     ImageView imageView;
     TextView tv_add_date;
+    String ed_category;
+    Spinner spn_category;
 
     //firebase
     FirebaseStorage storage;
@@ -62,6 +69,25 @@ public class AddIncomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_income);
         init();
+        List<String> list = new ArrayList<>();
+        list.add("Salary");
+        list.add("Gift");
+        list.add("Loan");
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this,R.layout.support_simple_spinner_dropdown_item,list);
+        adapter.setDropDownViewResource(android.R.layout.simple_list_item_single_choice);
+        spn_category.setAdapter(adapter);
+        spn_category.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                ed_category = spn_category.getSelectedItem().toString();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
 
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -83,13 +109,16 @@ public class AddIncomeActivity extends AppCompatActivity {
         Retrofit retrofitClient = RetrofitClient.getInstance();
         myService = retrofitClient.create(MyService.class);
 
+
+
+
         storage = FirebaseStorage.getInstance();
         storageReference = storage.getReference();
         imageView = findViewById(R.id.image_add_income);
 
         ed_amount =findViewById(R.id.add_in_amount);
         ed_note =findViewById(R.id.add_in_note);
-        ed_category =findViewById(R.id.add_in_category);
+        spn_category =findViewById(R.id.add_in_category);
         ed_type =findViewById(R.id.add_in_type);
         button_add_in = findViewById(R.id.button_add_in);
         tv_add_date =findViewById(R.id.add_in_date);
@@ -148,7 +177,7 @@ public class AddIncomeActivity extends AppCompatActivity {
             email = email.replace("\"", "");
             String amount = ed_amount.getText().toString();
             String note = ed_note.getText().toString();
-            String category = ed_category.getText().toString();
+            String category = ed_category;
             String type = ed_type.getText().toString();
             String date = tv_add_date.getText().toString();
             String photo = "";
@@ -173,7 +202,7 @@ public class AddIncomeActivity extends AppCompatActivity {
                                     email = email.replace("\"", "");
                                     String amount = ed_amount.getText().toString();
                                     String note = ed_note.getText().toString();
-                                    String category = ed_category.getText().toString();
+                                    String category = ed_category;
                                     String type = "Income";
                                     String date = tv_add_date.getText().toString();
                                     String photo = uri.toString();

@@ -44,7 +44,7 @@
            app:layout_constraintTop_toBottomOf="@+id/add_in_amount"
            app:layout_constraintWidth_percent="0.8" />
 
-       <EditText
+       <Spinner
            android:id="@+id/add_in_category"
            android:layout_width="0dp"
            android:layout_height="45dp"

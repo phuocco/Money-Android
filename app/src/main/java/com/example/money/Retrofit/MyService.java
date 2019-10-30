@@ -66,6 +66,10 @@ public interface MyService {
     @GET("/transaction/id/{id}")
     Call<Transaction> getTransactionById(@Path("id") String id );
 
+    //delete transaction by id
+    @DELETE("/transaction/id/{id}")
+    Call<Transaction> deleteTransactionById(@Path("id") String id);
+
     @PUT("/transaction/id/update/{id}")
     @FormUrlEncoded
     Call<Transaction> updateTransaction(@Path("id") String id,
@@ -74,9 +78,7 @@ public interface MyService {
                                         @Field("type") String type,
                                         @Field("note") String note,
                                         @Field("date") String date);
-    //delete transaction by id
-    @DELETE("/transaction/id/{id}")
-    Call<Transaction> deleteTransactionById(@Path("id") String id);
+
 
 //    @GET("/transaction/chart1/{month}/{year}")
 //    Call<List<Chart>> getChartByMonth( @Body("month") String month,

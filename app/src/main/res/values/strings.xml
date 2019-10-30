@@ -8,5 +8,6 @@
 
     <string name="add_expense">Add Expense</string>
     <string name="date">Add Date</string>
-
+    <string name="before_logo_text">Before Logo Text</string>
+    <string name="total_expense">Total Expense</string>
 </resources>

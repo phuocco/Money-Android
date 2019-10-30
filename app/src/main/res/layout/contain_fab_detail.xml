@@ -36,7 +36,7 @@
         app:srcCompat="@drawable/ic_share" />
 
     <TextView
-        android:id="@+id/textview_mail"
+        android:id="@+id/textview_edit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
@@ -45,7 +45,7 @@
         android:layout_marginEnd="88dp"
         android:background="#212121"
         android:padding="8dp"
-        android:text="Email"
+        android:text="Edit"
         android:textColor="#ffffff"
         android:visibility="invisible" />
 
@@ -83,5 +83,36 @@
         app:backgroundTint="#ffffff"
         app:pressedTranslationZ="12dp"
         app:srcCompat="@drawable/ic_add" />
+
+    <TextView
+        android:id="@+id/textview_delete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginBottom="256dp"
+        android:layout_marginEnd="88dp"
+        android:background="#212121"
+        android:padding="8dp"
+        android:text="Delete"
+        android:textColor="#ffffff"
+        android:visibility="invisible" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginBottom="246dp"
+        android:layout_marginEnd="20dp"
+        android:background="?android:attr/selectableItemBackground"
+        android:clickable="true"
+        android:elevation="16dp"
+        android:focusable="true"
+        android:visibility="invisible"
+        app:backgroundTint="#ffffff"
+        app:pressedTranslationZ="12dp"
+        app:srcCompat="@drawable/ic_share" />
 
 </RelativeLayout>

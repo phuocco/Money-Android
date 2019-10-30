@@ -14,10 +14,13 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -37,7 +40,9 @@ import com.google.firebase.storage.UploadTask;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 import java.util.UUID;
 
 import retrofit2.Call;
@@ -46,12 +51,13 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 
 public class AddExpenseActivity extends AppCompatActivity {
-    EditText ed_email,ed_amount,ed_note, ed_category, ed_type;
+    EditText ed_email,ed_amount,ed_note, ed_type;
     CardView button_add_ex;
     MyService myService;
     ImageView imageView;
     TextView tv_add_date;
-
+    Spinner spn_category;
+    String ed_category;
     //firebase
     FirebaseStorage storage;
     StorageReference storageReference;
@@ -62,6 +68,28 @@ public class AddExpenseActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_expense);
         init();
+
+        List<String> list = new ArrayList<>();
+        list.add("Food");
+        list.add("Water");
+        list.add("Entertainment");
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this,R.layout.support_simple_spinner_dropdown_item,list);
+        adapter.setDropDownViewResource(android.R.layout.simple_list_item_single_choice);
+        spn_category.setAdapter(adapter);
+        spn_category.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                ed_category = spn_category.getSelectedItem().toString();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -86,7 +114,7 @@ public class AddExpenseActivity extends AppCompatActivity {
 
         ed_amount =findViewById(R.id.add_ex_amount);
         ed_note =findViewById(R.id.add_ex_note);
-        ed_category =findViewById(R.id.add_ex_category);
+        spn_category =findViewById(R.id.add_ex_category);
         ed_type =findViewById(R.id.add_ex_type);
         button_add_ex = findViewById(R.id.button_add_ex);
         tv_add_date = findViewById(R.id.add_ex_date);
@@ -144,7 +172,7 @@ public class AddExpenseActivity extends AppCompatActivity {
             email = email.replace("\"", "");
             String amount = ed_amount.getText().toString();
             String note = ed_note.getText().toString();
-            String category = ed_category.getText().toString();
+            String category = ed_category;
             String type = ed_type.getText().toString();
             String date = tv_add_date.getText().toString();
             String photo = "";
@@ -169,7 +197,7 @@ public class AddExpenseActivity extends AppCompatActivity {
                                     email = email.replace("\"", "");
                                     String amount = ed_amount.getText().toString();
                                     String note = ed_note.getText().toString();
-                                    String category = ed_category.getText().toString();
+                                    String category = ed_category;
                                     String type = "Expense";
                                     String date = tv_add_date.getText().toString();
                                     String photo = uri.toString();

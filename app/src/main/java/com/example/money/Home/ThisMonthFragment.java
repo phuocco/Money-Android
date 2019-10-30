@@ -180,6 +180,7 @@ public class ThisMonthFragment extends Fragment {
                         sum = sum + Integer.parseInt(transaction1.getAmount());
                     }
                     sum_ex.setText(String.valueOf(ex));
+                    sum_in.setText(String.valueOf(in));
                     sum_all.setText(String.valueOf(sum));
 
             }
