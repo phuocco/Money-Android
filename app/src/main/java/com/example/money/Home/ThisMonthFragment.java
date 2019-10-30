@@ -159,7 +159,6 @@ public class ThisMonthFragment extends Fragment {
             public void onResponse(Call<List<Transaction>> call, Response<List<Transaction>> response) {
                 if (response.isSuccessful()){
                     final List<Transaction> transactionList = response.body();
-
                     HomeAdapter homeAdapter = new HomeAdapter(transactionList);
                     RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
                     myRecyclerView.setLayoutManager(layoutManager);

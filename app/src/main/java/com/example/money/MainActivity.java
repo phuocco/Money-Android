@@ -26,6 +26,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
         login = findViewById(R.id.main_login);
         reg = findViewById(R.id.main_reg);
         ex = findViewById(R.id.buttonex);
@@ -33,9 +35,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         home = findViewById(R.id.buttonhome);
         tv = findViewById(R.id.textView2);
         SharedPreferences sharedPreferences =  getSharedPreferences(SHARED_PREFS,MODE_PRIVATE);
-        String abc = sharedPreferences.getString(EMAIL,"").replace("\"", "");
-        abc = abc.replace("\"", "");
-        tv.setText(abc);
+        String email = sharedPreferences.getString(EMAIL,"").replace("\"", "");
+        email = email.replace("\"", "");
+        if(email != null && email.isEmpty()){
+            startActivity(new Intent(MainActivity.this,LoginActivity.class));
+        } else {
+            startActivity(new Intent(MainActivity.this,HomeActivity.class));
+
+        }
+        tv.setText(email);
        // Toast.makeText(this, ""+abc, Toast.LENGTH_SHORT).show();
 
        // startActivity(new Intent(MainActivity.this, SettingsActivity.class));

@@ -1,6 +1,7 @@
 package com.example.money;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -23,7 +24,7 @@ import io.reactivex.schedulers.Schedulers;
 import retrofit2.Retrofit;
 
 public class RegisterActivity extends AppCompatActivity {
-    RelativeLayout button_reg;
+    CardView button_reg;
     EditText reg_email, reg_username, reg_password;
     TextView register_login;
     String email,username,password;

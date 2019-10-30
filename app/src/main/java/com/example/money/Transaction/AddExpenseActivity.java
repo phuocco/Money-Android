@@ -3,6 +3,7 @@ package com.example.money.Transaction;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
@@ -46,7 +47,7 @@ import retrofit2.Retrofit;
 
 public class AddExpenseActivity extends AppCompatActivity {
     EditText ed_email,ed_amount,ed_note, ed_category, ed_type;
-    Button button_add_ex;
+    CardView button_add_ex;
     MyService myService;
     ImageView imageView;
     TextView tv_add_date;
