@@ -68,9 +68,13 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.CustomViewHold
         holder.home_amount.setText(transactionList.get(position).getAmount()+" $");
         if("Expense".equals(transactionList.get(position).getType())){
             holder.home_amount.setTextColor(Color.RED);
+            holder.card_transaction.setBackgroundResource(R.drawable.card_expense_light);
+        } else {
+            holder.home_amount.setTextColor(Color.GREEN);
+            holder.card_transaction.setBackgroundResource(R.drawable.card_income_light);
         }
         holder.home_category.setText(transactionList.get(position).getCategory());
-//        holder.home_note.setText(transactionList.get(position).getNote());
+        holder.home_note.setText(transactionList.get(position).getNote());
 //        holder.home_event.setText(transactionList.get(position).getEvent());
     }
 
@@ -90,7 +94,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.CustomViewHold
             home_category = itemView.findViewById(R.id.home_category);
             home_amount = itemView.findViewById(R.id.home_amount);
             home_date = itemView.findViewById(R.id.home_date);
-//            home_note = itemView.findViewById(R.id.home_note);
+            home_note = itemView.findViewById(R.id.home_note);
 //            home_event = itemView.findViewById(R.id.home_event);
             SharedPreferences preferences = itemView.getContext().getSharedPreferences(Constants.SHARED_PREFS, MODE_PRIVATE);
             boolean isDark = preferences.getBoolean(Constants.ISDARK,false);
