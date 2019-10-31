@@ -9,11 +9,21 @@
     android:id="@+id/this_month_layout"
     tools:context=".Home.ThisMonthFragment">
 
+
+
+
     <LinearLayout
         android:id="@+id/sum_this_month"
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/action_bar_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@string/total_wallet" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"

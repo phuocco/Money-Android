@@ -44,8 +44,11 @@ public interface MyService {
     Call<List<Transaction>> getAllTransactions(@Body Transaction transaction);
 
 
+    //this month
     @POST("/transaction/getAll")
     Call<List<Transaction>> getAll(@Body Transaction transaction);
+
+
 
     @GET("/transaction/plan")
     Call<List<Transaction>> getAllPlanTransactions();
@@ -67,7 +70,7 @@ public interface MyService {
     Call<Transaction> getTransactionById(@Path("id") String id );
 
     //delete transaction by id
-    @DELETE("/transaction/id/{id}")
+    @DELETE("/transaction/id/delete/{id}")
     Call<Transaction> deleteTransactionById(@Path("id") String id);
 
     @PUT("/transaction/id/update/{id}")

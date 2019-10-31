@@ -4,6 +4,7 @@ package com.example.money.Home;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -16,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -29,6 +31,7 @@ import com.example.money.Transaction.AddExpenseActivity;
 import com.example.money.Transaction.AddIncomeActivity;
 import com.example.money.models.Transaction;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.rengwuxian.materialedittext.Colors;
 
 import java.util.Calendar;
 import java.util.List;
@@ -52,12 +55,14 @@ public class ThisMonthFragment extends Fragment {
     RetrofitClient retrofitClient;
     boolean isDark =  false;
     TextView sum_ex,sum_in,sum_all;
+    TextView title;
     //fab
     private FloatingActionButton fab_home, fab_add_ex, fab_add_in;
     private Animation fab_open, fab_close, fab_clock, fab_anticlock;
     TextView tv_add_ex, tv_add_in;
     Boolean isOpen = false;
 
+    LinearLayout card;
 
 
     public ThisMonthFragment() {
@@ -70,6 +75,8 @@ public class ThisMonthFragment extends Fragment {
                              Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_this_month, container, false);
         this_month_layout = view.findViewById(R.id.this_month_layout);
+        title = view.findViewById(R.id.action_bar_title);
+        card = (LinearLayout) view.findViewById(R.id.card_transaction);
         sum_ex = view.findViewById(R.id.this_month_total_ex);
         sum_in = view.findViewById(R.id.this_month_total_in);
         sum_all = view.findViewById(R.id.this_month_total_all);
@@ -148,9 +155,6 @@ public class ThisMonthFragment extends Fragment {
 
 
 
-
-
-
         //get all by email
         final Transaction transaction =  new Transaction(email);
         Call<List<Transaction>> call = myService.getAllTransactions(transaction);
@@ -162,8 +166,10 @@ public class ThisMonthFragment extends Fragment {
                     HomeAdapter homeAdapter = new HomeAdapter(transactionList);
                     RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
                     myRecyclerView.setLayoutManager(layoutManager);
+                    homeAdapter.notifyDataSetChanged();
                     myRecyclerView.setAdapter(homeAdapter);
                   //  Toast.makeText(getActivity(), "success", Toast.LENGTH_SHORT).show();
+                    Log.d("test2", transactionList.toString());
 
                     int sum =0;
                     int ex = 0;
@@ -172,10 +178,15 @@ public class ThisMonthFragment extends Fragment {
                         if("Expense".equals(transaction1.getType()))
                         {
                             ex = ex + Integer.parseInt(transaction1.getAmount());
+                            card.setBackgroundColor(getResources().getColor(R.color.blue));
+                            card.invalidate();
                         }
                         if("Income".equals(transaction1.getType()))
                         {
                             in = in + Integer.parseInt(transaction1.getAmount());
+                            card.setBackgroundColor(getResources().getColor(R.color.red));
+                            card.invalidate();
+
                         }
                         sum = sum + Integer.parseInt(transaction1.getAmount());
                     }
@@ -190,15 +201,12 @@ public class ThisMonthFragment extends Fragment {
 
             }
         });
+
         return view;
     }
 
-    private void saveThemeStatePref(boolean isDark) {
-        SharedPreferences preferences = getContext().getSharedPreferences(Constants.SHARED_PREFS, MODE_PRIVATE);
-        SharedPreferences.Editor editor = preferences.edit();
-        editor.putBoolean("isDark",isDark);
-        editor.apply();
-    }
+
+
     private boolean getThemeStatePref(){
         SharedPreferences preferences = getContext().getSharedPreferences(Constants.SHARED_PREFS, MODE_PRIVATE);
         boolean isDark = preferences.getBoolean(Constants.ISDARK,false);

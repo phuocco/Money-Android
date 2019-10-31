@@ -13,10 +13,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.money.Constants;
+import com.example.money.Home.HomeActivity;
 import com.example.money.R;
 import com.example.money.Retrofit.MyService;
 import com.example.money.Retrofit.RetrofitClient;
 import com.example.money.models.Transaction;
+import com.google.android.material.button.MaterialButton;
+import com.google.android.material.textfield.TextInputEditText;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -30,9 +33,9 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 
 public class EditTransactionActivity extends AppCompatActivity {
-    EditText eamount,ecategory,enote,edate;
+    TextInputEditText eamount,ecategory,enote,edate;
     MyService myService;
-    Button button_edit;
+    MaterialButton button_edit;
     TextView tv_type;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,6 +78,8 @@ public class EditTransactionActivity extends AppCompatActivity {
                     public void onResponse(Call<Transaction> call, Response<Transaction> response) {
                         if (response.isSuccessful()){
                             Toast.makeText(EditTransactionActivity.this, "okkkk", Toast.LENGTH_SHORT).show();
+                            startActivity(new Intent(EditTransactionActivity.this, HomeActivity.class));
+
                         }
                     }
 

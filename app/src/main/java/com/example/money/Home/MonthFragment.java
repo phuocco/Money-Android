@@ -88,6 +88,7 @@ public class MonthFragment extends Fragment {
                     RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
                     myRecyclerView.setLayoutManager(layoutManager);
                     myRecyclerView.setAdapter(homeAdapter);
+                    homeAdapter.notifyDataSetChanged();
                     Toast.makeText(getActivity(), "success", Toast.LENGTH_SHORT).show();
                 }
             }

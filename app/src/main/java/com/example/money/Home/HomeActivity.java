@@ -21,6 +21,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.money.Constants;
+import com.example.money.MainActivity;
 import com.example.money.R;
 import com.example.money.Retrofit.MyService;
 import com.example.money.Retrofit.RetrofitClient;
@@ -51,7 +52,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
         drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
@@ -95,35 +95,14 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             }
         });
 
-
-
-
-
-        Retrofit retrofitClient = RetrofitClient.getInstance();
-        myService = retrofitClient.create(MyService.class);
         SharedPreferences sharedPreferences =  getSharedPreferences(Constants.SHARED_PREFS,MODE_PRIVATE);
         String email = sharedPreferences.getString(Constants.EMAIL,null).replace("\"", "");
-        Transaction transaction =  new Transaction(email);
-//        myService.getAll(transaction)
-//                .enqueue(new Callback<List<Transaction>>() {
-//                    @Override
-//                    public void onResponse(Call<List<Transaction>> call, Response<List<Transaction>> response) {
-//                        if(response.isSuccessful()){
-//                            Toast.makeText(HomeActivity.this, "asdasd", Toast.LENGTH_SHORT).show();
-//
-//                            int sum = 0;
-//                            for (Transaction transaction1: response.body()){
-//
-//                                sum = sum + Integer.parseInt(transaction1.getAmount());
-//                            }
-//                        }
-//                    }
-//
-//                    @Override
-//                    public void onFailure(Call<List<Transaction>> call, Throwable t) {
-//
-//                    }
-//                });
+        Transaction transaction = new Transaction(email);
+        Retrofit retrofitClient = RetrofitClient.getInstance();
+        myService = retrofitClient.create(MyService.class);
+
+
+
 
 
     }

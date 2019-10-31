@@ -17,6 +17,7 @@ import android.widget.Toast;
 import com.example.money.Home.HomeActivity;
 import com.example.money.Retrofit.MyService;
 import com.example.money.Retrofit.RetrofitClient;
+import com.google.android.material.textfield.TextInputEditText;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
@@ -25,7 +26,7 @@ import io.reactivex.schedulers.Schedulers;
 import retrofit2.Retrofit;
 
 public class LoginActivity extends AppCompatActivity {
-    EditText ed_email,ed_password;
+    TextInputEditText ed_email,ed_password;
     CardView button_login;
     TextView login_register;
     CompositeDisposable compositeDisposable  = new CompositeDisposable();

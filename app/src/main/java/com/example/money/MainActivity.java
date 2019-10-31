@@ -12,16 +12,27 @@ import android.widget.Toast;
 
 import com.example.money.Home.ChartActivity;
 import com.example.money.Home.HomeActivity;
+import com.example.money.Retrofit.MyService;
+import com.example.money.Retrofit.RetrofitClient;
 import com.example.money.Transaction.AddExpenseActivity;
 import com.example.money.Transaction.AddIncomeActivity;
 import com.example.money.Transaction.EditTransactionActivity;
+import com.example.money.models.Transaction;
+
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
     Button login, reg,ex,home,in;
     TextView tv;
     public static final String SHARED_PREFS = "sharedPrefs";
     public static final String EMAIL = "email";
-
+    private MyService myService;
+    RetrofitClient retrofitClient;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,13 +50,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         email = email.replace("\"", "");
         if(email != null && email.isEmpty()){
             startActivity(new Intent(MainActivity.this,LoginActivity.class));
-            finish();
+           // finish();
         } else {
             startActivity(new Intent(MainActivity.this,HomeActivity.class));
-            finish();
+           // finish();
         }
         tv.setText(email);
-       // Toast.makeText(this, ""+abc, Toast.LENGTH_SHORT).show();
+
+
+
+
 
        // startActivity(new Intent(MainActivity.this, SettingsActivity.class));
         login.setOnClickListener(this);
