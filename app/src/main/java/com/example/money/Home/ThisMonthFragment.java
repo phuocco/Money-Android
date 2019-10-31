@@ -178,14 +178,12 @@ public class ThisMonthFragment extends Fragment {
                         if("Expense".equals(transaction1.getType()))
                         {
                             ex = ex + Integer.parseInt(transaction1.getAmount());
-                            card.setBackgroundColor(getResources().getColor(R.color.blue));
-                            card.invalidate();
+
                         }
                         if("Income".equals(transaction1.getType()))
                         {
                             in = in + Integer.parseInt(transaction1.getAmount());
-                            card.setBackgroundColor(getResources().getColor(R.color.red));
-                            card.invalidate();
+
 
                         }
                         sum = sum + Integer.parseInt(transaction1.getAmount());
