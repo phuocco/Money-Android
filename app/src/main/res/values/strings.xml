@@ -18,5 +18,7 @@
     <string name="category">Category</string>
     <string name="select_date">Select date:</string>
     <string name="selected_date">Selected date is: %s</string>
+    <string name="select_month">Select month</string>
+    <string name="selected_month">Selected month is: %s</string>
 
 </resources>

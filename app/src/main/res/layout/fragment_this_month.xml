@@ -13,9 +13,7 @@
         android:orientation="vertical"
         android:paddingTop="10dp"
         android:paddingBottom="10dp"
-
         android:elevation="10dp"
-        android:background="@drawable/card_top"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -82,7 +80,6 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_thismonth"
         android:layout_below="@+id/sum_this_month"
-        android:background="@color/white"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 

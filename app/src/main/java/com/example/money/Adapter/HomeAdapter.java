@@ -47,13 +47,14 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.CustomViewHold
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
         View view = layoutInflater.inflate(R.layout.oneitem_tran, parent, false);
         mContext = parent.getContext();
-
         return new CustomViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull CustomViewHolder holder, int position) {
 
+
+        //date
         DateFormat outputFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.US);
         DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSX", Locale.US);
         String inputText = transactionList.get(position).getDate();
@@ -66,12 +67,42 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.CustomViewHold
         }
         holder.card_transaction.setAnimation(AnimationUtils.loadAnimation(mContext,R.anim.fade_scale_animation));
         holder.home_amount.setText(transactionList.get(position).getAmount()+" $");
-        if("Expense".equals(transactionList.get(position).getType())){
-            holder.home_amount.setTextColor(Color.RED);
-            holder.card_transaction.setBackgroundResource(R.drawable.card_expense_light);
+
+//        if("Expense".equals(transactionList.get(position).getType())){
+//            holder.home_amount.setTextColor(Color.RED);
+//            if (holder.isDark) {
+//                holder.card_transaction.setBackgroundResource(R.drawable.card_expense_light);
+//            } else {
+//                holder.card_transaction.setBackgroundResource(R.drawable.card_bg_dark);
+//            }
+//        } else {
+//            holder.home_amount.setTextColor(Color.GREEN);
+//            if (holder.isDark) {
+//                holder.card_transaction.setBackgroundResource(R.drawable.card_income_light);
+//            } else {
+//                holder.card_transaction.setBackgroundResource(R.drawable.card_bg);
+//            }
+//        }
+
+        if(holder.isDark){
+            if("Expense".equals(transactionList.get(position).getType())){
+                holder.home_amount.setTextColor(Color.RED);
+                holder.card_transaction.setBackgroundResource(R.drawable.card_expense_light);
+
+            } else {
+                holder.home_amount.setTextColor(Color.GREEN);
+                holder.card_transaction.setBackgroundResource(R.drawable.card_income_light);
+            }
         } else {
-            holder.home_amount.setTextColor(Color.GREEN);
-            holder.card_transaction.setBackgroundResource(R.drawable.card_income_light);
+
+            if("Expense".equals(transactionList.get(position).getType())){
+                holder.home_amount.setTextColor(Color.BLUE);
+                holder.card_transaction.setBackgroundResource(R.drawable.card_bg_dark);
+
+            } else {
+                holder.home_amount.setTextColor(Color.YELLOW);
+                holder.card_transaction.setBackgroundResource(R.drawable.card_bg);
+            }
         }
         holder.home_category.setText(transactionList.get(position).getCategory());
         holder.home_note.setText(transactionList.get(position).getNote());
@@ -86,6 +117,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.CustomViewHold
     class CustomViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         TextView home_category,home_amount, home_note,home_date,home_event;
         LinearLayout card_transaction;
+        boolean isDark;
 
         CustomViewHolder(final View itemView) {
             super(itemView);
@@ -97,10 +129,10 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.CustomViewHold
             home_note = itemView.findViewById(R.id.home_note);
 //            home_event = itemView.findViewById(R.id.home_event);
             SharedPreferences preferences = itemView.getContext().getSharedPreferences(Constants.SHARED_PREFS, MODE_PRIVATE);
-            boolean isDark = preferences.getBoolean(Constants.ISDARK,false);
-            if(isDark){
-                setDarkTheme();
-            }
+            isDark = preferences.getBoolean(Constants.ISDARK,false);
+//            if(isDark){
+//               // setDarkTheme();
+//            }
         }
         private void setDarkTheme(){
             card_transaction.setBackgroundResource(R.drawable.card_bg_dark);

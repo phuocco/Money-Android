@@ -57,6 +57,7 @@ public class ThisMonthFragment extends Fragment {
     boolean isDark =  false;
     TextView sum_ex,sum_in,sum_all;
     TextView title;
+    LinearLayout sum_this_month;
     //fab
     private FloatingActionButton fab_home, fab_add_ex, fab_add_in;
     private Animation fab_open, fab_close, fab_clock, fab_anticlock;
@@ -76,11 +77,11 @@ public class ThisMonthFragment extends Fragment {
         final View view = inflater.inflate(R.layout.fragment_this_month, container, false);
         this_month_layout = view.findViewById(R.id.this_month_layout);
         title = view.findViewById(R.id.action_bar_title);
-        card = (LinearLayout) view.findViewById(R.id.card_transaction);
         sum_ex = view.findViewById(R.id.this_month_total_ex);
         sum_in = view.findViewById(R.id.this_month_total_in);
         sum_all = view.findViewById(R.id.this_month_total_all);
         myRecyclerView = view.findViewById(R.id.rv_thismonth);
+        sum_this_month = view.findViewById(R.id.sum_this_month);
         //fab
         fab_home = view.findViewById(R.id.fab_home);
         fab_add_ex = view.findViewById(R.id.fab_add_ex);
@@ -96,9 +97,7 @@ public class ThisMonthFragment extends Fragment {
         fab_home.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 if (isOpen) {
-
                     tv_add_ex.setVisibility(View.INVISIBLE);
                     tv_add_in.setVisibility(View.INVISIBLE);
                     tv_add_ex.setAnimation(fab_close);
@@ -121,7 +120,6 @@ public class ThisMonthFragment extends Fragment {
                     fab_add_ex.setClickable(true);
                     isOpen = true;
                 }
-
             }
         });
         fab_add_ex.setOnClickListener(new View.OnClickListener() {
@@ -138,22 +136,23 @@ public class ThisMonthFragment extends Fragment {
             }
         });
 
-
-
         //retrofit
         Retrofit retrofitClient = RetrofitClient.getInstance();
         myService = retrofitClient.create(MyService.class);
         isDark = getThemeStatePref();
-//        if (isDark){
-//            this_month_layout.setBackgroundColor(getResources().getColor(R.color.black));
-//        } else {
-//            this_month_layout.setBackgroundColor(getResources().getColor(R.color.white));
-//        }
+        if (isDark){
+            this_month_layout.setBackgroundColor(getResources().getColor(R.color.black));
+            Toast.makeText(getActivity(), "dark", Toast.LENGTH_SHORT).show();
+            sum_this_month.setBackgroundResource(R.drawable.card_sum_dark);
+        } else {
+            this_month_layout.setBackgroundColor(getResources().getColor(R.color.white));
+            Toast.makeText(getActivity(), "white", Toast.LENGTH_SHORT).show();
+            sum_this_month.setBackgroundResource(R.drawable.card_sum_light);
+
+        }
         //get email
         SharedPreferences sharedPreferences =  getContext().getSharedPreferences(Constants.SHARED_PREFS,MODE_PRIVATE);
         String email = sharedPreferences.getString(Constants.EMAIL,null).replace("\"", "");
-
-
 
         //get all by email
         final Transaction transaction =  new Transaction(email);
@@ -170,7 +169,6 @@ public class ThisMonthFragment extends Fragment {
                     myRecyclerView.setAdapter(homeAdapter);
                   //  Toast.makeText(getActivity(), "success", Toast.LENGTH_SHORT).show();
                     Log.d("test2", transactionList.toString());
-
                     int sum =0;
                     int ex = 0;
                     int in = 0;
@@ -178,17 +176,13 @@ public class ThisMonthFragment extends Fragment {
                         if("Expense".equals(transaction1.getType()))
                         {
                             ex = ex + Integer.parseInt(transaction1.getAmount());
-
                         }
                         if("Income".equals(transaction1.getType()))
                         {
                             in = in + Integer.parseInt(transaction1.getAmount());
-
-
                         }
                         sum = sum + Integer.parseInt(transaction1.getAmount());
                     }
-
                     sum_ex.setText(String.valueOf(ex));
                     sum_in.setText(String.valueOf(in));
                     sum_all.setText(String.valueOf(sum));
@@ -203,6 +197,7 @@ public class ThisMonthFragment extends Fragment {
 
         return view;
     }
+
 
 
 

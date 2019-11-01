@@ -58,31 +58,28 @@ public class LastMonthFragment extends Fragment {
          View view = inflater.inflate(R.layout.fragment_last_month, container, false);
         last_month_layout = view.findViewById(R.id.last_month_layout);
 
-        final Calendar calendar = Calendar.getInstance();
-        final  int month = calendar.get(Calendar.MONTH);
-        final  int year = calendar.get(Calendar.YEAR);
-
-        getTransactionByMonth( String.valueOf(month), String.valueOf(year));
-
         isDark = getThemeStatePref();
         if (isDark){
             last_month_layout.setBackgroundColor(getResources().getColor(R.color.black));
         } else {
             last_month_layout.setBackgroundColor(getResources().getColor(R.color.white));
         }
+
+        final Calendar calendar = Calendar.getInstance();
+        final  int month = calendar.get(Calendar.MONTH);
+        final  int year = calendar.get(Calendar.YEAR);
+
+        getTransactionByMonth( String.valueOf(month), String.valueOf(year));
         myRecyclerView = (RecyclerView) view.findViewById(R.id.rv_lastmonth);
 
         return view;
     }
-
 
     private void getTransactionByMonth(String month, String year) {
         SharedPreferences sharedPreferences =  getContext().getSharedPreferences(Constants.SHARED_PREFS,MODE_PRIVATE);
         String email = sharedPreferences.getString(Constants.EMAIL,null).replace("\"", "");
         Transaction transaction =  new Transaction(email,month,year);
         Retrofit retrofitClient = RetrofitClient.getInstance();
-
-    //    myRecyclerView = (RecyclerView) this.getView().findViewById(R.id.rv_lastmonth);
 
         myService = retrofitClient.create(MyService.class);
         Call<List<Transaction>> call = myService.getAllTransactionsByEmail(transaction);
@@ -99,7 +96,6 @@ public class LastMonthFragment extends Fragment {
                     myRecyclerView.setAdapter(homeAdapter);
                     homeAdapter.notifyDataSetChanged();
                     Toast.makeText(getActivity(), "success", Toast.LENGTH_SHORT).show();
-
                 }
             }
             @Override
@@ -109,12 +105,6 @@ public class LastMonthFragment extends Fragment {
         });
     }
 
-    private void saveThemeStatePref(boolean isDark) {
-        SharedPreferences preferences = getContext().getSharedPreferences(Constants.SHARED_PREFS, MODE_PRIVATE);
-        SharedPreferences.Editor editor = preferences.edit();
-        editor.putBoolean("isDark",isDark);
-        editor.apply();
-    }
     private boolean getThemeStatePref(){
         SharedPreferences preferences = getContext().getSharedPreferences(Constants.SHARED_PREFS, MODE_PRIVATE);
         boolean isDark = preferences.getBoolean(Constants.ISDARK,false);
