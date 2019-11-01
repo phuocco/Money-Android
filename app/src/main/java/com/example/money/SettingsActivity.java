@@ -2,11 +2,14 @@ package com.example.money;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.CompoundButton;
 import android.widget.Switch;
 import android.widget.Toast;
+
+import com.example.money.Home.HomeActivity;
 
 public class SettingsActivity extends AppCompatActivity {
     boolean isDark;
@@ -16,6 +19,9 @@ public class SettingsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
         light_mode =  findViewById(R.id.switch_mode);
+
+        assert getSupportActionBar() != null;   //null check
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         SharedPreferences sharedPreferences =  getSharedPreferences(Constants.SHARED_PREFS,MODE_PRIVATE);
         isDark = sharedPreferences.getBoolean(Constants.ISDARK,false);
@@ -41,5 +47,11 @@ public class SettingsActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+    @Override
+    public boolean onSupportNavigateUp(){
+        startActivity(new Intent(SettingsActivity.this, HomeActivity.class));
+        finish();
+        return true;
     }
 }

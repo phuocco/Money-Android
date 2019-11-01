@@ -9,6 +9,14 @@
     <string name="add_expense">Add Expense</string>
     <string name="date">Add Date</string>
     <string name="before_logo_text">Before Logo Text</string>
-    <string name="total_expense">Total Expense</string>
-    <string name="total_wallet">Total wallet:</string>
+    <string name="total_expense">Total Expense: </string>
+    <string name="total_wallet">Total wallet: </string>
+    <string name="total">Total wallet: </string>
+    <string name="total_income">Total income: </string>
+    <string name="amount">Amount</string>
+    <string name="note">Note</string>
+    <string name="category">Category</string>
+    <string name="select_date">Select date:</string>
+    <string name="selected_date">Selected date is: %s</string>
+
 </resources>

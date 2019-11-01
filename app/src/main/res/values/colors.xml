@@ -30,6 +30,9 @@
     <color name="black">#000000</color>
     <color name="card_ex_light">#D8D6A9A9</color>
     <color name="card_in_light">#D8AAE99E</color>
+    <color name="background_rv">#3CE6D5D5</color>
+    <color name="card_top">#03A9F4</color>
+
 
 
 </resources>

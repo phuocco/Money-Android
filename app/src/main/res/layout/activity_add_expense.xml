@@ -20,65 +20,89 @@
         app:layout_constraintTop_toTopOf="parent">
 
 
-        <EditText
-            android:id="@+id/add_ex_amount"
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/layout_add_amount_ex"
             android:layout_width="0dp"
-            android:layout_height="45dp"
-            android:ems="10"
-            android:hint="Amount"
-            android:inputType="number"
+            android:layout_height="70dp"
+            android:hint="@string/amount"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintWidth_percent="0.8" />
+            app:layout_constraintWidth_percent="0.8">
 
-        <EditText
-            android:id="@+id/add_ex_note"
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/add_ex_amount"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:inputType="number" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/layout_add_note_ex"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="0dp"
-            android:layout_height="45dp"
-            android:layout_marginTop="30dp"
-            android:ems="10"
-            android:hint="Note"
-            android:inputType="textPersonName"
+            android:layout_height="70dp"
+            android:layout_marginTop="20dp"
+            android:hint="@string/note"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/add_ex_amount"
-            app:layout_constraintWidth_percent="0.8" />
+            app:layout_constraintTop_toBottomOf="@+id/layout_add_amount_ex"
+            app:layout_constraintWidth_percent="0.8">
 
-        <Spinner
-            android:id="@+id/add_ex_category"
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/add_ex_note"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:inputType="text"
+                 />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="0dp"
-            android:layout_height="45dp"
-            android:layout_marginTop="30dp"
-            android:ems="10"
-            android:hint="Category"
-            android:inputType="textPersonName"
+            android:layout_height="60dp"
+            android:id="@+id/layout_spinner"
+            android:layout_marginTop="20dp"
+
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/add_ex_note"
-            app:layout_constraintWidth_percent="0.8" />
+            app:layout_constraintTop_toBottomOf="@+id/layout_add_note_ex"
+            app:layout_constraintWidth_percent="0.8" >
+
+            <Spinner
+                android:id="@+id/add_ex_category"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
 
         <TextView
             android:id="@+id/add_ex_date"
+            android:text="@string/select_date"
+            android:textSize="20sp"
+            android:gravity="center_vertical"
             android:layout_width="0dp"
-            android:layout_height="45dp"
-            android:layout_marginTop="30dp"
-            android:hint="@string/date"
+            android:layout_height="50dp"
+            android:layout_marginTop="20dp"
+
+            android:background="@drawable/text"
+
+
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/add_ex_category"
+            app:layout_constraintTop_toBottomOf="@+id/layout_spinner"
             app:layout_constraintWidth_percent="0.8" />
 
         <ImageView
             android:id="@+id/image_add_expense"
             android:layout_width="150dp"
             android:layout_height="150dp"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="30dp"
+            android:src="@drawable/placeholder"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/add_ex_date"
-            app:srcCompat="@drawable/placeholder" />
+            app:layout_constraintTop_toBottomOf="@+id/add_ex_date" />
 
         <androidx.cardview.widget.CardView
             android:id="@+id/button_add_ex"
@@ -99,6 +123,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:textColor="@color/white"
                 android:gravity="center_vertical|center_horizontal"
                 android:text="@string/add_expense" />
         </androidx.cardview.widget.CardView>
@@ -112,5 +137,6 @@
             android:text="Expense"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

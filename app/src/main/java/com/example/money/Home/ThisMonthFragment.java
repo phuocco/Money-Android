@@ -31,6 +31,7 @@ import com.example.money.Transaction.AddExpenseActivity;
 import com.example.money.Transaction.AddIncomeActivity;
 import com.example.money.models.Transaction;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.navigation.NavigationView;
 import com.rengwuxian.materialedittext.Colors;
 
 import java.util.Calendar;
@@ -63,7 +64,6 @@ public class ThisMonthFragment extends Fragment {
     Boolean isOpen = false;
 
     LinearLayout card;
-
 
     public ThisMonthFragment() {
         // Required empty public constructor
@@ -144,11 +144,11 @@ public class ThisMonthFragment extends Fragment {
         Retrofit retrofitClient = RetrofitClient.getInstance();
         myService = retrofitClient.create(MyService.class);
         isDark = getThemeStatePref();
-        if (isDark){
-            this_month_layout.setBackgroundColor(getResources().getColor(R.color.black));
-        } else {
-            this_month_layout.setBackgroundColor(getResources().getColor(R.color.white));
-        }
+//        if (isDark){
+//            this_month_layout.setBackgroundColor(getResources().getColor(R.color.black));
+//        } else {
+//            this_month_layout.setBackgroundColor(getResources().getColor(R.color.white));
+//        }
         //get email
         SharedPreferences sharedPreferences =  getContext().getSharedPreferences(Constants.SHARED_PREFS,MODE_PRIVATE);
         String email = sharedPreferences.getString(Constants.EMAIL,null).replace("\"", "");
@@ -188,6 +188,7 @@ public class ThisMonthFragment extends Fragment {
                         }
                         sum = sum + Integer.parseInt(transaction1.getAmount());
                     }
+
                     sum_ex.setText(String.valueOf(ex));
                     sum_in.setText(String.valueOf(in));
                     sum_all.setText(String.valueOf(sum));

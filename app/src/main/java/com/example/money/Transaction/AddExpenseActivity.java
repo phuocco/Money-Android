@@ -33,6 +33,7 @@ import com.example.money.Retrofit.RetrofitClient;
 import com.example.money.models.Transaction;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
@@ -51,13 +52,14 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 
 public class AddExpenseActivity extends AppCompatActivity {
-    EditText ed_email,ed_amount,ed_note, ed_type;
+    TextInputEditText ed_email,ed_amount,ed_note;
     CardView button_add_ex;
     MyService myService;
     ImageView imageView;
     TextView tv_add_date;
     Spinner spn_category;
     String ed_category;
+    EditText ed_type;
     //firebase
     FirebaseStorage storage;
     StorageReference storageReference;
@@ -136,7 +138,9 @@ public class AddExpenseActivity extends AppCompatActivity {
             public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
                 calendar.set(i,i1,i2);
                 SimpleDateFormat simpleDateFormat=  new SimpleDateFormat("yyyy-MM-dd");
-                tv_add_date.setText(simpleDateFormat.format(calendar.getTime()));
+                String date = simpleDateFormat.format(calendar.getTime());
+              //  String result= getString(R.string.selected_date,date);
+                tv_add_date.setText(getString(R.string.selected_date, date));
             }
         },nam,thang,ngay);
         datePickerDialog.show();

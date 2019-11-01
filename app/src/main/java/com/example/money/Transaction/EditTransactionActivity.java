@@ -53,6 +53,9 @@ public class EditTransactionActivity extends AppCompatActivity {
         //final String transactionId = "5dac689c788f27175c88b5f4";
         Toast.makeText(EditTransactionActivity.this, ""+transactionId, Toast.LENGTH_SHORT).show();
 
+        assert getSupportActionBar() != null;   //null check
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         button_edit = findViewById(R.id.button_edit);
         button_edit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -122,5 +125,10 @@ public class EditTransactionActivity extends AppCompatActivity {
 
             }
         });
+    }
+    @Override
+    public boolean onSupportNavigateUp(){
+        finish();
+        return true;
     }
 }
