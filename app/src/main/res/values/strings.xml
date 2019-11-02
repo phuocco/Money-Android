@@ -21,4 +21,13 @@
     <string name="select_month">Select month</string>
     <string name="selected_month">Selected month is: %s</string>
 
+<!--    detail-->
+    <string name="detail_amount">Amount: %s VND</string>
+    <string name="detail_category">Category: %s</string>
+    <string name="detail_note">Note: %s</string>
+    <string name="detail_date">Date: %s</string>
+<!--    edit-->
+    <string name="edit_date">Date : %s</string>
+
+
 </resources>

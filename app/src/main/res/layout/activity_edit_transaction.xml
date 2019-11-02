@@ -19,7 +19,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:hint="Amount">
+            android:hint="@string/amount">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/edit_amount"
@@ -35,7 +35,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:hint="category">
+            android:hint="@string/category">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/edit_category"
@@ -50,7 +50,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:hint="note">
+            android:hint="@string/note">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/edit_note"
@@ -61,19 +61,16 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:hint="date">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/edit_date"
-                android:ems="10"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
-
-        </com.google.android.material.textfield.TextInputLayout>
+     <TextView
+         android:id="@+id/edit_date"
+         android:layout_width="match_parent"
+         android:layout_height="50dp"
+         android:layout_marginTop="15dp"
+         android:gravity="center_vertical"
+         android:paddingStart="20dp"
+         android:layout_marginBottom="15dp"
+         android:background="@drawable/text"
+         />
 
 
 
@@ -84,6 +81,7 @@
             android:text="Apply" />
 
         <TextView
+            android:visibility="invisible"
             android:id="@+id/edit_type"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />

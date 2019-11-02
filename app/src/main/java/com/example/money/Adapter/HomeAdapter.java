@@ -56,7 +56,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.CustomViewHold
 
         //date
         DateFormat outputFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.US);
-        DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSX", Locale.US);
+        DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.US);
         String inputText = transactionList.get(position).getDate();
         try {
             Date date = inputFormat.parse(inputText);
@@ -65,6 +65,9 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.CustomViewHold
         } catch (ParseException ex) {
             Log.v("Exception", ex.getLocalizedMessage());
         }
+
+       // holder.home_date.setText(transactionList.get(position).getDate());
+
         holder.card_transaction.setAnimation(AnimationUtils.loadAnimation(mContext,R.anim.fade_scale_animation));
         holder.home_amount.setText(transactionList.get(position).getAmount()+" $");
 

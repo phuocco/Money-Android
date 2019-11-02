@@ -166,25 +166,30 @@ public class DetailTransactionActivity extends AppCompatActivity {
 
                 // Toast.makeText(DetailTransactionActivity.this, ""+transaction.getId(), Toast.LENGTH_SHORT).show();
                 //id.setText(transaction.getId());
-                amount.setText(transaction.getAmount());
-                category.setText(transaction.getCategory());
-                id.setText(transaction.getId());
+              //  amount.setText(transaction.getAmount());
+                amount.setText(getString(R.string.detail_amount,transaction.getAmount()));
+                category.setText(getString(R.string.detail_category,transaction.getCategory()));
+              //  id.setText(transaction.getId());
                 if(transaction.getNote()==null){
                     note.setText("");
                 } else {
-                    note.setText(transaction.getNote());
+                    note.setText(getString(R.string.detail_note,transaction.getNote()));
                 }
                 //date format
+
                 DateFormat outputFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.US);
-                DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSX", Locale.US);
+                DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.US);
                 String inputText = transaction.getDate();
                 try {
                     Date dateTemp = inputFormat.parse(inputText);
+                    Log.d("input",dateTemp.toString());
+
                     String outputText = outputFormat.format(dateTemp);
-                    date.setText(outputText);
+                    date.setText(getString(R.string.detail_date,outputText));
                 } catch (ParseException ex) {
                     Log.v("Exception", ex.getLocalizedMessage());
                 }
+
                 if(transaction.getPhoto()!=null){
                     Picasso.get().load(Uri.parse(transaction.getPhoto())).into(photo);
                 }
@@ -203,12 +208,12 @@ public class DetailTransactionActivity extends AppCompatActivity {
     }
 
     private void init() {
-        id = findViewById(R.id.detail_id);
+    //    id = findViewById(R.id.detail_id);
         amount = findViewById(R.id.detail_amount);
         category = findViewById(R.id.detail_category);
         note = findViewById(R.id.detail_note);
         date = findViewById(R.id.detail_date);
-        remind = findViewById(R.id.detail_remind);
+   //     remind = findViewById(R.id.detail_remind);
         photo = findViewById(R.id.detail_photo);
 
     }

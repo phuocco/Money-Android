@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -8,98 +8,121 @@
     tools:context=".Transaction.DetailTransactionActivity">
 
 
-    <LinearLayout
-        android:id="@+id/detail_linear"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
+    <ImageView
+        android:id="@+id/iv_amount"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="28dp"
+        android:src="@drawable/amount"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:srcCompat="@tools:sample/avatars" />
 
-        android:paddingLeft="15dp"
-        android:background="@drawable/card_detail"
-        android:orientation="vertical">
+    <ImageView
+        android:id="@+id/iv_category"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
 
-        <TextView
-            android:id="@+id/detail_amount"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="24sp"
-            android:paddingTop="5dp"
-            android:gravity="center_vertical"
-            android:paddingBottom="5dp"
-            android:drawableStart="@drawable/amount"
-            android:drawablePadding="20dp"
-            android:text="Amount" />
-        <TextView
-            android:id="@+id/detail_category"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="24sp"
-            android:paddingTop="5dp"
-            android:gravity="center_vertical"
-            android:paddingBottom="5dp"
-            android:drawableStart="@drawable/category"
-            android:drawablePadding="20dp"
-            android:text="Category" />
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="8dp"
+        android:src="@drawable/category"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/iv_amount"
+        tools:srcCompat="@tools:sample/avatars" />
 
-        <TextView
-            android:id="@+id/detail_date"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="24sp"
-            android:paddingTop="5dp"
-            android:gravity="center_vertical"
-            android:paddingBottom="5dp"
-            android:drawableStart="@drawable/date"
-            android:drawablePadding="20dp"
-            android:text="Date" />
-        <TextView
-            android:id="@+id/detail_remind"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="24sp"
-            android:paddingTop="5dp"
-            android:gravity="center_vertical"
-            android:paddingBottom="5dp"
-            android:drawableStart="@drawable/remind"
-            android:drawablePadding="20dp"
-            android:text="Remind: " />
-        <TextView
-            android:id="@+id/detail_note"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:singleLine="false"
-            android:maxLines="3"
-            android:textSize="24sp"
-            android:paddingTop="5dp"
-            android:gravity="center_vertical"
-            android:paddingBottom="5dp"
-            android:drawableStart="@drawable/note"
-            android:drawablePadding="20dp"
-            android:text="Note: " />
+    <ImageView
+        android:id="@+id/iv_note"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="50dp"
 
-        <TextView
-            android:id="@+id/detail_id"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="24sp"
-            android:paddingTop="5dp"
-            android:paddingBottom="5dp"
-            android:text="id" />
+        android:layout_marginTop="8dp"
+        android:src="@drawable/note"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/iv_category"
+        tools:srcCompat="@tools:sample/avatars" />
 
-    </LinearLayout>
+    <TextView
+        android:id="@+id/detail_amount"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="28dp"
+        android:background="@drawable/text"
+        android:gravity="center_vertical"
+        android:paddingStart="20dp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.277"
+        app:layout_constraintStart_toEndOf="@+id/iv_amount"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintWidth_percent="0.6" />
+
+    <TextView
+        android:id="@+id/detail_category"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/text"
+        android:gravity="center_vertical"
+        android:paddingStart="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.277"
+        app:layout_constraintStart_toEndOf="@+id/iv_amount"
+        app:layout_constraintTop_toBottomOf="@+id/detail_amount"
+        app:layout_constraintWidth_percent="0.6" />
+
+    <ImageView
+        android:id="@+id/iv_date"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="50dp"
+
+        android:layout_marginTop="8dp"
+        android:src="@drawable/date"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/iv_note"
+        tools:srcCompat="@tools:sample/avatars" />
+
+    <TextView
+        android:id="@+id/detail_note"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/text"
+        android:gravity="center_vertical"
+        android:paddingStart="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.277"
+        app:layout_constraintStart_toEndOf="@+id/iv_amount"
+        app:layout_constraintTop_toBottomOf="@+id/detail_category"
+        app:layout_constraintWidth_percent="0.6" />
+
+    <TextView
+        android:id="@+id/detail_date"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/text"
+        android:gravity="center_vertical"
+        android:paddingStart="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.277"
+        app:layout_constraintStart_toEndOf="@+id/iv_amount"
+        app:layout_constraintTop_toBottomOf="@+id/detail_note"
+        app:layout_constraintWidth_percent="0.6" />
 
     <ImageView
         android:id="@+id/detail_photo"
-        android:layout_width="match_parent"
-        android:layout_height="170dp"
-        android:layout_below="@id/detail_linear"
-        android:layout_gravity="center"
-        android:layout_marginTop="44dp"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/detail_date"
+        app:layout_constraintVertical_bias="0.114"
         />
 
-
-
     <include layout="@layout/contain_fab_detail" />
-
-
-</RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
