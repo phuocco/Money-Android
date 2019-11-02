@@ -65,6 +65,13 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                     new ThisMonthFragment()).commit();
             navigationView.setCheckedItem(R.id.thismonth);
         }
+        SharedPreferences sharedPreferences =  getSharedPreferences(Constants.SHARED_PREFS,MODE_PRIVATE);
+        String email = sharedPreferences.getString(Constants.EMAIL,null).replace("\"", "");
+        View headerView = navigationView.getHeaderView(0);
+        title = headerView.findViewById(R.id.header_email);
+        title.setText(email);
+
+
         //select month
         imageButton =  findViewById(R.id.action_bar_button);
         imageButton.setOnClickListener(new View.OnClickListener() {
@@ -96,8 +103,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             }
         });
 
-        SharedPreferences sharedPreferences =  getSharedPreferences(Constants.SHARED_PREFS,MODE_PRIVATE);
-        String email = sharedPreferences.getString(Constants.EMAIL,null).replace("\"", "");
+
         Transaction transaction = new Transaction(email);
         Retrofit retrofitClient = RetrofitClient.getInstance();
         myService = retrofitClient.create(MyService.class);

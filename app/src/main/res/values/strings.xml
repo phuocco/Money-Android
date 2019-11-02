@@ -31,4 +31,6 @@
 <!--    settings-->
     <string name="dark_mode">Dark mode:</string>
     <string name="language">Language</string>
+<!--    nav header-->
+    <string name="header_email">Email</string>
 </resources>

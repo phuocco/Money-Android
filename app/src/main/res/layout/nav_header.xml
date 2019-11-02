@@ -3,93 +3,24 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="@color/colorAccent"
+    android:background="@color/colorSecondary"
     android:layout_width="match_parent"
     android:gravity="bottom"
     android:padding="20dp"
     android:layout_height="170dp">
 
     <TextView
-        android:id="@+id/header_username"
-        android:layout_width="150dp"
+        android:id="@+id/header_email"
+        android:layout_width="wrap_content"
         android:layout_height="30dp"
-        android:layout_marginStart="88dp"
+        android:layout_marginTop="44dp"
         android:gravity="center_vertical|center_horizontal"
-        android:text="aaaaaa"
+        android:text="@string/header_email"
         android:textAllCaps="true"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.061"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/header_total"
-        android:layout_width="100dp"
-        android:layout_height="25dp"
-        android:layout_marginTop="8dp"
-        android:text="@string/total"
-        android:gravity="center"
-        app:layout_constraintEnd_toStartOf="@+id/header_total_result"
-        app:layout_constraintHorizontal_bias="0.24"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/header_username" />
-
-    <TextView
-        android:id="@+id/header_total_result"
-        android:layout_width="100dp"
-        android:layout_height="25dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="160dp"
-        android:gravity="center"
-
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/header_username" />
-
-    <TextView
-        android:id="@+id/header_ex"
-        android:layout_width="100dp"
-        android:layout_height="25dp"
-        android:layout_marginTop="8dp"
-        android:gravity="center"
-
-        android:text="@string/total_expense"
-        app:layout_constraintEnd_toStartOf="@+id/header_ex_result"
-        app:layout_constraintHorizontal_bias="0.258"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/header_total" />
-
-    <TextView
-        android:id="@+id/header_ex_result"
-        android:layout_width="100dp"
-        android:layout_height="25dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="160dp"
-        android:gravity="center"
-
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/header_total_result" />
-
-    <TextView
-        android:id="@+id/header_in"
-        android:layout_width="100dp"
-        android:layout_height="25dp"
-        android:layout_marginTop="8dp"
-        android:gravity="center"
-
-        android:text="@string/total_income"
-        app:layout_constraintEnd_toStartOf="@+id/header_in_result"
-        app:layout_constraintHorizontal_bias="0.258"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/header_ex" />
-
-    <TextView
-        android:id="@+id/header_in_result"
-        android:layout_width="100dp"
-        android:layout_height="25dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="160dp"
-        android:gravity="center"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/header_ex_result" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
