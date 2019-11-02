@@ -25,8 +25,16 @@
             android:title="B"/>
     </menu>
 </item>
-    <item android:id="@+id/settings"
-        android:icon="@drawable/ic_navi"
-        android:title="Settings"/>
 
+    <item android:title="Tools">
+        <menu>
+            <item android:id="@+id/settings"
+                android:icon="@drawable/ic_navi"
+                android:title="Settings"/>
+
+            <item android:id="@+id/sign_out"
+                android:icon="@drawable/ic_navi"
+                android:title="Sign Out"/>
+        </menu>
+    </item>
 </menu>

@@ -49,11 +49,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         String email = sharedPreferences.getString(EMAIL,"").replace("\"", "");
         email = email.replace("\"", "");
         if(email != null && email.isEmpty()){
-            startActivity(new Intent(MainActivity.this,LoginActivity.class));
-           // finish();
+            Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(intent);
         } else {
-            startActivity(new Intent(MainActivity.this,HomeActivity.class));
-           // finish();
+            Intent intent = new Intent(MainActivity.this, HomeActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(intent);
         }
         tv.setText(email);
 

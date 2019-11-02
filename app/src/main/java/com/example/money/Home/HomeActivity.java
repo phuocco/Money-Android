@@ -21,6 +21,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.money.Constants;
+import com.example.money.LoginActivity;
 import com.example.money.MainActivity;
 import com.example.money.R;
 import com.example.money.Retrofit.MyService;
@@ -136,6 +137,15 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 break;
             case R.id.settings:
                 startActivity(new Intent(HomeActivity.this, SettingsActivity.class));
+                break;
+            case R.id.sign_out:
+                SharedPreferences sharedPreferences = getSharedPreferences(Constants.SHARED_PREFS,MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.clear();
+                editor.apply();
+                Intent intent = new Intent(HomeActivity.this, LoginActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent);
                 break;
         }
         drawer.closeDrawer(GravityCompat.START);

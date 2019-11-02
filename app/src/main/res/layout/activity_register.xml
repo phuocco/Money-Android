@@ -19,67 +19,88 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/logo" />
 
-    <EditText
-        android:id="@+id/reg_email"
-        android:layout_width="320dp"
-        android:layout_height="55dp"
-        android:layout_marginTop="20dp"
-        android:background="#11000000"
-        android:drawableStart="@drawable/username"
-        android:ems="10"
-        android:hint="Email"
-        android:inputType="textEmailAddress"
-        android:textSize="16sp"
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/layout_reg_email"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.505"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+         app:layout_constraintTop_toBottomOf="@+id/imageView"
+        app:layout_constraintWidth_percent="0.75"
+        android:hint="Email"
+        android:layout_width="0dp"
+        android:layout_height="55dp">
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/reg_email"
+            android:textSize="16sp"
+            android:inputType="textEmailAddress"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+    </com.google.android.material.textfield.TextInputLayout>
 
-    <EditText
-        android:id="@+id/reg_username"
-        android:layout_width="320dp"
-        android:layout_height="55dp"
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/layout_reg_username"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.505"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/layout_reg_email"
+        app:layout_constraintWidth_percent="0.75"
         android:layout_marginTop="20dp"
-        android:background="#11000000"
-        android:drawableStart="@drawable/username"
-        android:ems="10"
         android:hint="Username"
-        android:inputType="textPersonName"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.494"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/reg_email" />
+        android:layout_width="0dp"
+        android:layout_height="55dp">
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/reg_username"
+            android:textSize="16sp"
+            android:inputType="textEmailAddress"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+    </com.google.android.material.textfield.TextInputLayout>
 
-    <EditText
-        android:id="@+id/reg_password"
-        android:layout_width="320dp"
-        android:layout_height="55dp"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/layout_reg_password"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.505"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/layout_reg_username"
+        app:layout_constraintWidth_percent="0.75"
         android:layout_marginTop="20dp"
-        android:background="#11000000"
-        android:drawableStart="@drawable/password"
-        android:ems="10"
         android:hint="Password"
-        android:inputType="textPassword"
-        android:paddingStart="9dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/reg_username" />
+        android:layout_width="0dp"
+        android:layout_height="55dp">
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/reg_password"
+            android:textSize="16sp"
+            android:inputType="textPassword"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+    </com.google.android.material.textfield.TextInputLayout>
 
-    <EditText
-        android:id="@+id/reg_re_password"
-        android:layout_width="320dp"
-        android:layout_height="55dp"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/layout_reg_repassword"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.505"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/layout_reg_password"
+        app:layout_constraintWidth_percent="0.75"
         android:layout_marginTop="20dp"
+        android:hint="Password"
+        android:layout_width="0dp"
+        android:layout_height="55dp">
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/reg_repassword"
+            android:textSize="16sp"
+            android:inputType="textPassword"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+    </com.google.android.material.textfield.TextInputLayout>
 
-        android:background="#11000000"
-        android:drawableStart="@drawable/password"
-        android:ems="10"
-        android:hint="Retype Password"
-        android:inputType="textPassword"
-        android:paddingStart="9dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/reg_password" />
+
 
 
     <androidx.cardview.widget.CardView
@@ -93,7 +114,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.505"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/reg_re_password">
+        app:layout_constraintTop_toBottomOf="@+id/layout_reg_repassword">
 
         <TextView
             android:id="@+id/textView"
@@ -117,38 +138,31 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/button_reg" />
 
-    <ImageView
-        android:id="@+id/imageView4"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:layout_marginTop="12dp"
-        android:layout_marginEnd="16dp"
-        app:layout_constraintEnd_toStartOf="@+id/imageView3"
-        app:layout_constraintHorizontal_bias="0.977"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/register_login"
-        app:srcCompat="@drawable/twitter" />
-
-    <ImageView
-        android:id="@+id/imageView3"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:layout_marginTop="12dp"
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/register_login"
-        app:srcCompat="@drawable/instagram" />
+        app:layout_constraintTop_toBottomOf="@+id/register_login">
 
-    <ImageView
-        android:id="@+id/imageView2"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:layout_marginStart="16dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.058"
-        app:layout_constraintStart_toEndOf="@+id/imageView3"
-        app:layout_constraintTop_toTopOf="@+id/imageView3"
-        app:srcCompat="@drawable/facebook" />
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            app:srcCompat="@drawable/facebook" />
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:src="@drawable/twitter"/>
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/instagram"/>
+    </LinearLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

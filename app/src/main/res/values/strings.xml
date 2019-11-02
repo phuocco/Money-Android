@@ -28,6 +28,7 @@
     <string name="detail_date">Date: %s</string>
 <!--    edit-->
     <string name="edit_date">Date : %s</string>
-
-
+<!--    settings-->
+    <string name="dark_mode">Dark mode:</string>
+    <string name="language">Language</string>
 </resources>
