@@ -27,17 +27,22 @@
                 android:layout_height="wrap_content"
                 android:lineHeight="30dp"
                 android:layout_weight="3"
-                android:textAlignment="center"
+                android:layout_marginLeft="50dp"
                 android:text="@string/total_expense"/>
 
             <TextView
                 android:id="@+id/this_month_total_ex"
-                android:layout_width="wrap_content"
+                android:layout_width="50dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
-                android:textAlignment="center"
-                android:text="" />
+                android:textAlignment="textEnd"
+                android:paddingEnd="30dp"
+                android:text="asdasd" />
         </LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@android:color/darker_gray"/>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -46,16 +51,21 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="3"
-                android:textAlignment="center"
+                android:layout_marginLeft="50dp"
                 android:text="@string/total_income"/>
             <TextView
                 android:id="@+id/this_month_total_in"
-                android:layout_width="wrap_content"
+                android:layout_width="50dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
-                android:textAlignment="center"
-                android:text=""/>
+                android:textAlignment="textEnd"
+                android:paddingEnd="30dp"
+                android:text="ssss"/>
         </LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@android:color/darker_gray"/>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -64,15 +74,16 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="3"
-                android:textAlignment="center"
+                android:layout_marginLeft="50dp"
                 android:text="@string/total_wallet"/>
             <TextView
                 android:id="@+id/this_month_total_all"
-                android:layout_width="wrap_content"
+                android:layout_width="50dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
-                android:textAlignment="center"
-                android:text=""/>
+                android:textAlignment="textEnd"
+                android:paddingEnd="30dp"
+                android:text="aaaa"/>
         </LinearLayout>
     </LinearLayout>
 

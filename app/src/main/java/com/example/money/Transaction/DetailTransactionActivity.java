@@ -175,7 +175,7 @@ public class DetailTransactionActivity extends AppCompatActivity {
                 } else {
                     note.setText(getString(R.string.detail_note,transaction.getNote()));
                 }
-                //date format
+                //ic_date format
 
                 DateFormat outputFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.US);
                 DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.US);
@@ -183,7 +183,6 @@ public class DetailTransactionActivity extends AppCompatActivity {
                 try {
                     Date dateTemp = inputFormat.parse(inputText);
                     Log.d("input",dateTemp.toString());
-
                     String outputText = outputFormat.format(dateTemp);
                     date.setText(getString(R.string.detail_date,outputText));
                 } catch (ParseException ex) {

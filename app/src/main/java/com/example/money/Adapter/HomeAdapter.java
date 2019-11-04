@@ -54,22 +54,12 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.CustomViewHold
     public void onBindViewHolder(@NonNull CustomViewHolder holder, int position) {
 
 
-        //date
-        DateFormat outputFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.US);
-        DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.US);
-        String inputText = transactionList.get(position).getDate();
-        try {
-            Date date = inputFormat.parse(inputText);
-            String outputText = outputFormat.format(date);
-            holder.home_date.setText(outputText);
-        } catch (ParseException ex) {
-            Log.v("Exception", ex.getLocalizedMessage());
-        }
+
 
        // holder.home_date.setText(transactionList.get(position).getDate());
 
         holder.card_transaction.setAnimation(AnimationUtils.loadAnimation(mContext,R.anim.fade_scale_animation));
-        holder.home_amount.setText(transactionList.get(position).getAmount()+" $");
+        holder.home_amount.setText(mContext.getResources().getString(R.string.currency_vnd,transactionList.get(position).getAmount()));
 
 //        if("Expense".equals(transactionList.get(position).getType())){
 //            holder.home_amount.setTextColor(Color.RED);
@@ -90,26 +80,39 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.CustomViewHold
         if(holder.isDark){
             if("Expense".equals(transactionList.get(position).getType())){
                 holder.home_amount.setTextColor(Color.RED);
+                holder.card_transaction.setBackgroundResource(R.drawable.card_expense_dark);
+
+            } else {
+                holder.home_amount.setTextColor(Color.GREEN);
+                holder.card_transaction.setBackgroundResource(R.drawable.card_income_dark);
+            }
+            holder.home_category.setTextColor(Color.rgb(255,255,255));
+        } else {
+            holder.home_category.setTextColor(Color.rgb(103,58,183));
+
+            if("Expense".equals(transactionList.get(position).getType())){
+                holder.home_amount.setTextColor(Color.RED);
                 holder.card_transaction.setBackgroundResource(R.drawable.card_expense_light);
 
             } else {
                 holder.home_amount.setTextColor(Color.GREEN);
                 holder.card_transaction.setBackgroundResource(R.drawable.card_income_light);
             }
-        } else {
-
-            if("Expense".equals(transactionList.get(position).getType())){
-                holder.home_amount.setTextColor(Color.BLUE);
-                holder.card_transaction.setBackgroundResource(R.drawable.card_bg_dark);
-
-            } else {
-                holder.home_amount.setTextColor(Color.YELLOW);
-                holder.card_transaction.setBackgroundResource(R.drawable.card_bg);
-            }
         }
         holder.home_category.setText(transactionList.get(position).getCategory());
         holder.home_note.setText(transactionList.get(position).getNote());
 //        holder.home_event.setText(transactionList.get(position).getEvent());
+        //ic_date
+        DateFormat outputFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.US);
+        DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.US);
+        String inputText = transactionList.get(position).getDate();
+        try {
+            Date date = inputFormat.parse(inputText);
+            String outputText = outputFormat.format(date);
+            holder.home_date.setText(outputText);
+        } catch (ParseException ex) {
+            Log.v("Exception", ex.getLocalizedMessage());
+        }
     }
 
     @Override
@@ -151,5 +154,5 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.CustomViewHold
             context.startActivity(a);
         }
     }
-  
+
 }

@@ -54,7 +54,6 @@ public class EditTransactionActivity extends AppCompatActivity {
         SharedPreferences sharedPreferences =  getSharedPreferences(Constants.SHARED_PREFS,MODE_PRIVATE);
         final String transactionId = sharedPreferences.getString(Constants.ID,"").replace("\"", "");
         //final String transactionId = "5dac689c788f27175c88b5f4";
-        Toast.makeText(EditTransactionActivity.this, ""+transactionId, Toast.LENGTH_SHORT).show();
 
         assert getSupportActionBar() != null;   //null check
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -75,8 +74,8 @@ public class EditTransactionActivity extends AppCompatActivity {
                 String date =  edate.getText().toString();
                 String category =  ecategory.getText().toString();
                 String type = tv_type.getText().toString();
-                Toast.makeText(EditTransactionActivity.this, ""+transactionId, Toast.LENGTH_SHORT).show();
                 updateTrans(transactionId,amount,category,type,note,date);
+                startActivity(new Intent(EditTransactionActivity.this, HomeActivity.class));
             }
         });
 
@@ -94,9 +93,9 @@ public class EditTransactionActivity extends AppCompatActivity {
             public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
                 calendar.set(i,i1,i2);
                 SimpleDateFormat simpleDateFormat=  new SimpleDateFormat("yyyy-MM-dd");
-                String date = simpleDateFormat.format(calendar.getTime());
-                //  String result= getString(R.string.selected_date,date);
-                edate.setText(getString(R.string.edit_date, date));
+                String date2 = simpleDateFormat.format(calendar.getTime());
+                //  String result= getString(R.string.selected_date,ic_date);
+                edate.setText(getString(R.string.edit_date, date2));
             }
         },nam,thang,ngay+1);
         datePickerDialog.show();
@@ -107,11 +106,10 @@ public class EditTransactionActivity extends AppCompatActivity {
                 .enqueue(new Callback<Transaction>() {
                     @Override
                     public void onResponse(Call<Transaction> call, Response<Transaction> response) {
-                        if (response.isSuccessful()){
-                            Toast.makeText(EditTransactionActivity.this, "okkkk", Toast.LENGTH_SHORT).show();
-                            startActivity(new Intent(EditTransactionActivity.this, HomeActivity.class));
-
-                        }
+                      if(response.isSuccessful())
+                      {
+                          Toast.makeText(EditTransactionActivity.this, "ac", Toast.LENGTH_SHORT).show();
+                      }
                     }
 
                     @Override

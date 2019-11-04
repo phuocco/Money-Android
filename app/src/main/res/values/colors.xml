@@ -20,7 +20,6 @@
     <color name="blue">#3F51B5</color>
     <color name="green">#4CAF50</color>
     <color name="yellow">#FFEB3B</color>
-    <color name="category">#5B5E8EDD</color>
     <color name="card_bg_color">#E7D6D6</color>
     <color name="card_bg_dark_color">#65163C2E</color>
     <color name="amount">#BC4D40C9</color>
@@ -28,10 +27,15 @@
 
     <color name="white">#FFFFFF</color>
     <color name="black">#000000</color>
-    <color name="card_ex_light">#D8D6A9A9</color>
-    <color name="card_in_light">#D8AA493F</color>
+    <color name="card_ex_light">#34F11313</color>
+    <color name="card_in_light">#4B2D332C</color>
+    <color name="card_ex_dark">#D8630C0C</color>
+    <color name="card_in_dark">#D8042904</color>
     <color name="background_rv">#3CE6D5D5</color>
     <color name="card_top">#03A9F4</color>
+    <color name="category">#673AB7</color>
+    <color name="category_dark">#FFFFFF</color>
+
 
 
 

@@ -33,4 +33,5 @@
     <string name="language">Language</string>
 <!--    nav header-->
     <string name="header_email">Email</string>
+    <string name="currency_vnd"> %s VND</string>
 </resources>

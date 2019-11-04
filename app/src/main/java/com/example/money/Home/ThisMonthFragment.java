@@ -183,9 +183,9 @@ public class ThisMonthFragment extends Fragment {
                         }
                         sum = sum + Integer.parseInt(transaction1.getAmount());
                     }
-                    sum_ex.setText(String.valueOf(ex));
-                    sum_in.setText(String.valueOf(in));
-                    sum_all.setText(String.valueOf(sum));
+                    sum_ex.setText(getString(R.string.currency_vnd,String.valueOf(ex)));
+                    sum_in.setText(getString(R.string.currency_vnd,String.valueOf(in)));
+                    sum_all.setText(getString(R.string.currency_vnd,String.valueOf(sum)));
 
             }
             }

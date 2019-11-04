@@ -139,7 +139,7 @@ public class AddExpenseActivity extends AppCompatActivity {
                 calendar.set(i,i1,i2);
                 SimpleDateFormat simpleDateFormat=  new SimpleDateFormat("yyyy-MM-dd");
                 String date = simpleDateFormat.format(calendar.getTime());
-              //  String result= getString(R.string.selected_date,date);
+              //  String result= getString(R.string.selected_date,ic_date);
                 tv_add_date.setText(getString(R.string.selected_date, date));
             }
         },nam,thang,ngay);
