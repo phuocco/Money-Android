@@ -21,12 +21,14 @@
             </intent-filter>
         </activity>
         <activity android:name=".SettingsActivity" />
-        <activity android:name=".Transaction.EditTransactionActivity" />
+        <activity android:name=".Transaction.EditTransactionActivity"
+            android:label="@string/edit_bar"/>
         <activity android:name=".TestActivity" />
         <activity android:name=".Home.ChartActivity" />
         <activity android:name=".Home.TransactionCategoryActivity" />
         <activity android:name=".Transaction.AddIncomeActivity" />
-        <activity android:name=".Transaction.DetailTransactionActivity" />
+        <activity android:name=".Transaction.DetailTransactionActivity"
+            android:label="@string/detail_bar"/>
         <activity
             android:name=".Home.HomeActivity"
             android:theme="@style/AppTheme.NoActionBar" />

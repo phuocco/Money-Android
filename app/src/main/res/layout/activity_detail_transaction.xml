@@ -8,6 +8,7 @@
     tools:context=".Transaction.DetailTransactionActivity">
 
 
+
     <ImageView
         android:id="@+id/iv_amount"
         android:layout_width="50dp"

@@ -8,13 +8,13 @@
         android:id="@+id/tv_add_in"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginBottom="186dp"
+        android:layout_alignParentBottom="true"
         android:layout_marginEnd="88dp"
+        android:layout_marginBottom="186dp"
         android:background="#212121"
         android:padding="8dp"
-        android:text="Add in"
+        android:text="@string/add_income"
         android:textColor="#ffffff"
         android:visibility="invisible" />
 
@@ -39,13 +39,13 @@
         android:id="@+id/tv_add_ex"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginBottom="116dp"
+        android:layout_alignParentBottom="true"
         android:layout_marginEnd="88dp"
+        android:layout_marginBottom="116dp"
         android:background="#212121"
         android:padding="8dp"
-        android:text="add ex"
+        android:text="@string/add_expense"
         android:textColor="#ffffff"
         android:visibility="invisible" />
 

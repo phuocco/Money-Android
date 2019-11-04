@@ -5,21 +5,21 @@
 
     <group android:checkableBehavior="single">
         <item android:id="@+id/thismonth"
-            android:icon="@drawable/ic_navi"
+            android:icon="@drawable/ic_month"
             android:title="This Month"/>
         <item android:id="@+id/lastmonth"
-            android:icon="@drawable/ic_navi"
+            android:icon="@drawable/ic_month"
             android:title="Last Month"/>
         <item android:id="@+id/plan"
-            android:icon="@drawable/ic_navi"
+            android:icon="@drawable/ic_month"
             android:title="Plan"/>
     </group>
 
-<item android:title="ABC">
+<item android:title="Statics">
     <menu>
         <item android:id="@+id/nav_a"
-            android:icon="@drawable/ic_navi"
-            android:title="A"/>
+            android:icon="@drawable/ic_chart"
+            android:title="Chart"/>
         <item android:id="@+id/nav_b"
             android:icon="@drawable/ic_navi"
             android:title="B"/>
@@ -29,11 +29,11 @@
     <item android:title="Tools">
         <menu>
             <item android:id="@+id/settings"
-                android:icon="@drawable/ic_navi"
+                android:icon="@drawable/ic_settings"
                 android:title="Settings"/>
 
             <item android:id="@+id/sign_out"
-                android:icon="@drawable/ic_navi"
+                android:icon="@drawable/ic_quit"
                 android:title="Sign Out"/>
         </menu>
     </item>

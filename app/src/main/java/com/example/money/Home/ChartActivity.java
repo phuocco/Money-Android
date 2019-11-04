@@ -40,6 +40,8 @@ public class ChartActivity extends AppCompatActivity {
     MyService myService;
     RetrofitClient retrofitClient;
     TextView selectTime,chartTemp;
+    private float[] yData ={};
+    private String[] xData = {};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -107,7 +109,21 @@ public class ChartActivity extends AppCompatActivity {
                         if (response.isSuccessful()) {
 
                             List<Chart> list = response.body();
-                            Log.d("abc",list.toString());
+                            ArrayList<PieEntry> yEntries =  new ArrayList<>();
+                            ArrayList<String> xEntries = new ArrayList<>();
+                            for(int i =0; i<list.size();i++){
+                                float y = (float)list.get(i).getSum();
+                                yEntries.add(new PieEntry(y,i));
+                            }
+                            for (int i = 1;i<list.size();i++){
+                                xEntries.add(list.get(i).getId());
+                            }
+                             PieDataSet pieDataSet = new PieDataSet(yEntries,"Avg category");
+                            pieDataSet.setSliceSpace(2);
+                            pieDataSet.setColors(ColorTemplate.MATERIAL_COLORS);
+                            PieData pieData = new PieData(pieDataSet);
+                            pieChart.setData(pieData);
+                            pieChart.invalidate();
 //                            ArrayList<PieEntry> entries = new ArrayList<>();
 //                            for (int i = 0; i < list.size(); i++) {
 //                                entries.add(new PieEntry((float) list.get(i).getSum(), list.get(i).getId()));
@@ -169,7 +185,7 @@ public class ChartActivity extends AppCompatActivity {
 //                        PieData data = new PieData(dataSet);
 //                        pieChart.setData(data);
 
-
+//chart default
 //                        ArrayList<PieEntry> pieEntries =  new ArrayList<>();
 //                        for (Chart chart: response.body()){
 //                            pieEntries.add(new PieEntry(chart.getSum(),chart.getId()));
@@ -190,7 +206,7 @@ public class ChartActivity extends AppCompatActivity {
 //                        pieChart.setData(pieData);
 //                        Log.d("test",pieData.toString());
 //                        pieChart.invalidate();
-
+// quit
 
 //                        PieDataSet pieDataSet = new PieDataSet(pieEntries,"Sum per cate");
 //                        pieDataSet.setColors(ColorTemplate.MATERIAL_COLORS);

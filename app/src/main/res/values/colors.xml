@@ -24,6 +24,7 @@
     <color name="card_bg_dark_color">#65163C2E</color>
     <color name="amount">#BC4D40C9</color>
     <color name="date">#CD746ACE</color>
+    <color name="card_sum_dark">#CD2E209E</color>
 
     <color name="white">#FFFFFF</color>
     <color name="black">#000000</color>

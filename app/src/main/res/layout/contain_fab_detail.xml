@@ -113,6 +113,6 @@
         android:visibility="invisible"
         app:backgroundTint="#ffffff"
         app:pressedTranslationZ="12dp"
-        app:srcCompat="@drawable/ic_share" />
+        app:srcCompat="@drawable/ic_delete" />
 
 </RelativeLayout>
