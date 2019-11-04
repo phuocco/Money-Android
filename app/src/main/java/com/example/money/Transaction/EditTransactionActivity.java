@@ -8,9 +8,12 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,8 +29,10 @@ import com.google.android.material.textfield.TextInputEditText;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 import retrofit2.Call;
@@ -36,17 +41,19 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 
 public class EditTransactionActivity extends AppCompatActivity {
-    TextInputEditText eamount,ecategory,enote;
+    TextInputEditText eamount,enote;
     MyService myService;
     MaterialButton button_edit;
     TextView tv_type,edate;
+    Spinner spn_ecategory;
+    String ecategory;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_transaction);
         eamount = findViewById(R.id.edit_amount);
         enote = findViewById(R.id.edit_note);
-        ecategory =  findViewById(R.id.edit_category);
+        spn_ecategory =  findViewById(R.id.edit_category);
         edate = findViewById(R.id.edit_date);
         tv_type =  findViewById(R.id.edit_type);
         Retrofit retrofitClient = RetrofitClient.getInstance();
@@ -54,6 +61,18 @@ public class EditTransactionActivity extends AppCompatActivity {
         SharedPreferences sharedPreferences =  getSharedPreferences(Constants.SHARED_PREFS,MODE_PRIVATE);
         final String transactionId = sharedPreferences.getString(Constants.ID,"").replace("\"", "");
         //final String transactionId = "5dac689c788f27175c88b5f4";
+
+        spn_ecategory.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                ecategory = spn_ecategory.getSelectedItem().toString();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
 
         assert getSupportActionBar() != null;   //null check
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -72,7 +91,7 @@ public class EditTransactionActivity extends AppCompatActivity {
                 String amount =  eamount.getText().toString();
                 String note =  enote.getText().toString();
                 String date =  edate.getText().toString();
-                String category =  ecategory.getText().toString();
+                String category =  ecategory;
                 String type = tv_type.getText().toString();
                 updateTrans(transactionId,amount,category,type,note,date);
                 startActivity(new Intent(EditTransactionActivity.this, HomeActivity.class));
@@ -127,7 +146,6 @@ public class EditTransactionActivity extends AppCompatActivity {
                     Transaction transaction = response.body();
                     eamount.setText(transaction.getAmount());
                     enote.setText(transaction.getNote());
-                    ecategory.setText(transaction.getCategory());
                     edate.setText(transaction.getDate());
 
                     DateFormat outputFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
@@ -140,7 +158,32 @@ public class EditTransactionActivity extends AppCompatActivity {
                     } catch (ParseException ex) {
                         Log.v("Exception", ex.getLocalizedMessage());
                     }
+                    String compareValue = transaction.getCategory();
 
+                    //list
+                    List<String> list_ex = new ArrayList<>();
+                    list_ex.add("Food");
+                    list_ex.add("Water");
+                    list_ex.add("Entertainment");
+
+                    List<String> list_in = new ArrayList<>();
+                    list_in.add("Salary");
+                    list_in.add("Gift");
+                    list_in.add("Loan");
+
+                    List<String> list = new ArrayList<>();
+                    if("Expense".equals(transaction.getType())){
+                        list = list_ex;
+                    } else {
+                        list = list_in;
+                    }
+                    ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(),R.layout.support_simple_spinner_dropdown_item,list);
+                    adapter.setDropDownViewResource(android.R.layout.simple_list_item_single_choice);
+                    spn_ecategory.setAdapter(adapter);
+                    if (compareValue != null) {
+                        int spinnerPosition = adapter.getPosition(compareValue);
+                        spn_ecategory.setSelection(spinnerPosition);
+                    }
                     tv_type.setText(transaction.getType());
 
                 }

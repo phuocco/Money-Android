@@ -64,7 +64,6 @@
             android:layout_height="60dp"
             android:id="@+id/layout_spinner"
             android:layout_marginTop="20dp"
-
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/layout_add_note_in"

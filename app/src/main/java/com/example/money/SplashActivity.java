@@ -33,17 +33,13 @@ public class SplashActivity extends AppCompatActivity {
         EasySplashScreen config = new EasySplashScreen(SplashActivity.this)
                 .withFullScreen()
                 .withTargetActivity(MainActivity.class)
-                .withSplashTimeOut(1000)
-                .withBackgroundColor(Color.parseColor("#1a1b29"))
-                .withHeaderText("Header")
-                .withFooterText("Footer")
-                .withBeforeLogoText("Before Logo Text")
-                .withAfterLogoText("After Logo Text")
+                .withSplashTimeOut(3000)
+                .withBackgroundColor(Color.parseColor("#CFB0B0"))
+
+                .withAfterLogoText("Money Management")
                 .withLogo(R.drawable.logo);
 
-        config.getHeaderTextView().setTextColor(Color.WHITE);
-        config.getFooterTextView().setTextColor(Color.WHITE);
-        config.getBeforeLogoTextView().setTextColor(Color.WHITE);
+
         config.getAfterLogoTextView().setTextColor(Color.WHITE);
         View easySplashScreen = config.create();
         setContentView(easySplashScreen);
