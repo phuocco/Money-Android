@@ -6,7 +6,7 @@ public class Constants {
     public static String urlLocalK = "http://172.19.201.134:3000/";
 
     public static String urlHerokutest2 = "https://money-test-phuoc.herokuapp.com/";
-    public static final String URL = urlLocal;
+    public static final String URL = urlHerokutest2;
 
     //shared
     public static final String SHARED_PREFS = "sharedPrefs";

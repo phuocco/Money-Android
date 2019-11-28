@@ -8,13 +8,19 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.media.Image;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -117,6 +123,91 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.top_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menu_range:
+                Toast.makeText(this, "Range", Toast.LENGTH_SHORT).show();
+                showRangeDialog();
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void showRangeDialog() {
+        final AlertDialog dialogBuilder = new AlertDialog.Builder(this).create();
+        LayoutInflater inflater = this.getLayoutInflater();
+        View dialogView = inflater.inflate(R.layout.dialog_range, null);
+
+        final TextView startDate = (TextView) dialogView.findViewById(R.id.range_startDate);
+        final TextView endDate = (TextView) dialogView.findViewById(R.id.range_endDate);
+        final Button rangeOK = (Button) dialogView.findViewById(R.id.range_ok);
+        final Button  rangeCancel = (Button) dialogView.findViewById(R.id.range_cancel);
+        startDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final Calendar calendar = Calendar.getInstance();
+                int ngayStart =  calendar.get(Calendar.DATE);
+                int thangStart = calendar.get(Calendar.MONTH);
+                int namStart = calendar.get(Calendar.YEAR);
+                DatePickerDialog datePickerDialog = new DatePickerDialog(HomeActivity.this, new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                        calendar.set(year,month,dayOfMonth);
+                        SimpleDateFormat simpleDateFormat=  new SimpleDateFormat("yyyy-MM-dd");
+                        String date = simpleDateFormat.format(calendar.getTime());
+                        startDate.setText(date);
+                    }
+                },namStart,thangStart,ngayStart);
+                datePickerDialog.show();
+            }
+        });
+
+        endDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final Calendar calendar = Calendar.getInstance();
+                int ngayEnd =  calendar.get(Calendar.DATE);
+                int thangEnd = calendar.get(Calendar.MONTH);
+                int namEnd = calendar.get(Calendar.YEAR);
+                DatePickerDialog datePickerDialog = new DatePickerDialog(HomeActivity.this, new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                        calendar.set(year,month,dayOfMonth);
+                        SimpleDateFormat simpleDateFormat=  new SimpleDateFormat("yyyy-MM-dd");
+                        String date = simpleDateFormat.format(calendar.getTime());
+                        endDate.setText(date);
+                    }
+                },namEnd,thangEnd,ngayEnd);
+                datePickerDialog.show();
+            }
+        });
+        rangeOK.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // logic code
+                dialogBuilder.dismiss();
+            }
+        });
+        rangeCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialogBuilder.dismiss();
+            }
+        });
+
+        dialogBuilder.setView(dialogView);
+        dialogBuilder.setCanceledOnTouchOutside(false);
+        dialogBuilder.show();
+
+    }
+
+    @Override
     public void onBackPressed() {
         if(drawer.isDrawerOpen(GravityCompat.START)){
             drawer.closeDrawer(GravityCompat.START);
@@ -155,6 +246,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
                 break;
+
         }
         drawer.closeDrawer(GravityCompat.START);
         return true;
