@@ -15,6 +15,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.media.Image;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -30,14 +31,18 @@ import com.example.money.Constants;
 import com.example.money.LoginActivity;
 import com.example.money.MainActivity;
 import com.example.money.R;
+import com.example.money.RangeActivity;
 import com.example.money.Retrofit.MyService;
 import com.example.money.Retrofit.RetrofitClient;
 import com.example.money.SettingsActivity;
 import com.example.money.models.Transaction;
 import com.google.android.material.navigation.NavigationView;
 
+import java.sql.Timestamp;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import retrofit2.Call;
@@ -97,8 +102,8 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                        // SimpleDateFormat simpleDateFormat=  new SimpleDateFormat("yyyy-MM");
                         String selectYear = String.valueOf(i);
                         String selectMonth =  String.valueOf((i1+1));
-                        Fragment monthFragment =  new MonthFragment();
 
+                        Fragment monthFragment =  new MonthFragment();
                         Bundle data = new Bundle();
                         data.putString("month",selectMonth);
                         data.putString("year",selectYear);
@@ -106,7 +111,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, monthFragment).commit();
 
                     }
-                },year,month,day);
+                },year,(month-1),day);
                 datePickerDialog.show();
             }
         });
@@ -133,7 +138,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_range:
-                Toast.makeText(this, "Range", Toast.LENGTH_SHORT).show();
+               // startActivity(new Intent(HomeActivity.this, RangeActivity.class));
                 showRangeDialog();
         }
         return super.onOptionsItemSelected(item);
@@ -159,7 +164,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                     @Override
                     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                         calendar.set(year,month,dayOfMonth);
-                        SimpleDateFormat simpleDateFormat=  new SimpleDateFormat("yyyy-MM-dd");
+                        SimpleDateFormat simpleDateFormat=  new SimpleDateFormat("dd-MM-yyyy");
                         String date = simpleDateFormat.format(calendar.getTime());
                         startDate.setText(date);
                     }
@@ -179,7 +184,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                     @Override
                     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                         calendar.set(year,month,dayOfMonth);
-                        SimpleDateFormat simpleDateFormat=  new SimpleDateFormat("yyyy-MM-dd");
+                        SimpleDateFormat simpleDateFormat=  new SimpleDateFormat("dd-MM-yyyy");
                         String date = simpleDateFormat.format(calendar.getTime());
                         endDate.setText(date);
                     }
@@ -191,6 +196,32 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             @Override
             public void onClick(View v) {
                 // logic code
+
+                String start = startDate.getText().toString();
+                String end = endDate.getText().toString();
+                String startDateStr = null;
+                String endDateStr = null;
+
+                try {
+                    DateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+                    Date date1 = (Date)formatter.parse(start);
+                    startDateStr = String.valueOf(date1.getTime());
+
+                    Date date2 = (Date)formatter.parse(end);
+                    endDateStr = String.valueOf(date2.getTime());
+
+                } catch (java.text.ParseException e) {
+                    e.printStackTrace();
+                }
+
+
+                Fragment rangeFragment =  new RangeFragment();
+                Bundle data = new Bundle();
+                data.putString("startDate",startDateStr);
+                data.putString("endDate",endDateStr);
+                rangeFragment.setArguments(data);
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, rangeFragment).commit();
+
                 dialogBuilder.dismiss();
             }
         });

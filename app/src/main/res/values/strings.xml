@@ -22,17 +22,17 @@
     <string name="select_month">Select month</string>
     <string name="selected_month">Selected month is: %s</string>
 
-<!--    detail-->
+    <!--    detail-->
     <string name="detail_amount">Amount: %s VND</string>
     <string name="detail_category">Category: %s</string>
     <string name="detail_note">Note: %s</string>
     <string name="detail_date">Date: %s</string>
-<!--    edit-->
+    <!--    edit-->
     <string name="edit_date">Date : %s</string>
-<!--    settings-->
+    <!--    settings-->
     <string name="dark_mode">Dark mode:</string>
     <string name="language">Language</string>
-<!--    nav header-->
+    <!--    nav header-->
     <string name="header_email">Email</string>
     <string name="currency_vnd"> %s VND</string>
 

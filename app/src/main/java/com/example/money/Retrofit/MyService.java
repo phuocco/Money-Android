@@ -1,6 +1,7 @@
 package com.example.money.Retrofit;
 
 import com.example.money.models.Chart;
+import com.example.money.models.Range;
 import com.example.money.models.Transaction;
 
 import java.util.List;
@@ -53,9 +54,14 @@ public interface MyService {
     @GET("/transaction/plan")
     Call<List<Transaction>> getAllPlanTransactions();
 
-    //last month
+    //select month
     @POST("/transaction/email/")
     Call<List<Transaction>> getAllTransactionsByEmail(@Body Transaction transaction);
+
+    //range date
+    @POST("/transaction/range/")
+    Call<List<Transaction>> getTransactionByRange(@Body Range range);
+
 
 
 //    @GET("/transaction/{id}")

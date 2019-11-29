@@ -12,7 +12,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".SplashActivity"
+        <activity android:name=".RangeActivity"></activity>
+        <activity
+            android:name=".SplashActivity"
             android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -21,14 +23,16 @@
             </intent-filter>
         </activity>
         <activity android:name=".SettingsActivity" />
-        <activity android:name=".Transaction.EditTransactionActivity"
-            android:label="@string/edit_bar"/>
+        <activity
+            android:name=".Transaction.EditTransactionActivity"
+            android:label="@string/edit_bar" />
         <activity android:name=".TestActivity" />
         <activity android:name=".Home.ChartActivity" />
         <activity android:name=".Home.TransactionCategoryActivity" />
         <activity android:name=".Transaction.AddIncomeActivity" />
-        <activity android:name=".Transaction.DetailTransactionActivity"
-            android:label="@string/detail_bar"/>
+        <activity
+            android:name=".Transaction.DetailTransactionActivity"
+            android:label="@string/detail_bar" />
         <activity
             android:name=".Home.HomeActivity"
             android:theme="@style/AppTheme.NoActionBar" />
