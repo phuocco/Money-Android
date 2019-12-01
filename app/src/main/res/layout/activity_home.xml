@@ -21,7 +21,22 @@
         android:id="@+id/toolbar"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-        android:elevation="3dp"/>
+        android:elevation="3dp">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:weightSum="1">
+
+            <ImageButton
+                android:id="@+id/action_bar_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="20dp"
+                android:background="@drawable/ic_today" />
+
+        </RelativeLayout>
+    </androidx.appcompat.widget.Toolbar>
     <FrameLayout
         android:id="@+id/fragment_container"
         android:layout_width="match_parent"

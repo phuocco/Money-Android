@@ -1,13 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <color name="primaryColor">#bdbdbd</color>
-    <color name="primaryLightColor">#efefef</color>
-    <color name="primaryDarkColor">#8d8d8d</color>
-    <color name="secondaryColor">#29b6f6</color>
-    <color name="secondaryLightColor">#73e8ff</color>
-    <color name="secondaryDarkColor">#0086c3</color>
-    <color name="primaryTextColor">#37474f</color>
-    <color name="secondaryTextColor">#111111</color>
-    <color name="card_bg_color">#f6f6f6</color>
+<!--    primary-->
+    <color name="colorPrimary">#42a5f5</color>
+    <color name="colorPrimaryLight">#80d6ff</color>
+    <color name="colorPrimaryDark">#0077c2</color>
+
+
+    <color name="colorAccent">#39356B</color>
+
+<!--    secondary-->
+    <color name="colorSecondary">#e0e0e0</color>
+    <color name="colorSecondaryLight">#ffffff</color>
+    <color name="colorSecondaryDark">#aeaeae</color>
+<!--text -->
+    <color name="colorPrimaryText">#000000</color>
+    <color name="colorSecondaryText">#000000</color>
+    <color name="red">#F70A0A</color>
+    <color name="blue">#3F51B5</color>
+    <color name="green">#4CAF50</color>
+    <color name="yellow">#FFEB3B</color>
+    <color name="card_bg_color">#CFB0B0</color>
+    <color name="card_bg_dark_color">#65163C2E</color>
+    <color name="amount">#BC4D40C9</color>
+    <color name="date">#CD746ACE</color>
+    <color name="card_sum_dark">#CD2E209E</color>
+
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+    <color name="card_ex_light">#34F11313</color>
+    <color name="card_in_light">#2067DF52</color>
+    <color name="card_ex_dark">#D8630C0C</color>
+    <color name="card_in_dark">#D8042904</color>
+    <color name="background_rv">#3CE6D5D5</color>
+    <color name="card_top">#03A9F4</color>
+    <color name="category">#673AB7</color>
+    <color name="category_dark">#FFFFFF</color>
+
+
+
+
 </resources>

@@ -1,6 +1,7 @@
 package com.example.money;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,8 +9,11 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.money.Home.HomeActivity;
 import com.example.money.Retrofit.MyService;
 import com.example.money.Retrofit.RetrofitClient;
 
@@ -20,8 +24,9 @@ import io.reactivex.schedulers.Schedulers;
 import retrofit2.Retrofit;
 
 public class RegisterActivity extends AppCompatActivity {
-    Button button_reg;
+    CardView button_reg;
     EditText reg_email, reg_username, reg_password;
+    TextView register_login;
     String email,username,password;
     CompositeDisposable compositeDisposable  = new CompositeDisposable();
     MyService myService;
@@ -44,9 +49,17 @@ public class RegisterActivity extends AppCompatActivity {
         reg_username = findViewById(R.id.reg_username);
         reg_password = findViewById(R.id.reg_password);
         button_reg =  findViewById(R.id.button_reg);
-
+        register_login = findViewById(R.id.register_login);
         Retrofit retrofitClient = RetrofitClient.getInstance();
         myService = retrofitClient.create(MyService.class);
+
+        register_login.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(RegisterActivity.this,LoginActivity.class));
+                finish();
+            }
+        });
         button_reg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -74,7 +87,7 @@ public class RegisterActivity extends AppCompatActivity {
                     @Override
                     public void accept(String response) throws Exception {
                         Toast.makeText(RegisterActivity.this, "Success", Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(RegisterActivity.this,LoginActivity.class));
+                        startActivity(new Intent(RegisterActivity.this, HomeActivity.class));
                     }
                 })
         );

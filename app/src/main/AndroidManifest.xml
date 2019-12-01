@@ -2,6 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.money">
 
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -9,8 +12,27 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Transaction.AddIncomeActivity"></activity>
-        <activity android:name=".Transaction.DetailTransactionActivity" />
+        <activity android:name=".RangeActivity"></activity>
+        <activity
+            android:name=".SplashActivity"
+            android:theme="@style/SplashTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".SettingsActivity" />
+        <activity
+            android:name=".Transaction.EditTransactionActivity"
+            android:label="@string/edit_bar" />
+        <activity android:name=".TestActivity" />
+        <activity android:name=".Home.ChartActivity" />
+        <activity android:name=".Home.TransactionCategoryActivity" />
+        <activity android:name=".Transaction.AddIncomeActivity" />
+        <activity
+            android:name=".Transaction.DetailTransactionActivity"
+            android:label="@string/detail_bar" />
         <activity
             android:name=".Home.HomeActivity"
             android:theme="@style/AppTheme.NoActionBar" />
@@ -21,15 +43,7 @@
         <activity
             android:name=".LoginActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".MainActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+        <activity android:name=".MainActivity" />
     </application>
-
-    <uses-permission android:name="android.permission.INTERNET" />
 
 </manifest>

@@ -1,43 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:padding="10dp"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:id="@+id/card_transaction"
+    android:paddingTop="10dp"
+    android:paddingBottom="10dp"
+    android:layout_marginTop="5dp"
+    android:layout_marginBottom="5dp"
+    android:orientation="horizontal"
+    android:elevation="5dp"
+    android:layout_marginEnd="10dp"
+    android:layout_marginStart="10dp"
+    android:background="@color/background_rv"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
 
-    <RelativeLayout
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_weight="2"
+      android:orientation="vertical"
+      android:paddingStart="30dp"
+      android:paddingEnd="2dp"
+      android:gravity="start">
+      <TextView
+          android:id="@+id/home_category"
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:textSize="24sp"
+          android:text="1"/>
+      <TextView
+          android:id="@+id/home_date"
+          android:paddingLeft="23dp"
+          android:textColor="@color/date"
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:text="2"/>
+      <TextView
+          android:id="@+id/home_note"
+          android:layout_width="match_parent"
+          android:layout_height="30dp"
+          android:layout_marginTop="5dp"
+          android:textSize="15sp"
+          android:singleLine="false"
+          android:maxLines="2"
+          android:textColor="@color/category"
+          android:text="1"/>
+  </LinearLayout>
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0">
+        android:layout_weight="3"
+        android:gravity="center">
 
         <TextView
-            android:id="@+id/textView"
-            android:layout_width="134dp"
-            android:layout_height="44dp"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentEnd="false"
-            android:layout_alignParentBottom="false"
-            android:layout_marginStart="42dp"
-            android:layout_marginTop="40"
-            android:layout_marginEnd="209dp"
-            android:layout_marginBottom="628dp"
-            android:text="TextView" />
+            android:id="@+id/home_amount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="1"
+            android:textColor="@color/amount"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+</LinearLayout>
 
-        <TextView
-            android:id="@+id/textView3"
-            android:layout_width="92dp"
-            android:layout_height="36dp"
-            android:layout_alignParentEnd="true"
-            android:layout_marginTop="40dp"
-            android:layout_marginEnd="53dp"
-            android:text="TextView" />
-
-    </RelativeLayout>
-</androidx.constraintlayout.widget.ConstraintLayout>

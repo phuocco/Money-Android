@@ -30,6 +30,60 @@ public class Transaction {
     @SerializedName("__v")
     @Expose
     private Integer v;
+    @SerializedName("photo")
+    @Expose
+    private String photo;
+
+
+
+    private String reqEmail;
+    private String month;
+    private String year;
+
+    private String eAmount;
+    private String eCategory;
+    private String eNote;
+    private String eType;
+    private String eDate;
+
+    public Transaction(String eAmount, String eCategory, String eNote, String eDate, String eType) {
+        this.eAmount = eAmount;
+        this.eCategory = eCategory;
+        this.eNote = eNote;
+        this.eDate = eDate;
+        this.eType = eType;
+    }
+
+
+
+
+
+    public Transaction(String reqEmail) {
+        this.reqEmail = reqEmail;
+    }
+
+    public Transaction(String month, String year) {
+        this.month = month;
+        this.year = year;
+    }
+
+    public Transaction(String reqEmail, String month, String year) {
+        this.reqEmail = reqEmail;
+        this.month = month;
+        this.year = year;
+    }
+
+    public String getEvent() {
+        return event;
+    }
+
+    public void setEvent(String event) {
+        this.event = event;
+    }
+
+    @SerializedName("event")
+    @Expose
+    private String event;
 
     public String getId() {
         return id;
@@ -94,5 +148,14 @@ public class Transaction {
     public void setV(Integer v) {
         this.v = v;
     }
+
+    public String getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(String photo) {
+        this.photo = photo;
+    }
+
 
 }
