@@ -178,7 +178,18 @@ public class AddIncomeActivity extends AppCompatActivity {
             SharedPreferences sharedPreferences =  getSharedPreferences(Constants.SHARED_PREFS,MODE_PRIVATE);
             String email = sharedPreferences.getString(Constants.EMAIL,"");
             email = email.replace("\"", "");
-            String amount = ed_amount.getText().toString();
+            boolean isUSD =  sharedPreferences.getBoolean(Constants.ISUSD,false);
+            float rate = sharedPreferences.getFloat(Constants.RATE,0f);
+            email = email.replace("\"", "");
+            String amount;
+            if(isUSD){
+                String textAmount = ed_amount.getText().toString();
+                float amountFloat = Float.parseFloat(textAmount);
+                float finalAmountFloat = amountFloat * rate;
+                amount = String.valueOf(finalAmountFloat);
+            } else {
+                amount = ed_amount.getText().toString();
+            }
             String note = ed_note.getText().toString();
             String category = ed_category;
             String type = ed_type.getText().toString();
@@ -203,7 +214,18 @@ public class AddIncomeActivity extends AppCompatActivity {
                                     SharedPreferences sharedPreferences =  getSharedPreferences(Constants.SHARED_PREFS,MODE_PRIVATE);
                                     String email = sharedPreferences.getString(Constants.EMAIL,"");
                                     email = email.replace("\"", "");
-                                    String amount = ed_amount.getText().toString();
+                                    boolean isUSD =  sharedPreferences.getBoolean(Constants.ISUSD,false);
+                                    float rate = sharedPreferences.getFloat(Constants.RATE,0f);
+                                    email = email.replace("\"", "");
+                                    String amount;
+                                    if(isUSD){
+                                        String textAmount = ed_amount.getText().toString();
+                                        float amountFloat = Float.parseFloat(textAmount);
+                                        float finalAmountFloat = amountFloat * rate;
+                                        amount = String.valueOf(finalAmountFloat);
+                                    } else {
+                                        amount = ed_amount.getText().toString();
+                                    }
                                     String note = ed_note.getText().toString();
                                     String category = ed_category;
                                     String type = "Income";

@@ -1,6 +1,7 @@
 package com.example.money.Retrofit;
 
 import com.example.money.models.Chart;
+import com.example.money.models.Quotes;
 import com.example.money.models.Range;
 import com.example.money.models.Transaction;
 
@@ -49,10 +50,14 @@ public interface MyService {
     @POST("/transaction/getAll")
     Call<List<Transaction>> getAll(@Body Transaction transaction);
 
+    @GET("/transaction/rate")
+    Call<Quotes> getRate();
 
 
-    @GET("/transaction/plan")
-    Call<List<Transaction>> getAllPlanTransactions();
+
+    @POST("/transaction/plan")
+    @FormUrlEncoded
+    Call<List<Transaction>> getAllPlanTransactions(@Field("reqEmail") String email);
 
     //select month
     @POST("/transaction/email/")

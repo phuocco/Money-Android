@@ -58,10 +58,11 @@ public class PlanFragment extends Fragment {
             plan_layout.setBackgroundColor(getResources().getColor(R.color.white));
         }
 
-
+        SharedPreferences sharedPreferences =  getContext().getSharedPreferences(Constants.SHARED_PREFS,MODE_PRIVATE);
+        String email = sharedPreferences.getString(Constants.EMAIL,null).replace("\"", "");
         Retrofit retrofitClient = RetrofitClient.getInstance();
         myService = retrofitClient.create(MyService.class);
-        Call<List<Transaction>> call = myService.getAllPlanTransactions();
+        Call<List<Transaction>> call = myService.getAllPlanTransactions(email);
         call.enqueue(new Callback<List<Transaction>>() {
             @Override
             public void onResponse(Call<List<Transaction>> call, Response<List<Transaction>> response) {

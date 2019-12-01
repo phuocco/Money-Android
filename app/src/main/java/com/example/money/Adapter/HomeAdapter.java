@@ -59,8 +59,16 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.CustomViewHold
        // holder.home_date.setText(transactionList.get(position).getDate());
 
         holder.card_transaction.setAnimation(AnimationUtils.loadAnimation(mContext,R.anim.fade_scale_animation));
-        holder.home_amount.setText(mContext.getResources().getString(R.string.currency_vnd,transactionList.get(position).getAmount()));
+        holder.card_transaction.setAnimation(AnimationUtils.loadAnimation(mContext,R.anim.fade_scale_animation));
+        if (holder.isUSD){
+            String finalString = Float.toString(Float.parseFloat(transactionList.get(position).getAmount())/holder.rate).substring(0,3);
+            holder.home_amount.setText(mContext.getResources().getString(R.string.currency_usd,finalString));
 
+        }
+        else {
+            holder.home_amount.setText(mContext.getResources().getString(R.string.currency_vnd,transactionList.get(position).getAmount()));
+
+        }
 //        if("Expense".equals(transactionList.get(position).getType())){
 //            holder.home_amount.setTextColor(Color.RED);
 //            if (holder.isDark) {
@@ -123,7 +131,8 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.CustomViewHold
     class CustomViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         TextView home_category,home_amount, home_note,home_date,home_event;
         LinearLayout card_transaction;
-        boolean isDark;
+        boolean isDark,isUSD;
+        float rate;
 
         CustomViewHolder(final View itemView) {
             super(itemView);
@@ -136,13 +145,11 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.CustomViewHold
 //            home_event = itemView.findViewById(R.id.home_event);
             SharedPreferences preferences = itemView.getContext().getSharedPreferences(Constants.SHARED_PREFS, MODE_PRIVATE);
             isDark = preferences.getBoolean(Constants.ISDARK,false);
-//            if(isDark){
-//               // setDarkTheme();
-//            }
+            isUSD = preferences.getBoolean(Constants.ISUSD,false);
+            rate = preferences.getFloat(Constants.RATE,0f);
+
         }
-        private void setDarkTheme(){
-            card_transaction.setBackgroundResource(R.drawable.card_bg_dark);
-        }
+
 
         @Override
         public void onClick(View view) {

@@ -80,6 +80,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         }
         SharedPreferences sharedPreferences =  getSharedPreferences(Constants.SHARED_PREFS,MODE_PRIVATE);
         String email = sharedPreferences.getString(Constants.EMAIL,null).replace("\"", "");
+        float rate =sharedPreferences.getFloat(Constants.RATE,0f);
         View headerView = navigationView.getHeaderView(0);
         title = headerView.findViewById(R.id.header_email);
         title.setText(email);

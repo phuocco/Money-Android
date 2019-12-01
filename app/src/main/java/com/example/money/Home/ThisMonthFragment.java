@@ -153,6 +153,8 @@ public class ThisMonthFragment extends Fragment {
         //get email
         SharedPreferences sharedPreferences =  getContext().getSharedPreferences(Constants.SHARED_PREFS,MODE_PRIVATE);
         String email = sharedPreferences.getString(Constants.EMAIL,null).replace("\"", "");
+        final float rate =sharedPreferences.getFloat(Constants.RATE,0f);
+        final boolean isUSD =  sharedPreferences.getBoolean(Constants.ISUSD,false);
 
         //get all by email
         final Transaction transaction =  new Transaction(email);
@@ -169,23 +171,47 @@ public class ThisMonthFragment extends Fragment {
                     myRecyclerView.setAdapter(homeAdapter);
                   //  Toast.makeText(getActivity(), "success", Toast.LENGTH_SHORT).show();
                     Log.d("test2", transactionList.toString());
-                    int sum =0;
-                    int ex = 0;
-                    int in = 0;
-                    for (Transaction transaction1: response.body()){
-                        if("Expense".equals(transaction1.getType()))
-                        {
-                            ex = ex + Integer.parseInt(transaction1.getAmount());
+                    if(isUSD){
+                        float sum =0;
+                        float ex = 0;
+                        float in = 0;
+                        float finalSum = 0,finalEx = 0,finalIn = 0;
+                        for (Transaction transaction1: response.body()){
+                            if("Expense".equals(transaction1.getType()))
+                            {
+                                ex = ex + Float.parseFloat(transaction1.getAmount());
+                                finalEx = ex/rate;
+                            }
+                            if("Income".equals(transaction1.getType()))
+                            {
+                                in = in + Float.parseFloat((transaction1.getAmount()));
+                                finalIn = in/rate;
+                            }
+                            sum = sum + Float.parseFloat((transaction1.getAmount()));
+                            finalSum = sum/rate;
                         }
-                        if("Income".equals(transaction1.getType()))
-                        {
-                            in = in + Integer.parseInt(transaction1.getAmount());
+                        sum_ex.setText(getString(R.string.currency_usd,String.valueOf(finalEx)));
+                        sum_in.setText(getString(R.string.currency_usd,String.valueOf(finalIn)));
+                        sum_all.setText(getString(R.string.currency_usd,String.valueOf(finalSum)));
+                    } else {
+                        int sum =0;
+                        int ex = 0;
+                        int in = 0;
+                        for (Transaction transaction1: response.body()){
+                            if("Expense".equals(transaction1.getType()))
+                            {
+                                ex = ex + Integer.parseInt(transaction1.getAmount());
+                            }
+                            if("Income".equals(transaction1.getType()))
+                            {
+                                in = in + Integer.parseInt((transaction1.getAmount()));
+                            }
+                            sum = sum + Integer.parseInt((transaction1.getAmount()));
                         }
-                        sum = sum + Integer.parseInt(transaction1.getAmount());
+                        sum_ex.setText(getString(R.string.currency_vnd,String.valueOf(ex)));
+                        sum_in.setText(getString(R.string.currency_vnd,String.valueOf(in)));
+                        sum_all.setText(getString(R.string.currency_vnd,String.valueOf(sum)));
                     }
-                    sum_ex.setText(getString(R.string.currency_vnd,String.valueOf(ex)));
-                    sum_in.setText(getString(R.string.currency_vnd,String.valueOf(in)));
-                    sum_all.setText(getString(R.string.currency_vnd,String.valueOf(sum)));
 
             }
             }

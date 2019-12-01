@@ -38,10 +38,11 @@ public class SplashActivity extends AppCompatActivity {
 
                 .withAfterLogoText("Money Management")
                 .withLogo(R.drawable.logo);
-
-
         config.getAfterLogoTextView().setTextColor(Color.WHITE);
         View easySplashScreen = config.create();
         setContentView(easySplashScreen);
+
+
+
     }
 }

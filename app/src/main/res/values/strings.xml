@@ -35,7 +35,9 @@
     <!--    nav header-->
     <string name="header_email">Email</string>
     <string name="currency_vnd"> %s VND</string>
-
+    <string name="currency_usd"> %s USD</string>
     <string name="detail_bar">Detail transaction</string>
     <string name="edit_bar">Edit transaction</string>
+    <!--    settings-->
+    <string name="currency_settings">Currency</string>
 </resources>

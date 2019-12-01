@@ -11,6 +11,8 @@ public class Constants {
     //shared
     public static final String SHARED_PREFS = "sharedPrefs";
     public static final String EMAIL = "email";
+    public static final String RATE = "rate";
+    public static final String ISUSD = "isUSD";
     public static final String ISDARK = "isDark";
     public static final String ID = "id";
 

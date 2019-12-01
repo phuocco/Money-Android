@@ -5,21 +5,18 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.money.Home.ChartActivity;
 import com.example.money.Home.HomeActivity;
 import com.example.money.Retrofit.MyService;
 import com.example.money.Retrofit.RetrofitClient;
 import com.example.money.Transaction.AddExpenseActivity;
 import com.example.money.Transaction.AddIncomeActivity;
-import com.example.money.Transaction.EditTransactionActivity;
-import com.example.money.models.Transaction;
-
-import java.util.List;
+import com.example.money.models.Quotes;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -33,6 +30,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public static final String EMAIL = "email";
     private MyService myService;
     RetrofitClient retrofitClient;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,6 +43,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         in = findViewById(R.id.buttonin);
         home = findViewById(R.id.buttonhome);
         tv = findViewById(R.id.textView2);
+
         SharedPreferences sharedPreferences =  getSharedPreferences(SHARED_PREFS,MODE_PRIVATE);
         String email = sharedPreferences.getString(EMAIL,"").replace("\"", "");
         email = email.replace("\"", "");
@@ -57,8 +56,29 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
         }
-        tv.setText(email);
 
+        Retrofit retrofitClient = RetrofitClient.getInstance();
+        myService = retrofitClient.create(MyService.class);
+        Call<Quotes> call = myService.getRate();
+        call.enqueue(new Callback<Quotes>() {
+            @Override
+            public void onResponse(Call<Quotes> call, Response<Quotes> response) {
+                if (response.isSuccessful()){
+                    response.body();
+                    double rate = response.body().getUSDVND();
+                    SharedPreferences sharedPreferences = getSharedPreferences(Constants.SHARED_PREFS,MODE_PRIVATE);
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putFloat(Constants.RATE,(float)rate);
+                    editor.apply();
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Quotes> call, Throwable t) {
+
+            }
+        });
 
 
 
