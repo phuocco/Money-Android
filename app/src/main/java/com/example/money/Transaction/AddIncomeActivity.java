@@ -16,7 +16,6 @@ import android.provider.MediaStore;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -43,6 +42,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 import java.util.UUID;
 
 import retrofit2.Call;
@@ -51,17 +51,17 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 
 public class AddIncomeActivity extends AppCompatActivity {
-    TextInputEditText ed_email,ed_amount,ed_note;
-    CardView button_add_in;
+    TextInputEditText mEditTextAmount, mEditTextNote;
+    CardView mButtonAddIncome;
     MyService myService;
-    ImageView imageView;
-    TextView tv_add_date;
-    String ed_category;
-    Spinner spn_category;
-    EditText ed_type;
+    ImageView mImageView;
+    TextView mTextViewAddDate;
+    String mStrCategory;
+    Spinner mSpnCategory;
+    EditText mEditTextType;
     //firebase
-    FirebaseStorage storage;
-    StorageReference storageReference;
+    FirebaseStorage mStorage;
+    StorageReference mStorageReference;
     private final int PICK_IMAGE_REQUEST = 71;
     Uri filePath;
 
@@ -77,11 +77,11 @@ public class AddIncomeActivity extends AppCompatActivity {
 
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this,R.layout.support_simple_spinner_dropdown_item,list);
         adapter.setDropDownViewResource(android.R.layout.simple_list_item_single_choice);
-        spn_category.setAdapter(adapter);
-        spn_category.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        mSpnCategory.setAdapter(adapter);
+        mSpnCategory.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                ed_category = spn_category.getSelectedItem().toString();
+                mStrCategory = mSpnCategory.getSelectedItem().toString();
             }
 
             @Override
@@ -90,14 +90,14 @@ public class AddIncomeActivity extends AppCompatActivity {
             }
         });
 
-        imageView.setOnClickListener(new View.OnClickListener() {
+        mImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 chooseImage();
             }
         });
 
-        button_add_in.setOnClickListener(new View.OnClickListener() {
+        mButtonAddIncome.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                uploadImage();
@@ -113,17 +113,17 @@ public class AddIncomeActivity extends AppCompatActivity {
 
 
 
-        storage = FirebaseStorage.getInstance();
-        storageReference = storage.getReference();
-        imageView = findViewById(R.id.image_add_income);
+        mStorage = FirebaseStorage.getInstance();
+        mStorageReference = mStorage.getReference();
+        mImageView = findViewById(R.id.image_add_income);
 
-        ed_amount =findViewById(R.id.add_in_amount);
-        ed_note =findViewById(R.id.add_in_note);
-        spn_category =findViewById(R.id.add_in_category);
-        ed_type =findViewById(R.id.add_in_type);
-        button_add_in = findViewById(R.id.button_add_in);
-        tv_add_date =findViewById(R.id.add_in_date);
-        tv_add_date.setOnClickListener(new View.OnClickListener() {
+        mEditTextAmount =findViewById(R.id.add_in_amount);
+        mEditTextNote =findViewById(R.id.add_in_note);
+        mSpnCategory =findViewById(R.id.add_in_category);
+        mEditTextType =findViewById(R.id.add_in_type);
+        mButtonAddIncome = findViewById(R.id.button_add_in);
+        mTextViewAddDate =findViewById(R.id.add_in_date);
+        mTextViewAddDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 pickDate();
@@ -140,10 +140,10 @@ public class AddIncomeActivity extends AppCompatActivity {
             @Override
             public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
                 calendar.set(i,i1,i2);
-                SimpleDateFormat simpleDateFormat=  new SimpleDateFormat("yyyy-MM-dd");
+                SimpleDateFormat simpleDateFormat=  new SimpleDateFormat("yyyy-MM-dd", Locale.US);
                 String date = simpleDateFormat.format(calendar.getTime());
                 //  String result= getString(R.string.selected_date,ic_date);
-                tv_add_date.setText(getString(R.string.selected_date, date));
+                mTextViewAddDate.setText(getString(R.string.selected_date, date));
             }
         },nam,thang,ngay);
         datePickerDialog.show();
@@ -164,7 +164,7 @@ public class AddIncomeActivity extends AppCompatActivity {
             filePath = data.getData();
             try {
                 Bitmap bitmap =  MediaStore.Images.Media.getBitmap(getContentResolver(),filePath);
-                imageView.setImageBitmap(bitmap);
+                mImageView.setImageBitmap(bitmap);
             } catch (IOException e){
                 e.printStackTrace();
             }
@@ -183,24 +183,24 @@ public class AddIncomeActivity extends AppCompatActivity {
             email = email.replace("\"", "");
             String amount;
             if(isUSD){
-                String textAmount = ed_amount.getText().toString();
+                String textAmount = mEditTextAmount.getText().toString();
                 float amountFloat = Float.parseFloat(textAmount);
                 float finalAmountFloat = amountFloat * rate;
                 amount = String.valueOf(finalAmountFloat);
             } else {
-                amount = ed_amount.getText().toString();
+                amount = mEditTextAmount.getText().toString();
             }
-            String note = ed_note.getText().toString();
-            String category = ed_category;
-            String type = ed_type.getText().toString();
-            String date = tv_add_date.getText().toString();
+            String note = mEditTextNote.getText().toString();
+            String category = mStrCategory;
+            String type = mEditTextType.getText().toString();
+            String date = mTextViewAddDate.getText().toString();
             String photo = "";
             addTransaction(email,amount,category,type,note,date,photo);
         } else {
             final ProgressDialog progressDialog = new ProgressDialog(this);
             progressDialog.setTitle("uploading");
             progressDialog.show();
-            final   StorageReference ref = storageReference.child("images/" + UUID.randomUUID().toString());
+            final   StorageReference ref = mStorageReference.child("images/" + UUID.randomUUID().toString());
             ref.putFile(filePath)
                     .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
@@ -219,17 +219,17 @@ public class AddIncomeActivity extends AppCompatActivity {
                                     email = email.replace("\"", "");
                                     String amount;
                                     if(isUSD){
-                                        String textAmount = ed_amount.getText().toString();
+                                        String textAmount = mEditTextAmount.getText().toString();
                                         float amountFloat = Float.parseFloat(textAmount);
                                         float finalAmountFloat = amountFloat * rate;
                                         amount = String.valueOf(finalAmountFloat);
                                     } else {
-                                        amount = ed_amount.getText().toString();
+                                        amount = mEditTextAmount.getText().toString();
                                     }
-                                    String note = ed_note.getText().toString();
-                                    String category = ed_category;
+                                    String note = mEditTextNote.getText().toString();
+                                    String category = mStrCategory;
                                     String type = "Income";
-                                    String date = tv_add_date.getText().toString();
+                                    String date = mTextViewAddDate.getText().toString();
                                     String photo = uri.toString();
                                     //   Toast.makeText(AddExpenseActivity.this, ""+photo, Toast.LENGTH_SHORT).show();
                                     addTransaction(email,amount,category,type,note,date,photo);

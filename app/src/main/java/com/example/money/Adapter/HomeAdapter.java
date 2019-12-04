@@ -11,13 +11,11 @@ import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.money.Constants;
-import com.example.money.Home.HomeActivity;
 import com.example.money.R;
 import com.example.money.Transaction.DetailTransactionActivity;
 import com.example.money.models.Transaction;
@@ -32,14 +30,12 @@ import java.util.Locale;
 import static android.content.Context.MODE_PRIVATE;
 
 public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.CustomViewHolder>{
-    Transaction transaction;
-    Context mContext;
+    private Context mContext;
     private List<Transaction> transactionList;
 
     public HomeAdapter(List<Transaction> transactionList) {
         this.transactionList = transactionList;
     }
-
 
     @NonNull
     @Override
@@ -53,63 +49,37 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.CustomViewHold
     @Override
     public void onBindViewHolder(@NonNull CustomViewHolder holder, int position) {
 
-
-
-
-       // holder.home_date.setText(transactionList.get(position).getDate());
-
-        holder.card_transaction.setAnimation(AnimationUtils.loadAnimation(mContext,R.anim.fade_scale_animation));
-        holder.card_transaction.setAnimation(AnimationUtils.loadAnimation(mContext,R.anim.fade_scale_animation));
+        holder.mCardTransaction.setAnimation(AnimationUtils.loadAnimation(mContext,R.anim.fade_scale_animation));
+        holder.mCardTransaction.setAnimation(AnimationUtils.loadAnimation(mContext,R.anim.fade_scale_animation));
         if (holder.isUSD){
             String finalString = Float.toString(Float.parseFloat(transactionList.get(position).getAmount())/holder.rate).substring(0,3);
-            holder.home_amount.setText(mContext.getResources().getString(R.string.currency_usd,finalString));
-
+            holder.mHomeAmount.setText(mContext.getResources().getString(R.string.currency_usd,finalString));
         }
         else {
-            holder.home_amount.setText(mContext.getResources().getString(R.string.currency_vnd,transactionList.get(position).getAmount()));
-
+            holder.mHomeAmount.setText(mContext.getResources().getString(R.string.currency_vnd,transactionList.get(position).getAmount()));
         }
-//        if("Expense".equals(transactionList.get(position).getType())){
-//            holder.home_amount.setTextColor(Color.RED);
-//            if (holder.isDark) {
-//                holder.card_transaction.setBackgroundResource(R.drawable.card_expense_light);
-//            } else {
-//                holder.card_transaction.setBackgroundResource(R.drawable.card_bg_dark);
-//            }
-//        } else {
-//            holder.home_amount.setTextColor(Color.GREEN);
-//            if (holder.isDark) {
-//                holder.card_transaction.setBackgroundResource(R.drawable.card_income_light);
-//            } else {
-//                holder.card_transaction.setBackgroundResource(R.drawable.card_bg);
-//            }
-//        }
 
         if(holder.isDark){
             if("Expense".equals(transactionList.get(position).getType())){
-                holder.home_amount.setTextColor(Color.RED);
-                holder.card_transaction.setBackgroundResource(R.drawable.card_expense_dark);
-
+                holder.mHomeAmount.setTextColor(Color.RED);
+                holder.mCardTransaction.setBackgroundResource(R.drawable.card_expense_dark);
             } else {
-                holder.home_amount.setTextColor(Color.GREEN);
-                holder.card_transaction.setBackgroundResource(R.drawable.card_income_dark);
+                holder.mHomeAmount.setTextColor(Color.GREEN);
+                holder.mCardTransaction.setBackgroundResource(R.drawable.card_income_dark);
             }
-            holder.home_category.setTextColor(Color.rgb(255,255,255));
+            holder.mHomeCategory.setTextColor(Color.rgb(255,255,255));
         } else {
-            holder.home_category.setTextColor(Color.rgb(103,58,183));
-
+            holder.mHomeCategory.setTextColor(Color.rgb(103,58,183));
             if("Expense".equals(transactionList.get(position).getType())){
-                holder.home_amount.setTextColor(Color.RED);
-                holder.card_transaction.setBackgroundResource(R.drawable.card_expense_light);
-
+                holder.mHomeAmount.setTextColor(Color.RED);
+                holder.mCardTransaction.setBackgroundResource(R.drawable.card_expense_light);
             } else {
-                holder.home_amount.setTextColor(Color.GREEN);
-                holder.card_transaction.setBackgroundResource(R.drawable.card_income_light);
+                holder.mHomeAmount.setTextColor(Color.GREEN);
+                holder.mCardTransaction.setBackgroundResource(R.drawable.card_income_light);
             }
         }
-        holder.home_category.setText(transactionList.get(position).getCategory());
-        holder.home_note.setText(transactionList.get(position).getNote());
-//        holder.home_event.setText(transactionList.get(position).getEvent());
+        holder.mHomeCategory.setText(transactionList.get(position).getCategory());
+        holder.mHomeNote.setText(transactionList.get(position).getNote());
         //ic_date
         DateFormat outputFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.US);
         DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.US);
@@ -117,7 +87,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.CustomViewHold
         try {
             Date date = inputFormat.parse(inputText);
             String outputText = outputFormat.format(date);
-            holder.home_date.setText(outputText);
+            holder.mHomeDate.setText(outputText);
         } catch (ParseException ex) {
             Log.v("Exception", ex.getLocalizedMessage());
         }
@@ -129,20 +99,20 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.CustomViewHold
     }
 
     class CustomViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
-        TextView home_category,home_amount, home_note,home_date,home_event;
-        LinearLayout card_transaction;
+        TextView mHomeCategory, mHomeAmount, mHomeNote, mHomeDate;
+        LinearLayout mCardTransaction;
         boolean isDark,isUSD;
         float rate;
 
         CustomViewHolder(final View itemView) {
             super(itemView);
             itemView.setOnClickListener(this);
-            card_transaction = itemView.findViewById(R.id.card_transaction);
-            home_category = itemView.findViewById(R.id.home_category);
-            home_amount = itemView.findViewById(R.id.home_amount);
-            home_date = itemView.findViewById(R.id.home_date);
-            home_note = itemView.findViewById(R.id.home_note);
-//            home_event = itemView.findViewById(R.id.home_event);
+            mCardTransaction = itemView.findViewById(R.id.card_transaction);
+            mHomeCategory = itemView.findViewById(R.id.home_category);
+            mHomeAmount = itemView.findViewById(R.id.home_amount);
+            mHomeDate = itemView.findViewById(R.id.home_date);
+            mHomeNote = itemView.findViewById(R.id.home_note);
+            // SharedPreferences
             SharedPreferences preferences = itemView.getContext().getSharedPreferences(Constants.SHARED_PREFS, MODE_PRIVATE);
             isDark = preferences.getBoolean(Constants.ISDARK,false);
             isUSD = preferences.getBoolean(Constants.ISUSD,false);
@@ -155,7 +125,6 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.CustomViewHold
         public void onClick(View view) {
             Context context = view.getContext();
             Transaction transaction = transactionList.get(getLayoutPosition());
-           // Toast.makeText(context, ""+transaction.getId(), Toast.LENGTH_SHORT).show();
             Intent a = new Intent(context,DetailTransactionActivity.class);
             a.putExtra("TransactionID",transaction.getId());
             context.startActivity(a);

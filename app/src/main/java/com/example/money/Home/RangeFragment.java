@@ -36,12 +36,10 @@ import static android.content.Context.MODE_PRIVATE;
  * A simple {@link Fragment} subclass.
  */
 public class RangeFragment extends Fragment {
-    HomeAdapter homeAdapter;
     private RecyclerView myRecyclerView;
-    RelativeLayout range_layout;
+    private RelativeLayout mRangeLayout;
     private MyService myService;
-    RetrofitClient retrofitClient;
-    boolean isDark =  false;
+    private boolean isDark =  false;
 
     public RangeFragment() {
         // Required empty public constructor
@@ -52,7 +50,7 @@ public class RangeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_range, container, false);
-        range_layout = view.findViewById(R.id.range_layout);
+        mRangeLayout = view.findViewById(R.id.range_layout);
 
         String startTime =  getArguments().getString("startDate");
         String endTime =  getArguments().getString("endDate");
@@ -62,9 +60,9 @@ public class RangeFragment extends Fragment {
         Log.d("test",startTime+ " "+ endTime);
         isDark = getThemeStatePref();
         if (isDark){
-            range_layout.setBackgroundColor(getResources().getColor(R.color.black));
+            mRangeLayout.setBackgroundColor(getResources().getColor(R.color.black));
         } else {
-            range_layout.setBackgroundColor(getResources().getColor(R.color.white));
+            mRangeLayout.setBackgroundColor(getResources().getColor(R.color.white));
         }
         myRecyclerView = (RecyclerView) view.findViewById(R.id.rv_range);
         getTransactionByRange(startTime,endTime);
@@ -90,21 +88,20 @@ public class RangeFragment extends Fragment {
                     myRecyclerView.setLayoutManager(layoutManager);
                     myRecyclerView.setAdapter(homeAdapter);
                     homeAdapter.notifyDataSetChanged();
-                    Toast.makeText(getActivity(), "success", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "Success", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<List<Transaction>> call, Throwable t) {
-
+                Toast.makeText(getActivity(), "Fail", Toast.LENGTH_SHORT).show();
             }
         });
     }
 
-
     private boolean getThemeStatePref(){
         SharedPreferences preferences = getContext().getSharedPreferences(Constants.SHARED_PREFS, MODE_PRIVATE);
-        boolean isDark = preferences.getBoolean(Constants.ISDARK,false);
+        isDark = preferences.getBoolean(Constants.ISDARK,false);
         return isDark;
     }
 

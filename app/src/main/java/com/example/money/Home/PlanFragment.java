@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,12 +35,11 @@ import static android.content.Context.MODE_PRIVATE;
  * A simple {@link Fragment} subclass.
  */
 public class PlanFragment extends Fragment {
-    private HomeAdapter homeAdapter;
     private RecyclerView myRecyclerView;
     private MyService myService;
-    RetrofitClient retrofitClient;
-    boolean isDark =  false;
-    FrameLayout plan_layout;
+    private boolean isDark =  false;
+    private FrameLayout mPlanLayout;
+    private String email;
     public PlanFragment() {
         // Required empty public constructor
     }
@@ -50,16 +50,20 @@ public class PlanFragment extends Fragment {
                              Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_plan, container, false);
         myRecyclerView = view.findViewById(R.id.rv_plan);
-        plan_layout = view.findViewById(R.id.plan_layout);
+        mPlanLayout = view.findViewById(R.id.plan_layout);
         isDark = getThemeStatePref();
         if (isDark){
-            plan_layout.setBackgroundColor(getResources().getColor(R.color.black));
+            mPlanLayout.setBackgroundColor(getResources().getColor(R.color.black));
         } else {
-            plan_layout.setBackgroundColor(getResources().getColor(R.color.white));
+            mPlanLayout.setBackgroundColor(getResources().getColor(R.color.white));
         }
 
         SharedPreferences sharedPreferences =  getContext().getSharedPreferences(Constants.SHARED_PREFS,MODE_PRIVATE);
-        String email = sharedPreferences.getString(Constants.EMAIL,null).replace("\"", "");
+        try {
+            email = sharedPreferences.getString(Constants.EMAIL,null).replace("\"", "");
+        } catch (NullPointerException n){
+            Log.d("error",n.toString());
+        }
         Retrofit retrofitClient = RetrofitClient.getInstance();
         myService = retrofitClient.create(MyService.class);
         Call<List<Transaction>> call = myService.getAllPlanTransactions(email);
@@ -86,7 +90,7 @@ public class PlanFragment extends Fragment {
     }
     private boolean getThemeStatePref(){
         SharedPreferences preferences = getContext().getSharedPreferences(Constants.SHARED_PREFS, MODE_PRIVATE);
-        boolean isDark = preferences.getBoolean(Constants.ISDARK,false);
+        isDark = preferences.getBoolean(Constants.ISDARK,false);
         return isDark;
     }
 }

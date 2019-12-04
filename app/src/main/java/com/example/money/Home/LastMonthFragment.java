@@ -1,8 +1,7 @@
 package com.example.money.Home;
 
 
-import android.app.DatePickerDialog;
-import android.content.Context;
+
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
@@ -14,9 +13,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.DatePicker;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.money.Adapter.HomeAdapter;
@@ -26,7 +23,7 @@ import com.example.money.Retrofit.MyService;
 import com.example.money.Retrofit.RetrofitClient;
 import com.example.money.models.Transaction;
 
-import java.text.SimpleDateFormat;
+
 import java.util.Calendar;
 import java.util.List;
 
@@ -41,12 +38,10 @@ import static android.content.Context.MODE_PRIVATE;
  * A simple {@link Fragment} subclass.
  */
 public class LastMonthFragment extends Fragment {
-    HomeAdapter homeAdapter;
     private RecyclerView myRecyclerView;
-    RelativeLayout last_month_layout;
+    private RelativeLayout last_month_layout;
     private MyService myService;
-    RetrofitClient retrofitClient;
-    boolean isDark =  false;
+    private boolean isDark =  false;
     public LastMonthFragment() {
         // Required empty public constructor
     }
@@ -70,11 +65,10 @@ public class LastMonthFragment extends Fragment {
         final  int year = calendar.get(Calendar.YEAR);
 
         getTransactionByMonth( String.valueOf(month), String.valueOf(year));
-        myRecyclerView = (RecyclerView) view.findViewById(R.id.rv_lastmonth);
-
+        myRecyclerView =  view.findViewById(R.id.rv_lastmonth);
         return view;
     }
-
+    // get transaction by month
     private void getTransactionByMonth(String month, String year) {
         SharedPreferences sharedPreferences =  getContext().getSharedPreferences(Constants.SHARED_PREFS,MODE_PRIVATE);
         String email = sharedPreferences.getString(Constants.EMAIL,null).replace("\"", "");
@@ -95,19 +89,19 @@ public class LastMonthFragment extends Fragment {
                     myRecyclerView.setLayoutManager(layoutManager);
                     myRecyclerView.setAdapter(homeAdapter);
                     homeAdapter.notifyDataSetChanged();
-                    Toast.makeText(getActivity(), "success", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "Success", Toast.LENGTH_SHORT).show();
                 }
             }
             @Override
             public void onFailure(Call<List<Transaction>> call, Throwable t) {
-
+                Toast.makeText(getActivity(), "Fail", Toast.LENGTH_SHORT).show();
             }
         });
     }
 
     private boolean getThemeStatePref(){
         SharedPreferences preferences = getContext().getSharedPreferences(Constants.SHARED_PREFS, MODE_PRIVATE);
-        boolean isDark = preferences.getBoolean(Constants.ISDARK,false);
+        isDark = preferences.getBoolean(Constants.ISDARK,false);
         return isDark;
     }
 }

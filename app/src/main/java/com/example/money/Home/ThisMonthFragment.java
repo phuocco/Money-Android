@@ -1,10 +1,8 @@
 package com.example.money.Home;
 
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -31,10 +29,7 @@ import com.example.money.Transaction.AddExpenseActivity;
 import com.example.money.Transaction.AddIncomeActivity;
 import com.example.money.models.Transaction;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.navigation.NavigationView;
-import com.rengwuxian.materialedittext.Colors;
 
-import java.util.Calendar;
 import java.util.List;
 
 import retrofit2.Call;
@@ -48,91 +43,87 @@ import static android.content.Context.MODE_PRIVATE;
  * A simple {@link Fragment} subclass.
  */
 public class ThisMonthFragment extends Fragment {
-    HomeAdapter homeAdapter;
     private RecyclerView myRecyclerView;
-    FloatingActionButton floatingActionButton;
-    RelativeLayout this_month_layout;
+    private RelativeLayout mThisMonthLayout;
     private MyService myService;
-    RetrofitClient retrofitClient;
-    boolean isDark =  false;
-    TextView sum_ex,sum_in,sum_all;
-    TextView title;
-    LinearLayout sum_this_month;
+    private boolean isDark =  false;
+    private TextView mSumExpense;
+    private TextView mSumIncome;
+    private TextView mSumAll;
+    private TextView mTitle;
+    LinearLayout mSumThisMonth;
     //fab
-    private FloatingActionButton fab_home, fab_add_ex, fab_add_in;
-    private Animation fab_open, fab_close, fab_clock, fab_anticlock;
-    TextView tv_add_ex, tv_add_in;
+    private FloatingActionButton mFabHome, mFabAllExpense, mFabAllIncome;
+    private Animation mFabOpen, mFabClose, mFabClock, mFabAntiClock;
+    private TextView mTextViewAddExpense;
+    private TextView mTextViewAddIncome;
     Boolean isOpen = false;
 
-    LinearLayout card;
 
     public ThisMonthFragment() {
         // Required empty public constructor
     }
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_this_month, container, false);
-        this_month_layout = view.findViewById(R.id.this_month_layout);
-        title = view.findViewById(R.id.action_bar_title);
-        sum_ex = view.findViewById(R.id.this_month_total_ex);
-        sum_in = view.findViewById(R.id.this_month_total_in);
-        sum_all = view.findViewById(R.id.this_month_total_all);
+        mThisMonthLayout = view.findViewById(R.id.this_month_layout);
+        mTitle = view.findViewById(R.id.action_bar_title);
+        mSumExpense = view.findViewById(R.id.this_month_total_ex);
+        mSumIncome = view.findViewById(R.id.this_month_total_in);
+        mSumAll = view.findViewById(R.id.this_month_total_all);
         myRecyclerView = view.findViewById(R.id.rv_thismonth);
-        sum_this_month = view.findViewById(R.id.sum_this_month);
+        mSumThisMonth = view.findViewById(R.id.sum_this_month);
         //fab
-        fab_home = view.findViewById(R.id.fab_home);
-        fab_add_ex = view.findViewById(R.id.fab_add_ex);
-        fab_add_in = view.findViewById(R.id.fab_add_in);
-        fab_close = AnimationUtils.loadAnimation(getContext().getApplicationContext(), R.anim.fab_close);
-        fab_open = AnimationUtils.loadAnimation(getContext().getApplicationContext(), R.anim.fab_open);
-        fab_clock = AnimationUtils.loadAnimation(getContext().getApplicationContext(), R.anim.fab_rotate_clock);
-        fab_anticlock = AnimationUtils.loadAnimation(getContext().getApplicationContext(), R.anim.fab_rotate_anticlock);
-        tv_add_ex = (TextView) view.findViewById(R.id.tv_add_ex);
-        tv_add_in = (TextView) view.findViewById(R.id.tv_add_in);
+        mFabHome = view.findViewById(R.id.fab_home);
+        mFabAllExpense = view.findViewById(R.id.fab_add_ex);
+        mFabAllIncome = view.findViewById(R.id.fab_add_in);
+        mFabClose = AnimationUtils.loadAnimation(getContext().getApplicationContext(), R.anim.fab_close);
+        mFabOpen = AnimationUtils.loadAnimation(getContext().getApplicationContext(), R.anim.fab_open);
+        mFabClock = AnimationUtils.loadAnimation(getContext().getApplicationContext(), R.anim.fab_rotate_clock);
+        mFabAntiClock = AnimationUtils.loadAnimation(getContext().getApplicationContext(), R.anim.fab_rotate_anticlock);
+        mTextViewAddExpense = view.findViewById(R.id.tv_add_ex);
+        mTextViewAddIncome = view.findViewById(R.id.tv_add_in);
 
-
-        fab_home.setOnClickListener(new View.OnClickListener() {
+        mFabHome.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (isOpen) {
-                    tv_add_ex.setVisibility(View.INVISIBLE);
-                    tv_add_in.setVisibility(View.INVISIBLE);
-                    tv_add_ex.setAnimation(fab_close);
-                    tv_add_in.setAnimation(fab_close);
-                    fab_add_in.startAnimation(fab_close);
-                    fab_add_ex.startAnimation(fab_close);
-                    fab_home.startAnimation(fab_anticlock);
-                    fab_add_in.setClickable(false);
-                    fab_add_ex.setClickable(false);
+                    mTextViewAddExpense.setVisibility(View.INVISIBLE);
+                    mTextViewAddIncome.setVisibility(View.INVISIBLE);
+                    mTextViewAddExpense.setAnimation(mFabClose);
+                    mTextViewAddIncome.setAnimation(mFabClose);
+                    mFabAllIncome.startAnimation(mFabClose);
+                    mFabAllExpense.startAnimation(mFabClose);
+                    mFabHome.startAnimation(mFabAntiClock);
+                    mFabAllIncome.setClickable(false);
+                    mFabAllExpense.setClickable(false);
                     isOpen = false;
                 } else {
-                    tv_add_ex.setVisibility(View.VISIBLE);
-                    tv_add_in.setVisibility(View.VISIBLE);
-                    fab_add_in.startAnimation(fab_open);
-                    fab_add_ex.startAnimation(fab_open);
-                    tv_add_ex.setAnimation(fab_open);
-                    tv_add_in.setAnimation(fab_open);
-                    fab_home.startAnimation(fab_clock);
-                    fab_add_in.setClickable(true);
-                    fab_add_ex.setClickable(true);
+                    mTextViewAddExpense.setVisibility(View.VISIBLE);
+                    mTextViewAddIncome.setVisibility(View.VISIBLE);
+                    mFabAllIncome.startAnimation(mFabOpen);
+                    mFabAllExpense.startAnimation(mFabOpen);
+                    mTextViewAddExpense.setAnimation(mFabOpen);
+                    mTextViewAddIncome.setAnimation(mFabOpen);
+                    mFabHome.startAnimation(mFabClock);
+                    mFabAllIncome.setClickable(true);
+                    mFabAllExpense.setClickable(true);
                     isOpen = true;
                 }
             }
         });
-        fab_add_ex.setOnClickListener(new View.OnClickListener() {
+        mFabAllExpense.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(getContext(), AddExpenseActivity.class));
             }
         });
-        fab_add_in.setOnClickListener(new View.OnClickListener() {
+        mFabAllIncome.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(getContext(), AddIncomeActivity.class));
-
             }
         });
 
@@ -141,13 +132,11 @@ public class ThisMonthFragment extends Fragment {
         myService = retrofitClient.create(MyService.class);
         isDark = getThemeStatePref();
         if (isDark){
-            this_month_layout.setBackgroundColor(getResources().getColor(R.color.black));
-            Toast.makeText(getActivity(), "dark", Toast.LENGTH_SHORT).show();
-            sum_this_month.setBackgroundResource(R.drawable.card_sum_dark);
+            mThisMonthLayout.setBackgroundColor(getResources().getColor(R.color.black));
+            mSumThisMonth.setBackgroundResource(R.drawable.card_sum_dark);
         } else {
-            this_month_layout.setBackgroundColor(getResources().getColor(R.color.white));
-            Toast.makeText(getActivity(), "white", Toast.LENGTH_SHORT).show();
-            sum_this_month.setBackgroundResource(R.drawable.card_sum_light);
+            mThisMonthLayout.setBackgroundColor(getResources().getColor(R.color.white));
+            mSumThisMonth.setBackgroundResource(R.drawable.card_sum_light);
 
         }
         //get email
@@ -169,55 +158,54 @@ public class ThisMonthFragment extends Fragment {
                     myRecyclerView.setLayoutManager(layoutManager);
                     homeAdapter.notifyDataSetChanged();
                     myRecyclerView.setAdapter(homeAdapter);
-                  //  Toast.makeText(getActivity(), "success", Toast.LENGTH_SHORT).show();
                     Log.d("test2", transactionList.toString());
                     if(isUSD){
-                        float sum =0;
-                        float ex = 0;
-                        float in = 0;
+                        float sumary =0;
+                        float expense = 0;
+                        float income = 0;
                         float finalSum = 0,finalEx = 0,finalIn = 0;
                         for (Transaction transaction1: response.body()){
                             if("Expense".equals(transaction1.getType()))
                             {
-                                ex = ex + Float.parseFloat(transaction1.getAmount());
-                                finalEx = ex/rate;
+                                expense = expense + Float.parseFloat(transaction1.getAmount());
+                                finalEx = expense/rate;
                             }
                             if("Income".equals(transaction1.getType()))
                             {
-                                in = in + Float.parseFloat((transaction1.getAmount()));
-                                finalIn = in/rate;
+                                income = income + Float.parseFloat((transaction1.getAmount()));
+                                finalIn = income /rate;
                             }
-                            sum = sum + Float.parseFloat((transaction1.getAmount()));
-                            finalSum = sum/rate;
+                            sumary = sumary + Float.parseFloat((transaction1.getAmount()));
+                            finalSum = sumary/rate;
                         }
-                        sum_ex.setText(getString(R.string.currency_usd,String.valueOf(finalEx)));
-                        sum_in.setText(getString(R.string.currency_usd,String.valueOf(finalIn)));
-                        sum_all.setText(getString(R.string.currency_usd,String.valueOf(finalSum)));
+                        mSumExpense.setText(getString(R.string.currency_usd,String.valueOf(finalEx)));
+                        mSumIncome.setText(getString(R.string.currency_usd,String.valueOf(finalIn)));
+                        mSumAll.setText(getString(R.string.currency_usd,String.valueOf(finalSum)));
                     } else {
-                        int sum =0;
-                        int ex = 0;
-                        int in = 0;
+                        int summary =0;
+                        int expense = 0;
+                        int income = 0;
                         for (Transaction transaction1: response.body()){
                             if("Expense".equals(transaction1.getType()))
                             {
-                                ex = ex + Integer.parseInt(transaction1.getAmount());
+                                expense = expense + (int) Double.parseDouble(transaction1.getAmount());
                             }
                             if("Income".equals(transaction1.getType()))
                             {
-                                in = in + Integer.parseInt((transaction1.getAmount()));
+                                int temp = (int) Double.parseDouble(transaction1.getAmount());
+                                income = income + (int) Double.parseDouble(transaction1.getAmount());
                             }
-                            sum = sum + Integer.parseInt((transaction1.getAmount()));
+                            summary = summary + (int) Double.parseDouble(transaction1.getAmount());
                         }
-                        sum_ex.setText(getString(R.string.currency_vnd,String.valueOf(ex)));
-                        sum_in.setText(getString(R.string.currency_vnd,String.valueOf(in)));
-                        sum_all.setText(getString(R.string.currency_vnd,String.valueOf(sum)));
+                        mSumExpense.setText(getString(R.string.currency_vnd,String.valueOf(expense)));
+                        mSumIncome.setText(getString(R.string.currency_vnd,String.valueOf(income)));
+                        mSumAll.setText(getString(R.string.currency_vnd,String.valueOf(summary)));
                     }
-
             }
             }
             @Override
             public void onFailure(Call<List<Transaction>> call, Throwable t) {
-
+                Toast.makeText(getActivity(), "Fail"+ t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -225,11 +213,9 @@ public class ThisMonthFragment extends Fragment {
     }
 
 
-
-
     private boolean getThemeStatePref(){
         SharedPreferences preferences = getContext().getSharedPreferences(Constants.SHARED_PREFS, MODE_PRIVATE);
-        boolean isDark = preferences.getBoolean(Constants.ISDARK,false);
+        isDark = preferences.getBoolean(Constants.ISDARK,false);
         return isDark;
     }
 
@@ -237,9 +223,7 @@ public class ThisMonthFragment extends Fragment {
     public void setUserVisibleHint(boolean isVisibleToUser) {
 
         super.setUserVisibleHint(isVisibleToUser);
-
         // Refresh tab data:
-
         if (getFragmentManager() != null) {
 
             getFragmentManager()

@@ -29,33 +29,33 @@ import java.io.IOException;
 import java.util.UUID;
 
 public class TransactionCategoryActivity extends AppCompatActivity {
-    ImageView imageView,imageView2;
-    Button buttonupload;
-    TextView link;
-    Uri filePath;
+    ImageView mImageView, mImageView2;
+    Button mButtonUpload;
+    TextView mLink;
+    Uri mFilePath;
     //Firebase
-    FirebaseStorage storage;
-    StorageReference storageReference;
+    FirebaseStorage mStorage;
+    StorageReference mStorageReference;
     private final int PICK_IMAGE_REQUEST = 71;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_transaction_category);
-        imageView = findViewById(R.id.imageView);
-        imageView2 = findViewById(R.id.imageView2);
+        mImageView = findViewById(R.id.imageView);
+        mImageView2 = findViewById(R.id.imageView2);
 
-        buttonupload = findViewById(R.id.buttonupload);
-        link = findViewById(R.id.link);
-        storage = FirebaseStorage.getInstance();
-        storageReference = storage.getReference();
-        imageView.setOnClickListener(new View.OnClickListener() {
+        mButtonUpload = findViewById(R.id.buttonupload);
+        mLink = findViewById(R.id.link);
+        mStorage = FirebaseStorage.getInstance();
+        mStorageReference = mStorage.getReference();
+        mImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 chooseImage();
             }
         });
-        buttonupload.setOnClickListener(new View.OnClickListener() {
+        mButtonUpload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 uploadImage();
@@ -75,23 +75,23 @@ public class TransactionCategoryActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data !=null && data.getData() != null){
-            filePath = data.getData();
+            mFilePath = data.getData();
             try {
-                Bitmap bitmap =  MediaStore.Images.Media.getBitmap(getContentResolver(),filePath);
-                imageView.setImageBitmap(bitmap);
+                Bitmap bitmap =  MediaStore.Images.Media.getBitmap(getContentResolver(), mFilePath);
+                mImageView.setImageBitmap(bitmap);
             } catch (IOException e){
                 e.printStackTrace();
             }
         }
     }
     private void uploadImage() {
-        if(filePath != null){
+        if(mFilePath != null){
             final ProgressDialog progressDialog = new ProgressDialog(this);
             progressDialog.setTitle("uploading");
             progressDialog.show();
 
-         final   StorageReference ref = storageReference.child("images/" + UUID.randomUUID().toString());
-            ref.putFile(filePath)
+         final   StorageReference ref = mStorageReference.child("images/" + UUID.randomUUID().toString());
+            ref.putFile(mFilePath)
                     .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
@@ -99,9 +99,9 @@ public class TransactionCategoryActivity extends AppCompatActivity {
                                @Override
                                public void onSuccess(Uri uri) {
                                    progressDialog.dismiss();
-                                   link.setText(uri.toString());
+                                   mLink.setText(uri.toString());
                                    Uri myUri = Uri.parse("https://renolation.com/1.jpg");
-                                   Picasso.get().load(myUri).into(imageView2);
+                                   Picasso.get().load(myUri).into(mImageView2);
                                    Toast.makeText(TransactionCategoryActivity.this, "success", Toast.LENGTH_SHORT).show();
                                }
                            });

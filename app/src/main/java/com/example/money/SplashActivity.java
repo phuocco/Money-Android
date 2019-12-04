@@ -23,9 +23,6 @@ import retrofit2.Retrofit;
 
 public class SplashActivity extends AppCompatActivity {
 
-    private MyService myService;
-    RetrofitClient retrofitClient;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

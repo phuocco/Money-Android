@@ -51,7 +51,6 @@ public class LoginActivity extends AppCompatActivity {
         ed_password = findViewById(R.id.login_password);
         button_login = findViewById(R.id.button_login);
         login_register = findViewById(R.id.login_register);
-
         Retrofit retrofitClient = RetrofitClient.getInstance();
         myService = retrofitClient.create(MyService.class);
         button_login.setOnClickListener(new View.OnClickListener() {
@@ -75,7 +74,7 @@ public class LoginActivity extends AppCompatActivity {
             return;
         }
         if(TextUtils.isEmpty(password)){
-            Toast.makeText(this, "Fill email", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Fill password", Toast.LENGTH_SHORT).show();
             return;
         }
     compositeDisposable.add(myService.loginUser(email,password)
@@ -93,11 +92,10 @@ public class LoginActivity extends AppCompatActivity {
                         editor.putString(EMAIL,response);
                         editor.apply();
                     } else {
-                        Toast.makeText(LoginActivity.this, "wrong pass", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(LoginActivity.this, ""+response, Toast.LENGTH_SHORT).show();
                     }
 
 
-                //    startActivity(new Intent(LoginActivity.this, HomeActivity.class));
                 }
             }));
     }
