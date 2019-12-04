@@ -205,7 +205,7 @@ public class ThisMonthFragment extends Fragment {
             }
             @Override
             public void onFailure(Call<List<Transaction>> call, Throwable t) {
-                Toast.makeText(getActivity(), "Fail"+ t.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "Fail", Toast.LENGTH_SHORT).show();
             }
         });
 

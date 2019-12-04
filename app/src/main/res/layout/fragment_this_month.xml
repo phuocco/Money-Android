@@ -37,7 +37,7 @@
                 android:layout_weight="2"
                 android:textAlignment="textEnd"
                 android:paddingEnd="30dp"
-                android:text="asdasd" />
+                android:text="" />
         </LinearLayout>
         <View
             android:layout_width="match_parent"
@@ -60,7 +60,7 @@
                 android:layout_weight="2"
                 android:textAlignment="textEnd"
                 android:paddingEnd="30dp"
-                android:text="ssss"/>
+                android:text=""/>
         </LinearLayout>
         <View
             android:layout_width="match_parent"
@@ -83,7 +83,7 @@
                 android:layout_weight="2"
                 android:textAlignment="textEnd"
                 android:paddingEnd="30dp"
-                android:text="aaaa"/>
+                android:text=""/>
         </LinearLayout>
     </LinearLayout>
 

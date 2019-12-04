@@ -235,7 +235,7 @@ public class AddExpenseActivity extends AppCompatActivity {
                     .addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
-                            Toast.makeText(AddExpenseActivity.this, "failllllll", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(AddExpenseActivity.this, "Fail", Toast.LENGTH_SHORT).show();
                         }
                     })
                     .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
