@@ -83,7 +83,6 @@ public class LoginActivity extends AppCompatActivity {
                     response= response.replace("\"", "");
                     String inputEmail = mEditTextEmail.getText().toString();
                     String responseInvalid = "Invalid";
-                    Toast.makeText(LoginActivity.this, ""+response, Toast.LENGTH_SHORT).show();
                     if(responseInvalid.equals(response)) {
                         Toast.makeText(LoginActivity.this, ""+response, Toast.LENGTH_SHORT).show();
                     } else {

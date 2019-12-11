@@ -3,6 +3,7 @@ package com.example.money.Home;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.DatePickerDialog;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
@@ -13,6 +14,7 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.money.Constants;
 import com.example.money.R;
 import com.example.money.Retrofit.MyService;
 import com.example.money.Retrofit.RetrofitClient;
@@ -44,6 +46,7 @@ public class ChartActivity extends AppCompatActivity {
     RadioButton mRadioButtonInCome, mRadioButtonExpense;
     boolean isDateNoSelected = true;
     boolean isDateSelected = true;
+    private boolean isDark =  false;
 
 
     @Override
@@ -56,12 +59,16 @@ public class ChartActivity extends AppCompatActivity {
         //retrofit
         Retrofit retrofitClient = RetrofitClient.getInstance();
         //init
+        init();
         myService = retrofitClient.create(MyService.class);
-        pieChart =  findViewById(R.id.chart);
-        mSelectTime =  findViewById(R.id.chart_select_time);
-        mRadioGroupChart = findViewById(R.id.radio_chart);
-        mRadioButtonInCome = findViewById(R.id.radio_income);
-        mRadioButtonExpense = findViewById(R.id.radio_expense);
+
+        isDark = getThemeStatePref();
+        if (isDark){
+            getWindow().getDecorView().setBackgroundResource(R.drawable.gradient_main_dark);
+            mSelectTime.setTextColor(Color.parseColor("#FFFFFF"));
+        } else {
+            getWindow().getDecorView().setBackgroundResource(R.drawable.gradient_main);
+        }
         final Calendar calendar = Calendar.getInstance();
         final int month = calendar.get(Calendar.MONTH)+1;
         final int year = calendar.get(Calendar.YEAR);
@@ -105,6 +112,14 @@ public class ChartActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    private void init() {
+        pieChart =  findViewById(R.id.chart);
+        mSelectTime =  findViewById(R.id.chart_select_time);
+        mRadioGroupChart = findViewById(R.id.radio_chart);
+        mRadioButtonInCome = findViewById(R.id.radio_income);
+        mRadioButtonExpense = findViewById(R.id.radio_expense);
     }
 
     private void pickDate() {
@@ -171,6 +186,11 @@ public class ChartActivity extends AppCompatActivity {
 
                     }
                 });
+    }
+    private boolean getThemeStatePref(){
+        SharedPreferences preferences = getSharedPreferences(Constants.SHARED_PREFS, MODE_PRIVATE);
+        isDark = preferences.getBoolean(Constants.ISDARK,false);
+        return isDark;
     }
     @Override
     public boolean onSupportNavigateUp(){

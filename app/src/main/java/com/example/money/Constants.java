@@ -7,7 +7,7 @@ public class Constants {
     private static String urlVPS = "http://172.105.117.74:3000/";
 
     private static String urlHerokuTest2 = "https://money-test-phuoc.herokuapp.com/";
-    public static final String URL = urlHerokuTest2;
+    public static final String URL = urlLocal;
 
     //shared
     public static final String SHARED_PREFS = "sharedPrefs";
