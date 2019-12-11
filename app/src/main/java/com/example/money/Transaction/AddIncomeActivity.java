@@ -10,6 +10,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -32,6 +33,7 @@ import com.example.money.models.Transaction;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
@@ -52,6 +54,7 @@ import retrofit2.Retrofit;
 
 public class AddIncomeActivity extends AppCompatActivity {
     TextInputEditText mEditTextAmount, mEditTextNote;
+    TextInputLayout mLayoutAmount, mLayoutNote;
     CardView mButtonAddIncome;
     MyService myService;
     ImageView mImageView;
@@ -59,6 +62,8 @@ public class AddIncomeActivity extends AppCompatActivity {
     String mStrCategory;
     Spinner mSpnCategory;
     EditText mEditTextType;
+    private boolean isDark =  false;
+
     //firebase
     FirebaseStorage mStorage;
     StorageReference mStorageReference;
@@ -70,10 +75,23 @@ public class AddIncomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_income);
         init();
+        isDark = getThemeStatePref();
+
+        mLayoutAmount = findViewById(R.id.layout_add_amount_in);
+        mLayoutNote = findViewById(R.id.layout_add_note_in);
         List<String> list = new ArrayList<>();
         list.add("Salary");
         list.add("Gift");
         list.add("Loan");
+
+        if (isDark){
+            getWindow().getDecorView().setBackgroundResource(R.drawable.gradient_dark_income);
+            mEditTextAmount.setTextColor(getResources().getColor(R.color.textDark));
+            mLayoutAmount.setDefaultHintTextColor(getResources().getColorStateList(R.color.textDark));
+            mEditTextNote.setTextColor(getResources().getColor(R.color.textDark));
+            mLayoutNote.setDefaultHintTextColor(getResources().getColorStateList(R.color.textDark));
+            mTextViewAddDate.setTextColor(getResources().getColor(R.color.textDark));
+        }
 
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this,R.layout.support_simple_spinner_dropdown_item,list);
         adapter.setDropDownViewResource(android.R.layout.simple_list_item_single_choice);
@@ -81,6 +99,8 @@ public class AddIncomeActivity extends AppCompatActivity {
         mSpnCategory.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                ((TextView) parent.getChildAt(0)).setTextColor(Color.WHITE);
+
                 mStrCategory = mSpnCategory.getSelectedItem().toString();
             }
 
@@ -109,9 +129,6 @@ public class AddIncomeActivity extends AppCompatActivity {
     private void init(){
         Retrofit retrofitClient = RetrofitClient.getInstance();
         myService = retrofitClient.create(MyService.class);
-
-
-
 
         mStorage = FirebaseStorage.getInstance();
         mStorageReference = mStorage.getReference();
@@ -270,5 +287,11 @@ public class AddIncomeActivity extends AppCompatActivity {
 
                     }
                 });
+    }
+
+    private boolean getThemeStatePref(){
+        SharedPreferences preferences = getSharedPreferences(Constants.SHARED_PREFS, MODE_PRIVATE);
+        isDark = preferences.getBoolean(Constants.ISDARK,false);
+        return isDark;
     }
 }

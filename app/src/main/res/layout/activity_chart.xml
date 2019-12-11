@@ -7,10 +7,54 @@
     android:orientation="vertical"
     tools:context=".Home.ChartActivity">
 
+
+
+    <RadioGroup
+        android:layout_marginTop="20dp"
+        android:checkedButton="@+id/radio_expense"
+        android:id="@+id/radio_chart"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="50dp"
+        android:background="@drawable/radio_out_line"
+
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:layout_marginTop="1dp"
+            android:layout_marginBottom="1dp"
+            android:layout_marginLeft="1dp"
+            android:id="@+id/radio_income"
+            android:background="@drawable/toggle_radio"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:button="@null"
+            android:gravity="center"
+            android:text="Income"
+            android:textColor="@color/white" />
+
+        <RadioButton
+            android:layout_marginRight="1dp"
+            android:layout_marginTop="1dp"
+            android:layout_marginBottom="1dp"
+            android:id="@+id/radio_expense"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/toggle_radio"
+            android:button="@null"
+            android:gravity="center"
+            android:text="Expense"
+            android:textColor="@color/white" />
+    </RadioGroup>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="30dp"
         android:layout_marginTop="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="20dp"
         android:orientation="horizontal">
 
 
@@ -26,16 +70,14 @@
             android:textSize="20sp"
             android:text="@string/select_month" />
 
-
     </LinearLayout>
-
-
-
 
     <com.github.mikephil.charting.charts.PieChart
         android:id="@+id/chart"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="10dp" />
+
+
 
 </LinearLayout>

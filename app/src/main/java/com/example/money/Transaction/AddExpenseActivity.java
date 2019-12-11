@@ -10,6 +10,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -32,6 +33,7 @@ import com.example.money.models.Transaction;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
@@ -51,14 +53,17 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 
 public class AddExpenseActivity extends AppCompatActivity {
-    TextInputEditText mEdittextAmount, mEdittextNote;
+    TextInputEditText mEditTextAmount, mEditTextNote;
+    TextInputLayout mLayoutAmount, mLayoutNote;
     CardView mButtonAddExpense;
     MyService myService;
     ImageView mImageView;
     TextView mTextViewAddDate;
     Spinner mSpnCategory;
-    String mEdittextCategory;
-    EditText mEdittextType;
+    String mEditTextCategory;
+    EditText mEditTextType;
+    private boolean isDark =  false;
+
     //firebase
     FirebaseStorage mStorage;
     StorageReference mStorageReference;
@@ -68,7 +73,19 @@ public class AddExpenseActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_expense);
+        isDark = getThemeStatePref();
+        mLayoutAmount = findViewById(R.id.layout_add_amount_ex);
+        mLayoutNote = findViewById(R.id.layout_add_note_ex);
         init();
+
+        if (isDark){
+            getWindow().getDecorView().setBackgroundResource(R.drawable.gradient_main_dark);
+            mEditTextAmount.setTextColor(getResources().getColor(R.color.textDark));
+            mLayoutAmount.setDefaultHintTextColor(getResources().getColorStateList(R.color.textDark));
+            mEditTextNote.setTextColor(getResources().getColor(R.color.textDark));
+            mLayoutNote.setDefaultHintTextColor(getResources().getColorStateList(R.color.textDark));
+            mTextViewAddDate.setTextColor(getResources().getColor(R.color.textDark));
+        }
 
         List<String> list = new ArrayList<>();
         list.add("Food");
@@ -81,7 +98,9 @@ public class AddExpenseActivity extends AppCompatActivity {
         mSpnCategory.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                mEdittextCategory = mSpnCategory.getSelectedItem().toString();
+                ((TextView) parent.getChildAt(0)).setTextColor(Color.WHITE);
+
+                mEditTextCategory = mSpnCategory.getSelectedItem().toString();
             }
 
             @Override
@@ -90,14 +109,12 @@ public class AddExpenseActivity extends AppCompatActivity {
             }
         });
 
-
         mImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 chooseImage();
             }
         });
-
         mButtonAddExpense.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -113,10 +130,10 @@ public class AddExpenseActivity extends AppCompatActivity {
         mStorageReference = mStorage.getReference();
         mImageView = findViewById(R.id.image_add_expense);
 
-        mEdittextAmount =findViewById(R.id.add_ex_amount);
-        mEdittextNote =findViewById(R.id.add_ex_note);
+        mEditTextAmount =findViewById(R.id.add_ex_amount);
+        mEditTextNote =findViewById(R.id.add_ex_note);
         mSpnCategory =findViewById(R.id.add_ex_category);
-        mEdittextType =findViewById(R.id.add_ex_type);
+        mEditTextType =findViewById(R.id.add_ex_type);
         mButtonAddExpense = findViewById(R.id.button_add_ex);
         mTextViewAddDate = findViewById(R.id.add_ex_date);
         mTextViewAddDate.setOnClickListener(new View.OnClickListener() {
@@ -177,16 +194,16 @@ public class AddExpenseActivity extends AppCompatActivity {
             email = email.replace("\"", "");
             String amount;
             if(isUSD){
-                String textAmount = mEdittextAmount.getText().toString();
+                String textAmount = mEditTextAmount.getText().toString();
                 float amountFloat = Float.parseFloat(textAmount);
                 float finalAmountFloat = amountFloat * rate;
                 amount = String.valueOf(finalAmountFloat);
             } else {
-                amount = mEdittextAmount.getText().toString();
+                amount = mEditTextAmount.getText().toString();
             }
-            String note = mEdittextNote.getText().toString();
-            String category = mEdittextCategory;
-            String type = mEdittextType.getText().toString();
+            String note = mEditTextNote.getText().toString();
+            String category = mEditTextCategory;
+            String type = mEditTextType.getText().toString();
             String date = mTextViewAddDate.getText().toString();
             String photo = "";
             addTransaction(email,amount,category,type,note,date,photo);
@@ -213,15 +230,15 @@ public class AddExpenseActivity extends AppCompatActivity {
                                     email = email.replace("\"", "");
                                     String amount;
                                     if(isUSD){
-                                        String textAmount = mEdittextAmount.getText().toString();
+                                        String textAmount = mEditTextAmount.getText().toString();
                                         float amountFloat = Float.parseFloat(textAmount);
                                         float finalAmountFloat = amountFloat * rate;
                                         amount = String.valueOf(finalAmountFloat);
                                     } else {
-                                        amount = mEdittextAmount.getText().toString();
+                                        amount = mEditTextAmount.getText().toString();
                                     }
-                                    String note = mEdittextNote.getText().toString();
-                                    String category = mEdittextCategory;
+                                    String note = mEditTextNote.getText().toString();
+                                    String category = mEditTextCategory;
                                     String type = "Expense";
                                     String date = mTextViewAddDate.getText().toString();
                                     String photo = uri.toString();
@@ -264,5 +281,11 @@ public class AddExpenseActivity extends AppCompatActivity {
                         Toast.makeText(AddExpenseActivity.this, "fail", Toast.LENGTH_SHORT).show();
                     }
                 });
+    }
+
+    private boolean getThemeStatePref(){
+        SharedPreferences preferences = getSharedPreferences(Constants.SHARED_PREFS, MODE_PRIVATE);
+        isDark = preferences.getBoolean(Constants.ISDARK,false);
+        return isDark;
     }
 }

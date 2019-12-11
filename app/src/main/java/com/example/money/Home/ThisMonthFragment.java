@@ -137,7 +137,6 @@ public class ThisMonthFragment extends Fragment {
         } else {
             mThisMonthLayout.setBackgroundColor(getResources().getColor(R.color.white));
             mSumThisMonth.setBackgroundResource(R.drawable.card_sum_light);
-
         }
         //get email
         SharedPreferences sharedPreferences =  getContext().getSharedPreferences(Constants.SHARED_PREFS,MODE_PRIVATE);
@@ -164,18 +163,18 @@ public class ThisMonthFragment extends Fragment {
                         float expense = 0;
                         float income = 0;
                         float finalSum = 0,finalEx = 0,finalIn = 0;
-                        for (Transaction transaction1: response.body()){
-                            if("Expense".equals(transaction1.getType()))
+                        for (Transaction transactionAll: response.body()){
+                            if("Expense".equals(transactionAll.getType()))
                             {
-                                expense = expense + Float.parseFloat(transaction1.getAmount());
+                                expense = expense + Float.parseFloat(transactionAll.getAmount());
                                 finalEx = expense/rate;
                             }
-                            if("Income".equals(transaction1.getType()))
+                            if("Income".equals(transactionAll.getType()))
                             {
-                                income = income + Float.parseFloat((transaction1.getAmount()));
+                                income = income + Float.parseFloat((transactionAll.getAmount()));
                                 finalIn = income /rate;
                             }
-                            sumary = sumary + Float.parseFloat((transaction1.getAmount()));
+                            sumary = sumary + Float.parseFloat((transactionAll.getAmount()));
                             finalSum = sumary/rate;
                         }
                         mSumExpense.setText(getString(R.string.currency_usd,String.valueOf(finalEx)));
@@ -185,17 +184,16 @@ public class ThisMonthFragment extends Fragment {
                         int summary =0;
                         int expense = 0;
                         int income = 0;
-                        for (Transaction transaction1: response.body()){
-                            if("Expense".equals(transaction1.getType()))
+                        for (Transaction transactionAll: response.body()){
+                            if("Expense".equals(transactionAll.getType()))
                             {
-                                expense = expense + (int) Double.parseDouble(transaction1.getAmount());
+                                expense = expense + (int) Double.parseDouble(transactionAll.getAmount());
                             }
-                            if("Income".equals(transaction1.getType()))
+                            if("Income".equals(transactionAll.getType()))
                             {
-                                int temp = (int) Double.parseDouble(transaction1.getAmount());
-                                income = income + (int) Double.parseDouble(transaction1.getAmount());
+                                income = income + (int) Double.parseDouble(transactionAll.getAmount());
                             }
-                            summary = summary + (int) Double.parseDouble(transaction1.getAmount());
+                            summary = summary + (int) Double.parseDouble(transactionAll.getAmount());
                         }
                         mSumExpense.setText(getString(R.string.currency_vnd,String.valueOf(expense)));
                         mSumIncome.setText(getString(R.string.currency_vnd,String.valueOf(income)));
