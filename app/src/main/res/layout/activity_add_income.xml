@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@drawable/gradient_main"
+    android:id="@+id/add_income_layout"
+
     tools:context=".Transaction.AddIncomeActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -119,9 +120,9 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:textColor="@color/white"
                 android:gravity="center_vertical|center_horizontal"
-                android:text="@string/add_expense" />
+                android:text="@string/add_income"
+                android:textColor="@color/white" />
         </androidx.cardview.widget.CardView>
 
         <EditText

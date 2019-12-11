@@ -40,4 +40,7 @@
     <string name="edit_bar">Edit transaction</string>
     <!--    settings-->
     <string name="currency_settings">Currency</string>
+
+<!--    other-->
+    <string name="share">Share</string>
 </resources>

@@ -5,14 +5,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.DatePicker;
-import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -25,6 +24,7 @@ import com.example.money.Retrofit.RetrofitClient;
 import com.example.money.models.Transaction;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -41,31 +41,52 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 
 public class EditTransactionActivity extends AppCompatActivity {
-    TextInputEditText eamount,enote;
+    TextInputEditText mEditTextAmount, mEditTextNote;
+    TextInputLayout mLayoutAmount, mLayoutNote;
+
     MyService myService;
-    MaterialButton button_edit;
-    TextView tv_type,edate;
-    Spinner spn_ecategory;
-    String ecategory;
+    MaterialButton mButtonEdit;
+    TextView mTextViewType, mTextViewDate;
+    Spinner mSpnCategory;
+    String mStrCategory;
+    private boolean isDark =  false;
+
+    //TODO dark mode
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_transaction);
-        eamount = findViewById(R.id.edit_amount);
-        enote = findViewById(R.id.edit_note);
-        spn_ecategory =  findViewById(R.id.edit_category);
-        edate = findViewById(R.id.edit_date);
-        tv_type =  findViewById(R.id.edit_type);
+        mEditTextAmount = findViewById(R.id.edit_amount);
+        mEditTextNote = findViewById(R.id.edit_note);
+        mSpnCategory =  findViewById(R.id.edit_category);
+        mTextViewDate = findViewById(R.id.edit_date);
+        mTextViewType =  findViewById(R.id.edit_type);
+        mLayoutAmount = findViewById(R.id.layout_edit_amount);
+        mLayoutNote = findViewById(R.id.layout_edit_note);
         Retrofit retrofitClient = RetrofitClient.getInstance();
         myService = retrofitClient.create(MyService.class);
         SharedPreferences sharedPreferences =  getSharedPreferences(Constants.SHARED_PREFS,MODE_PRIVATE);
         final String transactionId = sharedPreferences.getString(Constants.ID,"").replace("\"", "");
-        //final String transactionId = "5dac689c788f27175c88b5f4";
+        isDark = getThemeStatePref();
 
-        spn_ecategory.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        if (isDark){
+            getWindow().getDecorView().setBackgroundResource(R.drawable.gradient_dark_income);
+            mEditTextAmount.setTextColor(getResources().getColor(R.color.textDark));
+            mEditTextNote.setTextColor(getResources().getColor(R.color.textDark));
+            mTextViewDate.setTextColor(getResources().getColor(R.color.textDark));
+            mLayoutAmount.setDefaultHintTextColor(getResources().getColorStateList(R.color.textDark));
+            mLayoutNote.setDefaultHintTextColor(getResources().getColorStateList(R.color.textDark));
+
+        } else {
+            getWindow().getDecorView().setBackgroundResource(R.drawable.gradient_main);
+        }
+
+        mSpnCategory.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                ecategory = spn_ecategory.getSelectedItem().toString();
+                mStrCategory = mSpnCategory.getSelectedItem().toString();
+                ((TextView) parent.getChildAt(0)).setTextColor(Color.WHITE);
+
             }
 
             @Override
@@ -77,22 +98,22 @@ public class EditTransactionActivity extends AppCompatActivity {
         assert getSupportActionBar() != null;   //null check
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        edate.setOnClickListener(new View.OnClickListener() {
+        mTextViewDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 pickDate();
             }
         });
 
-        button_edit = findViewById(R.id.button_edit);
-        button_edit.setOnClickListener(new View.OnClickListener() {
+        mButtonEdit = findViewById(R.id.button_edit);
+        mButtonEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String amount =  eamount.getText().toString();
-                String note =  enote.getText().toString();
-                String date =  edate.getText().toString();
-                String category =  ecategory;
-                String type = tv_type.getText().toString();
+                String amount =  mEditTextAmount.getText().toString();
+                String note =  mEditTextNote.getText().toString();
+                String date =  mTextViewDate.getText().toString();
+                String category = mStrCategory;
+                String type = mTextViewType.getText().toString();
                 updateTrans(transactionId,amount,category,type,note,date);
                 startActivity(new Intent(EditTransactionActivity.this, HomeActivity.class));
             }
@@ -111,10 +132,10 @@ public class EditTransactionActivity extends AppCompatActivity {
             @Override
             public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
                 calendar.set(i,i1,i2);
-                SimpleDateFormat simpleDateFormat=  new SimpleDateFormat("yyyy-MM-dd");
+                SimpleDateFormat simpleDateFormat=  new SimpleDateFormat("yyyy-MM-dd",Locale.US);
                 String date2 = simpleDateFormat.format(calendar.getTime());
                 //  String result= getString(R.string.selected_date,ic_date);
-                edate.setText(getString(R.string.edit_date, date2));
+                mTextViewDate.setText(getString(R.string.edit_date, date2));
             }
         },nam,thang,ngay+1);
         datePickerDialog.show();
@@ -144,9 +165,9 @@ public class EditTransactionActivity extends AppCompatActivity {
             public void onResponse(Call<Transaction> call, Response<Transaction> response) {
                 if(response.isSuccessful()){
                     Transaction transaction = response.body();
-                    eamount.setText(transaction.getAmount());
-                    enote.setText(transaction.getNote());
-                    edate.setText(transaction.getDate());
+                    mEditTextAmount.setText(transaction.getAmount());
+                    mEditTextNote.setText(transaction.getNote());
+                    mTextViewDate.setText(transaction.getDate());
 
                     DateFormat outputFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
                     DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.US);
@@ -154,7 +175,7 @@ public class EditTransactionActivity extends AppCompatActivity {
                     try {
                         Date dateTemp = inputFormat.parse(inputText);
                         String outputText = outputFormat.format(dateTemp);
-                        edate.setText(getString(R.string.edit_date,outputText));
+                        mTextViewDate.setText(getString(R.string.edit_date,outputText));
                     } catch (ParseException ex) {
                         Log.v("Exception", ex.getLocalizedMessage());
                     }
@@ -171,20 +192,20 @@ public class EditTransactionActivity extends AppCompatActivity {
                     list_in.add("Gift");
                     list_in.add("Loan");
 
-                    List<String> list = new ArrayList<>();
+                    List<String> list;
                     if("Expense".equals(transaction.getType())){
                         list = list_ex;
                     } else {
                         list = list_in;
                     }
-                    ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(),R.layout.support_simple_spinner_dropdown_item,list);
+                    ArrayAdapter<String> adapter = new ArrayAdapter<>(getApplicationContext(),R.layout.support_simple_spinner_dropdown_item,list);
                     adapter.setDropDownViewResource(android.R.layout.simple_list_item_single_choice);
-                    spn_ecategory.setAdapter(adapter);
+                    mSpnCategory.setAdapter(adapter);
                     if (compareValue != null) {
                         int spinnerPosition = adapter.getPosition(compareValue);
-                        spn_ecategory.setSelection(spinnerPosition);
+                        mSpnCategory.setSelection(spinnerPosition);
                     }
-                    tv_type.setText(transaction.getType());
+                    mTextViewType.setText(transaction.getType());
 
                 }
             }
@@ -195,6 +216,13 @@ public class EditTransactionActivity extends AppCompatActivity {
             }
         });
     }
+
+    private boolean getThemeStatePref(){
+        SharedPreferences preferences = getSharedPreferences(Constants.SHARED_PREFS, MODE_PRIVATE);
+        isDark = preferences.getBoolean(Constants.ISDARK,false);
+        return isDark;
+    }
+
     @Override
     public boolean onSupportNavigateUp(){
         finish();

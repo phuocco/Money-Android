@@ -35,12 +35,10 @@ import static android.content.Context.MODE_PRIVATE;
  * A simple {@link Fragment} subclass.
  */
 public class MonthFragment extends Fragment {
-    HomeAdapter homeAdapter;
     private RecyclerView myRecyclerView;
-    RelativeLayout month_layout;
+    private RelativeLayout mMonthLayout;
     private MyService myService;
-    RetrofitClient retrofitClient;
-    boolean isDark =  false;
+    private boolean isDark =  false;
 
     public MonthFragment() {
         // Required empty public constructor
@@ -52,7 +50,7 @@ public class MonthFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_month, container, false);
-        month_layout = view.findViewById(R.id.month_layout);
+        mMonthLayout = view.findViewById(R.id.month_layout);
 
         String month =  getArguments().getString("month");
         String year =  getArguments().getString("year");
@@ -60,11 +58,11 @@ public class MonthFragment extends Fragment {
 
         isDark = getThemeStatePref();
         if (isDark){
-            month_layout.setBackgroundColor(getResources().getColor(R.color.black));
+            mMonthLayout.setBackgroundColor(getResources().getColor(R.color.black));
         } else {
-            month_layout.setBackgroundColor(getResources().getColor(R.color.white));
+            mMonthLayout.setBackgroundColor(getResources().getColor(R.color.white));
         }
-        myRecyclerView = (RecyclerView) view.findViewById(R.id.rv_month);
+        myRecyclerView = view.findViewById(R.id.rv_month);
         getTransactionByMonth(month,year);
         return view;
     }
@@ -74,7 +72,6 @@ public class MonthFragment extends Fragment {
         String email = sharedPreferences.getString(Constants.EMAIL,null).replace("\"", "");
         Transaction transaction =  new Transaction(email,month,year);
         Retrofit retrofitClient = RetrofitClient.getInstance();
-        //    myRecyclerView = (RecyclerView) this.getView().findViewById(R.id.rv_lastmonth);
         myService = retrofitClient.create(MyService.class);
         Call<List<Transaction>> call = myService.getAllTransactionsByEmail(transaction);
         call.enqueue(new Callback<List<Transaction>>() {
@@ -103,7 +100,7 @@ public class MonthFragment extends Fragment {
 
     private boolean getThemeStatePref(){
         SharedPreferences preferences = getContext().getSharedPreferences(Constants.SHARED_PREFS, MODE_PRIVATE);
-        boolean isDark = preferences.getBoolean(Constants.ISDARK,false);
+        isDark = preferences.getBoolean(Constants.ISDARK,false);
         return isDark;
     }
 }

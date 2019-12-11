@@ -9,19 +9,17 @@ public class Chart {
     private String id;
     @SerializedName("sum")
     @Expose
-    private Integer sum;
+    private Float sum;
 
-//    @SerializedName("month")
-//    @Expose
+
     private String month;
-
-//    @SerializedName("month")
-//    @Expose
     private String year;
+    private String type;
 
-    public Chart(String month, String year) {
+    public Chart(String month, String year, String type) {
         this.month = month;
         this.year = year;
+        this.type = type;
     }
 
 
@@ -36,10 +34,10 @@ public class Chart {
 
 
 
-    public Integer getSum() {
+    public Float getSum() {
         return sum;
     }
-    public void setSum(Integer sum) {
+    public void setSum(Float sum) {
         this.sum = sum;
     }
 

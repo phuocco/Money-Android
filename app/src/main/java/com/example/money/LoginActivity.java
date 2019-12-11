@@ -8,9 +8,6 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,9 +23,9 @@ import io.reactivex.schedulers.Schedulers;
 import retrofit2.Retrofit;
 
 public class LoginActivity extends AppCompatActivity {
-    TextInputEditText ed_email,ed_password;
-    CardView button_login;
-    TextView login_register;
+    TextInputEditText mEditTextEmail, mEditTextPassword;
+    CardView mButtonLogin;
+    TextView mLoginRegister;
     CompositeDisposable compositeDisposable  = new CompositeDisposable();
     MyService myService;
     public static final String SHARED_PREFS = "sharedPrefs";
@@ -47,20 +44,19 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void init() {
-        ed_email=findViewById(R.id.login_email);
-        ed_password = findViewById(R.id.login_password);
-        button_login = findViewById(R.id.button_login);
-        login_register = findViewById(R.id.login_register);
-
+        mEditTextEmail =findViewById(R.id.login_email);
+        mEditTextPassword = findViewById(R.id.login_password);
+        mButtonLogin = findViewById(R.id.button_login);
+        mLoginRegister = findViewById(R.id.login_register);
         Retrofit retrofitClient = RetrofitClient.getInstance();
         myService = retrofitClient.create(MyService.class);
-        button_login.setOnClickListener(new View.OnClickListener() {
+        mButtonLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                loginUser(ed_email.getText().toString(), ed_password.getText().toString());
+                loginUser(mEditTextEmail.getText().toString(), mEditTextPassword.getText().toString());
             }
         });
-        login_register.setOnClickListener(new View.OnClickListener() {
+        mLoginRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(LoginActivity.this,RegisterActivity.class));
@@ -75,7 +71,7 @@ public class LoginActivity extends AppCompatActivity {
             return;
         }
         if(TextUtils.isEmpty(password)){
-            Toast.makeText(this, "Fill email", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Fill password", Toast.LENGTH_SHORT).show();
             return;
         }
     compositeDisposable.add(myService.loginUser(email,password)
@@ -84,21 +80,21 @@ public class LoginActivity extends AppCompatActivity {
             .subscribe(new Consumer<String>() {
                 @Override
                 public void accept(String response) throws Exception {
-                        response= response.replace("\"", "");
-                        if(response.equals(ed_email.getText().toString())){
-                        Toast.makeText(LoginActivity.this, "success :"+response, Toast.LENGTH_SHORT).show();
+                    response= response.replace("\"", "");
+                    String inputEmail = mEditTextEmail.getText().toString();
+                    String responseInvalid = "Invalid";
+                    if(responseInvalid.equals(response)) {
+                        Toast.makeText(LoginActivity.this, ""+response, Toast.LENGTH_SHORT).show();
+                    } else {
                         startActivity(new Intent(LoginActivity.this,HomeActivity.class));
                         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS,MODE_PRIVATE);
                         SharedPreferences.Editor editor = sharedPreferences.edit();
-                        editor.putString(EMAIL,response);
+                        editor.putString(EMAIL,inputEmail);
                         editor.apply();
-                    } else {
-                        Toast.makeText(LoginActivity.this, "wrong pass", Toast.LENGTH_SHORT).show();
                     }
-
-
-                //    startActivity(new Intent(LoginActivity.this, HomeActivity.class));
                 }
+
             }));
+
     }
 }

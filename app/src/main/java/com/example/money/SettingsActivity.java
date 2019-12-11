@@ -13,13 +13,13 @@ import com.example.money.Home.HomeActivity;
 
 public class SettingsActivity extends AppCompatActivity {
     boolean isDark,isUSD;
-    Switch light_mode,currency;
+    Switch mLightMode, mCurrency;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
-        light_mode =  findViewById(R.id.switch_mode);
-        currency = findViewById(R.id.switch_currency);
+        mLightMode =  findViewById(R.id.switch_mode);
+        mCurrency = findViewById(R.id.switch_currency);
         assert getSupportActionBar() != null;   //null check
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
@@ -27,11 +27,11 @@ public class SettingsActivity extends AppCompatActivity {
         isDark = sharedPreferences.getBoolean(Constants.ISDARK,false);
         isUSD = sharedPreferences.getBoolean(Constants.ISUSD,false);
 
-        light_mode.setChecked(isDark);
-        light_mode.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        mLightMode.setChecked(isDark);
+        mLightMode.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(light_mode.isChecked()){
+                if(mLightMode.isChecked()){
                     isDark = true;
                     SharedPreferences sharedPreferences = getSharedPreferences(Constants.SHARED_PREFS,MODE_PRIVATE);
                     SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -49,11 +49,11 @@ public class SettingsActivity extends AppCompatActivity {
             }
         });
 
-        currency.setChecked(isUSD);
-        currency.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        mCurrency.setChecked(isUSD);
+        mCurrency.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(currency.isChecked()){
+                if(mCurrency.isChecked()){
                     isUSD = true;
                     SharedPreferences sharedPreferences = getSharedPreferences(Constants.SHARED_PREFS,MODE_PRIVATE);
                     SharedPreferences.Editor editor = sharedPreferences.edit();

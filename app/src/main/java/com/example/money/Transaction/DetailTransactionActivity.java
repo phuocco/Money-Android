@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
+import android.widget.ShareActionProvider;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -36,79 +37,93 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 
 public class DetailTransactionActivity extends AppCompatActivity {
-    TextView id,amount,category,note,date,remind;
+    TextView mAmount, mCategory, mNote, mDate;
+
     ImageView photo;
     MyService myService;
-    private FloatingActionButton fab_main, fab1_edit, fab2_share, fab3_delete;
-    private Animation fab_open, fab_close, fab_clock, fab_anticlock;
-    TextView textview_edit, textview_share, textview_delete;
-    Context context;
+    private FloatingActionButton mFabMain, mFabEdit, mFabShare, mFabDelete;
+    private Animation mFabOpen, mFabClose, mFabClock, mFabAntiClock;
+    TextView mTextViewEdit, mTextViewShare, mTextViewDelete;
     boolean isOpen = false;
+    private boolean isDark =  false;
 
+    //TODO dark mode
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail_transaction);
-
-
-
         //init
        init();
+        isDark = getThemeStatePref();
+        if (isDark){
+            getWindow().getDecorView().setBackgroundResource(R.drawable.gradient_main_dark);
+            mAmount.setTextColor(getResources().getColor(R.color.textDark));
+            mCategory.setTextColor(getResources().getColor(R.color.textDark));
+            mNote.setTextColor(getResources().getColor(R.color.textDark));
+            mDate.setTextColor(getResources().getColor(R.color.textDark));
+
+        }
         //back button
         assert getSupportActionBar() != null;   //null check
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
        getDetail();
         fab();
     }
-
+    // initialize
+    private void init() {
+        mAmount = findViewById(R.id.detail_amount);
+        mCategory = findViewById(R.id.detail_category);
+        mNote = findViewById(R.id.detail_note);
+        mDate = findViewById(R.id.detail_date);
+        photo = findViewById(R.id.detail_photo);
+    }
+    //init fab & action
     private void fab() {
-        fab_main = findViewById(R.id.fab);
-        fab1_edit = findViewById(R.id.fab1);
-        fab2_share = findViewById(R.id.fab2);
-        fab3_delete = findViewById(R.id.fab3);
-        fab_close = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_close);
-        fab_open = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_open);
-        fab_clock = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_rotate_clock);
-        fab_anticlock = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_rotate_anticlock);
+        mFabMain = findViewById(R.id.fab);
+        mFabEdit = findViewById(R.id.fab1);
+        mFabShare = findViewById(R.id.fab2);
+        mFabDelete = findViewById(R.id.fab3);
+        mFabClose = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_close);
+        mFabOpen = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_open);
+        mFabClock = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_rotate_clock);
+        mFabAntiClock = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_rotate_anticlock);
 
-        textview_edit = (TextView) findViewById(R.id.textview_edit);
-        textview_share = (TextView) findViewById(R.id.textview_share);
-        textview_delete = (TextView) findViewById(R.id.textview_delete);
-        fab_main.setOnClickListener(new View.OnClickListener() {
+        mTextViewEdit =  findViewById(R.id.textview_edit);
+        mTextViewShare = findViewById(R.id.textview_share);
+        mTextViewDelete =  findViewById(R.id.textview_delete);
+        mFabMain.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
                 if (isOpen) {
-
-                    textview_edit.setVisibility(View.INVISIBLE);
-                    textview_share.setVisibility(View.INVISIBLE);
-                    textview_delete.setVisibility(View.INVISIBLE);
-
-                    fab2_share.startAnimation(fab_close);
-                    fab1_edit.startAnimation(fab_close);
-                    fab3_delete.startAnimation(fab_close);
-                    fab_main.startAnimation(fab_anticlock);
-                    fab2_share.setClickable(false);
-                    fab1_edit.setClickable(false);
-                    fab3_delete.setClickable(false);
+                    mTextViewEdit.setVisibility(View.INVISIBLE);
+                    mTextViewShare.setVisibility(View.INVISIBLE);
+                    mTextViewDelete.setVisibility(View.INVISIBLE);
+                    mFabShare.startAnimation(mFabClose);
+                    mFabEdit.startAnimation(mFabClose);
+                    mFabDelete.startAnimation(mFabClose);
+                    mFabMain.startAnimation(mFabAntiClock);
+                    mFabShare.setClickable(false);
+                    mFabEdit.setClickable(false);
+                    mFabDelete.setClickable(false);
                     isOpen = false;
                 } else {
-                    textview_edit.setVisibility(View.VISIBLE);
-                    textview_share.setVisibility(View.VISIBLE);
-                    textview_delete.setVisibility(View.VISIBLE);
-                    fab2_share.startAnimation(fab_open);
-                    fab1_edit.startAnimation(fab_open);
-                    fab3_delete.startAnimation(fab_open);
-                    fab_main.startAnimation(fab_clock);
-                    fab2_share.setClickable(true);
-                    fab1_edit.setClickable(true);
-                    fab3_delete.setClickable(true);
+                    mTextViewEdit.setVisibility(View.VISIBLE);
+                    mTextViewShare.setVisibility(View.VISIBLE);
+                    mTextViewDelete.setVisibility(View.VISIBLE);
+                    mFabShare.startAnimation(mFabOpen);
+                    mFabEdit.startAnimation(mFabOpen);
+                    mFabDelete.startAnimation(mFabOpen);
+                    mFabMain.startAnimation(mFabClock);
+                    mFabShare.setClickable(true);
+                    mFabEdit.setClickable(true);
+                    mFabDelete.setClickable(true);
                     isOpen = true;
                 }
 
             }
         });
-        fab1_edit.setOnClickListener(new View.OnClickListener() {
+        mFabEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = getIntent();
@@ -121,7 +136,19 @@ public class DetailTransactionActivity extends AppCompatActivity {
 
             }
         });
-        fab3_delete.setOnClickListener(new View.OnClickListener() {
+        mFabShare.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent myIntent = new Intent(Intent.ACTION_SEND);
+                myIntent.setType("text/plain");
+                String shareBody = "Your body is here";
+                String shareSub = "Your subject";
+                myIntent.putExtra(Intent.EXTRA_SUBJECT, shareSub);
+                myIntent.putExtra(Intent.EXTRA_TEXT, shareBody);
+                startActivity(Intent.createChooser(myIntent, "Share using"));
+            }
+        });
+        mFabDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //delete
@@ -145,38 +172,32 @@ public class DetailTransactionActivity extends AppCompatActivity {
         });
     }
 
+
+
     private void getDetail() {
         //get id
         Intent intent = getIntent();
         final String transactionId = intent.getStringExtra("TransactionID");
-        // Toast.makeText(this, ""+transactionId, Toast.LENGTH_SHORT).show();
-
         Retrofit retrofitClient = RetrofitClient.getInstance();
         myService = retrofitClient.create(MyService.class);
         Call<Transaction> call = myService.getTransactionById(transactionId);
         call.enqueue(new Callback<Transaction>() {
             @Override
             public void onResponse(Call<Transaction> call, Response<Transaction> response) {
-
                 Transaction transaction = response.body();
                 SharedPreferences sharedPreferences = getSharedPreferences(Constants.SHARED_PREFS,MODE_PRIVATE);
                 SharedPreferences.Editor editor = sharedPreferences.edit();
                 editor.putString(Constants.ID,transactionId);
                 editor.apply();
 
-                // Toast.makeText(DetailTransactionActivity.this, ""+transaction.getId(), Toast.LENGTH_SHORT).show();
-                //id.setText(transaction.getId());
-              //  amount.setText(transaction.getAmount());
-                amount.setText(getString(R.string.detail_amount,transaction.getAmount()));
-                category.setText(getString(R.string.detail_category,transaction.getCategory()));
-              //  id.setText(transaction.getId());
+                mAmount.setText(getString(R.string.detail_amount,transaction.getAmount()));
+                mCategory.setText(getString(R.string.detail_category,transaction.getCategory()));
                 if(transaction.getNote()==null){
-                    note.setText("");
+                    mNote.setText("");
                 } else {
-                    note.setText(getString(R.string.detail_note,transaction.getNote()));
+                    mNote.setText(getString(R.string.detail_note,transaction.getNote()));
                 }
                 //ic_date format
-
                 DateFormat outputFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.US);
                 DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.US);
                 String inputText = transaction.getDate();
@@ -184,7 +205,7 @@ public class DetailTransactionActivity extends AppCompatActivity {
                     Date dateTemp = inputFormat.parse(inputText);
                     Log.d("input",dateTemp.toString());
                     String outputText = outputFormat.format(dateTemp);
-                    date.setText(getString(R.string.detail_date,outputText));
+                    mDate.setText(getString(R.string.detail_date,outputText));
                 } catch (ParseException ex) {
                     Log.v("Exception", ex.getLocalizedMessage());
                 }
@@ -192,7 +213,7 @@ public class DetailTransactionActivity extends AppCompatActivity {
                 if(transaction.getPhoto()!=null){
                     Picasso.get().load(Uri.parse(transaction.getPhoto())).into(photo);
                 }
-                // remind.setText(transaction.getPhoto());
+// for place holder
 //                if(transaction.getPhoto()==null){
 //                   Picasso.get().load(R.drawable.placeholder).into(photo);
 //                } else {
@@ -206,15 +227,10 @@ public class DetailTransactionActivity extends AppCompatActivity {
         });
     }
 
-    private void init() {
-    //    id = findViewById(R.id.detail_id);
-        amount = findViewById(R.id.detail_amount);
-        category = findViewById(R.id.detail_category);
-        note = findViewById(R.id.detail_note);
-        date = findViewById(R.id.detail_date);
-   //     remind = findViewById(R.id.detail_remind);
-        photo = findViewById(R.id.detail_photo);
-
+    private boolean getThemeStatePref(){
+        SharedPreferences preferences = getSharedPreferences(Constants.SHARED_PREFS, MODE_PRIVATE);
+        isDark = preferences.getBoolean(Constants.ISDARK,false);
+        return isDark;
     }
 
     @Override
@@ -222,4 +238,6 @@ public class DetailTransactionActivity extends AppCompatActivity {
         finish();
         return true;
     }
+
+
 }

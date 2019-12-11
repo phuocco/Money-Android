@@ -5,8 +5,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@drawable/gradient_main"
+    android:id="@+id/add_expense_layout"
     tools:context=".Transaction.AddExpenseActivity">
+
+<!--    android:background="@drawable/gradient_main"-->
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -36,6 +38,7 @@
                 android:id="@+id/add_ex_amount"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
+
                 android:inputType="number" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -85,9 +88,7 @@
             android:layout_width="0dp"
             android:layout_height="50dp"
             android:layout_marginTop="20dp"
-
             android:background="@drawable/text"
-
 
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
