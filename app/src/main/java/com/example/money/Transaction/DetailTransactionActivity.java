@@ -38,19 +38,31 @@ import retrofit2.Retrofit;
 
 public class DetailTransactionActivity extends AppCompatActivity {
     TextView mAmount, mCategory, mNote, mDate;
+
     ImageView photo;
     MyService myService;
     private FloatingActionButton mFabMain, mFabEdit, mFabShare, mFabDelete;
     private Animation mFabOpen, mFabClose, mFabClock, mFabAntiClock;
     TextView mTextViewEdit, mTextViewShare, mTextViewDelete;
     boolean isOpen = false;
-//TODO dark mode
+    private boolean isDark =  false;
+
+    //TODO dark mode
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail_transaction);
         //init
        init();
+        isDark = getThemeStatePref();
+        if (isDark){
+            getWindow().getDecorView().setBackgroundResource(R.drawable.gradient_main_dark);
+            mAmount.setTextColor(getResources().getColor(R.color.textDark));
+            mCategory.setTextColor(getResources().getColor(R.color.textDark));
+            mNote.setTextColor(getResources().getColor(R.color.textDark));
+            mDate.setTextColor(getResources().getColor(R.color.textDark));
+
+        }
         //back button
         assert getSupportActionBar() != null;   //null check
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -215,7 +227,11 @@ public class DetailTransactionActivity extends AppCompatActivity {
         });
     }
 
-
+    private boolean getThemeStatePref(){
+        SharedPreferences preferences = getSharedPreferences(Constants.SHARED_PREFS, MODE_PRIVATE);
+        isDark = preferences.getBoolean(Constants.ISDARK,false);
+        return isDark;
+    }
 
     @Override
     public boolean onSupportNavigateUp(){

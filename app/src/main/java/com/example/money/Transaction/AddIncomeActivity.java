@@ -91,6 +91,8 @@ public class AddIncomeActivity extends AppCompatActivity {
             mEditTextNote.setTextColor(getResources().getColor(R.color.textDark));
             mLayoutNote.setDefaultHintTextColor(getResources().getColorStateList(R.color.textDark));
             mTextViewAddDate.setTextColor(getResources().getColor(R.color.textDark));
+        } else {
+            getWindow().getDecorView().setBackgroundResource(R.drawable.gradient_main);
         }
 
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this,R.layout.support_simple_spinner_dropdown_item,list);

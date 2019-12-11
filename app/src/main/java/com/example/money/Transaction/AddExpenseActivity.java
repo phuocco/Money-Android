@@ -85,6 +85,8 @@ public class AddExpenseActivity extends AppCompatActivity {
             mEditTextNote.setTextColor(getResources().getColor(R.color.textDark));
             mLayoutNote.setDefaultHintTextColor(getResources().getColorStateList(R.color.textDark));
             mTextViewAddDate.setTextColor(getResources().getColor(R.color.textDark));
+        } else {
+            getWindow().getDecorView().setBackgroundResource(R.drawable.gradient_main);
         }
 
         List<String> list = new ArrayList<>();

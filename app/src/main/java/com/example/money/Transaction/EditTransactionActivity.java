@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -23,6 +24,7 @@ import com.example.money.Retrofit.RetrofitClient;
 import com.example.money.models.Transaction;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -40,11 +42,15 @@ import retrofit2.Retrofit;
 
 public class EditTransactionActivity extends AppCompatActivity {
     TextInputEditText mEditTextAmount, mEditTextNote;
+    TextInputLayout mLayoutAmount, mLayoutNote;
+
     MyService myService;
     MaterialButton mButtonEdit;
     TextView mTextViewType, mTextViewDate;
     Spinner mSpnCategory;
     String mStrCategory;
+    private boolean isDark =  false;
+
     //TODO dark mode
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,16 +61,32 @@ public class EditTransactionActivity extends AppCompatActivity {
         mSpnCategory =  findViewById(R.id.edit_category);
         mTextViewDate = findViewById(R.id.edit_date);
         mTextViewType =  findViewById(R.id.edit_type);
+        mLayoutAmount = findViewById(R.id.layout_edit_amount);
+        mLayoutNote = findViewById(R.id.layout_edit_note);
         Retrofit retrofitClient = RetrofitClient.getInstance();
         myService = retrofitClient.create(MyService.class);
         SharedPreferences sharedPreferences =  getSharedPreferences(Constants.SHARED_PREFS,MODE_PRIVATE);
         final String transactionId = sharedPreferences.getString(Constants.ID,"").replace("\"", "");
-        //final String transactionId = "5dac689c788f27175c88b5f4";
+        isDark = getThemeStatePref();
+
+        if (isDark){
+            getWindow().getDecorView().setBackgroundResource(R.drawable.gradient_dark_income);
+            mEditTextAmount.setTextColor(getResources().getColor(R.color.textDark));
+            mEditTextNote.setTextColor(getResources().getColor(R.color.textDark));
+            mTextViewDate.setTextColor(getResources().getColor(R.color.textDark));
+            mLayoutAmount.setDefaultHintTextColor(getResources().getColorStateList(R.color.textDark));
+            mLayoutNote.setDefaultHintTextColor(getResources().getColorStateList(R.color.textDark));
+
+        } else {
+            getWindow().getDecorView().setBackgroundResource(R.drawable.gradient_main);
+        }
 
         mSpnCategory.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 mStrCategory = mSpnCategory.getSelectedItem().toString();
+                ((TextView) parent.getChildAt(0)).setTextColor(Color.WHITE);
+
             }
 
             @Override
@@ -194,6 +216,13 @@ public class EditTransactionActivity extends AppCompatActivity {
             }
         });
     }
+
+    private boolean getThemeStatePref(){
+        SharedPreferences preferences = getSharedPreferences(Constants.SHARED_PREFS, MODE_PRIVATE);
+        isDark = preferences.getBoolean(Constants.ISDARK,false);
+        return isDark;
+    }
+
     @Override
     public boolean onSupportNavigateUp(){
         finish();
