@@ -148,7 +148,7 @@ public class EditTransactionActivity extends AppCompatActivity {
                     public void onResponse(Call<Transaction> call, Response<Transaction> response) {
                       if(response.isSuccessful())
                       {
-                          Toast.makeText(EditTransactionActivity.this, "ac", Toast.LENGTH_SHORT).show();
+                          Toast.makeText(EditTransactionActivity.this, "Edited", Toast.LENGTH_SHORT).show();
                       }
                     }
 
@@ -180,23 +180,14 @@ public class EditTransactionActivity extends AppCompatActivity {
                         Log.v("Exception", ex.getLocalizedMessage());
                     }
                     String compareValue = transaction.getCategory();
-
                     //list
-                    List<String> list_ex = new ArrayList<>();
-                    list_ex.add("Food");
-                    list_ex.add("Water");
-                    list_ex.add("Entertainment");
-
-                    List<String> list_in = new ArrayList<>();
-                    list_in.add("Salary");
-                    list_in.add("Gift");
-                    list_in.add("Loan");
-
+                    AddExpenseActivity listExpense =  new AddExpenseActivity();
+                    AddIncomeActivity listIncome = new AddIncomeActivity();
                     List<String> list;
                     if("Expense".equals(transaction.getType())){
-                        list = list_ex;
+                        list = listExpense.getExpenseList();
                     } else {
-                        list = list_in;
+                        list = listIncome.getIncomeList();
                     }
                     ArrayAdapter<String> adapter = new ArrayAdapter<>(getApplicationContext(),R.layout.support_simple_spinner_dropdown_item,list);
                     adapter.setDropDownViewResource(android.R.layout.simple_list_item_single_choice);

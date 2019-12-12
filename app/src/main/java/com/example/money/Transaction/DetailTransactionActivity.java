@@ -141,8 +141,8 @@ public class DetailTransactionActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent myIntent = new Intent(Intent.ACTION_SEND);
                 myIntent.setType("text/plain");
-                String shareBody = "Your body is here";
-                String shareSub = "Your subject";
+                String shareBody = mNote.getText().toString();
+                String shareSub = mAmount.getText().toString();
                 myIntent.putExtra(Intent.EXTRA_SUBJECT, shareSub);
                 myIntent.putExtra(Intent.EXTRA_TEXT, shareBody);
                 startActivity(Intent.createChooser(myIntent, "Share using"));
@@ -165,7 +165,7 @@ public class DetailTransactionActivity extends AppCompatActivity {
 
                             @Override
                             public void onFailure(Call<Transaction> call, Throwable t) {
-                                Toast.makeText(DetailTransactionActivity.this, "fail", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(DetailTransactionActivity.this, "Fail", Toast.LENGTH_SHORT).show();
                             }
                         });
             }
@@ -222,7 +222,7 @@ public class DetailTransactionActivity extends AppCompatActivity {
             }
             @Override
             public void onFailure(Call<Transaction> call, Throwable t) {
-                Toast.makeText(DetailTransactionActivity.this, "fail", Toast.LENGTH_SHORT).show();
+                Toast.makeText(DetailTransactionActivity.this, "Fail", Toast.LENGTH_SHORT).show();
             }
         });
     }

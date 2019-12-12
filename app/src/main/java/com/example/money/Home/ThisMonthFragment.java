@@ -50,7 +50,10 @@ public class ThisMonthFragment extends Fragment {
     private TextView mSumExpense;
     private TextView mSumIncome;
     private TextView mSumAll;
-    private TextView mTitle;
+    private TextView mTextIncome;
+    private TextView mTextExpense;
+    private TextView mTextTotal;
+
     LinearLayout mSumThisMonth;
     //fab
     private FloatingActionButton mFabHome, mFabAllExpense, mFabAllIncome;
@@ -69,7 +72,9 @@ public class ThisMonthFragment extends Fragment {
                              Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_this_month, container, false);
         mThisMonthLayout = view.findViewById(R.id.this_month_layout);
-        mTitle = view.findViewById(R.id.action_bar_title);
+        mTextExpense = view.findViewById(R.id.this_month_text_expense);
+        mTextIncome =view.findViewById(R.id.this_month_text_income);
+        mTextTotal = view.findViewById(R.id.this_month_text_total);
         mSumExpense = view.findViewById(R.id.this_month_total_ex);
         mSumIncome = view.findViewById(R.id.this_month_total_in);
         mSumAll = view.findViewById(R.id.this_month_total_all);
@@ -134,6 +139,12 @@ public class ThisMonthFragment extends Fragment {
         if (isDark){
             mThisMonthLayout.setBackgroundColor(getResources().getColor(R.color.black));
             mSumThisMonth.setBackgroundResource(R.drawable.card_sum_dark);
+            mTextTotal.setTextColor(getResources().getColor(R.color.textDark));
+            mTextIncome.setTextColor(getResources().getColor(R.color.textDark));
+            mTextExpense.setTextColor(getResources().getColor(R.color.textDark));
+            mSumExpense.setTextColor(getResources().getColor(R.color.textDark));
+            mSumIncome.setTextColor(getResources().getColor(R.color.textDark));
+            mSumAll.setTextColor(getResources().getColor(R.color.textDark));
         } else {
             mThisMonthLayout.setBackgroundColor(getResources().getColor(R.color.white));
             mSumThisMonth.setBackgroundResource(R.drawable.card_sum_light);

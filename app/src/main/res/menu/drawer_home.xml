@@ -20,9 +20,7 @@
         <item android:id="@+id/nav_a"
             android:icon="@drawable/ic_chart"
             android:title="Chart"/>
-        <item android:id="@+id/nav_b"
-            android:icon="@drawable/ic_navi"
-            android:title="B"/>
+
     </menu>
 </item>
 

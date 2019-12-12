@@ -61,7 +61,7 @@ public class RangeActivity extends AppCompatActivity {
                     myRecyclerView.setAdapter(homeAdapter);
                     homeAdapter.notifyDataSetChanged();
                     textView5.setText(response.toString());
-                    Toast.makeText(RangeActivity.this, "success", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(RangeActivity.this, "Success", Toast.LENGTH_SHORT).show();
                     }
             }
 
