@@ -74,7 +74,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.CustomViewHold
                 holder.mHomeAmount.setTextColor(Color.RED);
                 holder.mCardTransaction.setBackgroundResource(R.drawable.card_expense_light);
             } else {
-                holder.mHomeAmount.setTextColor(Color.GREEN);
+                holder.mHomeAmount.setTextColor(Color.BLUE);
                 holder.mCardTransaction.setBackgroundResource(R.drawable.card_income_light);
             }
         }

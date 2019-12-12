@@ -135,7 +135,9 @@ public class AddExpenseActivity extends AppCompatActivity {
         mSpnCategory.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                ((TextView) parent.getChildAt(0)).setTextColor(Color.WHITE);
+                if(isDark){
+                    ((TextView) parent.getChildAt(0)).setTextColor(Color.WHITE);
+                }
 
                 mEditTextCategory = mSpnCategory.getSelectedItem().toString();
             }

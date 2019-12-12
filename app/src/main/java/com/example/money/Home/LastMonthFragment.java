@@ -83,7 +83,6 @@ public class LastMonthFragment extends Fragment {
                 if (response.isSuccessful()){
                     final  List<Transaction> transactionList = response.body();
                     Log.d("test",response.toString());
-                    Toast.makeText(getActivity(), ""+response, Toast.LENGTH_SHORT).show();
                     HomeAdapter homeAdapter = new HomeAdapter(transactionList);
                     RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
                     myRecyclerView.setLayoutManager(layoutManager);
