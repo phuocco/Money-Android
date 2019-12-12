@@ -37,14 +37,14 @@ public class SettingsActivity extends AppCompatActivity {
                     SharedPreferences.Editor editor = sharedPreferences.edit();
                     editor.putBoolean(Constants.ISDARK,isDark);
                     editor.apply();
-                    Toast.makeText(SettingsActivity.this, "on", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(SettingsActivity.this, "Dark mode: ON", Toast.LENGTH_SHORT).show();
                 } else {
                     isDark = false;
                     SharedPreferences sharedPreferences = getSharedPreferences(Constants.SHARED_PREFS,MODE_PRIVATE);
                     SharedPreferences.Editor editor = sharedPreferences.edit();
                     editor.putBoolean(Constants.ISDARK,isDark);
                     editor.apply();
-                    Toast.makeText(SettingsActivity.this, "off", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(SettingsActivity.this, "Dark mode: OFF", Toast.LENGTH_SHORT).show();
                 }
             }
         });

@@ -102,7 +102,7 @@ public class TransactionCategoryActivity extends AppCompatActivity {
                                    mLink.setText(uri.toString());
                                    Uri myUri = Uri.parse("https://renolation.com/1.jpg");
                                    Picasso.get().load(myUri).into(mImageView2);
-                                   Toast.makeText(TransactionCategoryActivity.this, "success", Toast.LENGTH_SHORT).show();
+                                   Toast.makeText(TransactionCategoryActivity.this, "Success", Toast.LENGTH_SHORT).show();
                                }
                            });
                         }
@@ -110,7 +110,7 @@ public class TransactionCategoryActivity extends AppCompatActivity {
                     .addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
-                            Toast.makeText(TransactionCategoryActivity.this, "fail", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(TransactionCategoryActivity.this, "Fail", Toast.LENGTH_SHORT).show();
                         }
                     })
                     .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {

@@ -63,6 +63,27 @@ public class AddExpenseActivity extends AppCompatActivity {
     String mEditTextCategory;
     EditText mEditTextType;
     private boolean isDark =  false;
+    public ArrayList<String> getExpenseList() {
+        ArrayList<String> list= new ArrayList<String>();
+        list.add("Food");
+        list.add("Water");
+        list.add("Entertainment");
+        list.add("Phone");
+        list.add("Electricity");
+        list.add("Internet");
+        list.add("Transportation");
+        list.add("Shopping");
+        list.add("Travel");
+        list.add("Health & Fitness");
+        list.add("Gift & Donations");
+        list.add("Family");
+        list.add("Education");
+        list.add("Investment");
+        list.add("Withdrawal");
+        list.add("Others");
+        return list;
+    }
+
 
     //firebase
     FirebaseStorage mStorage;
@@ -89,12 +110,26 @@ public class AddExpenseActivity extends AppCompatActivity {
             getWindow().getDecorView().setBackgroundResource(R.drawable.gradient_main);
         }
 
-        List<String> list = new ArrayList<>();
-        list.add("Food");
-        list.add("Water");
-        list.add("Entertainment");
+//        list.add("Food");
+//        list.add("Water");
+//        list.add("Entertainment");
+//        list.add("Phone");
+//        list.add("Electricity");
+//        list.add("Internet");
+//        list.add("Transportation");
+//        list.add("Shopping");
+//        list.add("Travel");
+//        list.add("Health & Fitness");
+//        list.add("Gift & Donations");
+//        list.add("Family");
+//        list.add("Education");
+//        list.add("Investment");
+//        list.add("Withdrawal");
+//        list.add("Others");
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this,R.layout.support_simple_spinner_dropdown_item,list);
+
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this,R.layout.support_simple_spinner_dropdown_item,getExpenseList());
         adapter.setDropDownViewResource(android.R.layout.simple_list_item_single_choice);
         mSpnCategory.setAdapter(adapter);
         mSpnCategory.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -273,14 +308,14 @@ public class AddExpenseActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(Call<Transaction> call, Response<Transaction> response) {
                         if(response.isSuccessful()){
-                            Toast.makeText(AddExpenseActivity.this, "success", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(AddExpenseActivity.this, "Success", Toast.LENGTH_SHORT).show();
                             startActivity(new Intent(AddExpenseActivity.this, MainActivity.class));
                         }
                     }
 
                     @Override
                     public void onFailure(Call<Transaction> call, Throwable t) {
-                        Toast.makeText(AddExpenseActivity.this, "fail", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(AddExpenseActivity.this, "Fail", Toast.LENGTH_SHORT).show();
                     }
                 });
     }
@@ -290,4 +325,5 @@ public class AddExpenseActivity extends AppCompatActivity {
         isDark = preferences.getBoolean(Constants.ISDARK,false);
         return isDark;
     }
+
 }

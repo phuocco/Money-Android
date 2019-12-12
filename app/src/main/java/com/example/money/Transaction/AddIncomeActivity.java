@@ -63,7 +63,26 @@ public class AddIncomeActivity extends AppCompatActivity {
     Spinner mSpnCategory;
     EditText mEditTextType;
     private boolean isDark =  false;
-
+    public ArrayList<String> getIncomeList() {
+        ArrayList<String> list= new ArrayList<>();
+        list.add("Food");
+        list.add("Water");
+        list.add("Entertainment");
+        list.add("Phone");
+        list.add("Electricity");
+        list.add("Internet");
+        list.add("Transportation");
+        list.add("Shopping");
+        list.add("Travel");
+        list.add("Health & Fitness");
+        list.add("Gift & Donations");
+        list.add("Family");
+        list.add("Education");
+        list.add("Investment");
+        list.add("Withdrawal");
+        list.add("Others");
+        return list;
+    }
     //firebase
     FirebaseStorage mStorage;
     StorageReference mStorageReference;
@@ -79,10 +98,6 @@ public class AddIncomeActivity extends AppCompatActivity {
 
         mLayoutAmount = findViewById(R.id.layout_add_amount_in);
         mLayoutNote = findViewById(R.id.layout_add_note_in);
-        List<String> list = new ArrayList<>();
-        list.add("Salary");
-        list.add("Gift");
-        list.add("Loan");
 
         if (isDark){
             getWindow().getDecorView().setBackgroundResource(R.drawable.gradient_dark_income);
@@ -95,7 +110,7 @@ public class AddIncomeActivity extends AppCompatActivity {
             getWindow().getDecorView().setBackgroundResource(R.drawable.gradient_main);
         }
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this,R.layout.support_simple_spinner_dropdown_item,list);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this,R.layout.support_simple_spinner_dropdown_item,getIncomeList());
         adapter.setDropDownViewResource(android.R.layout.simple_list_item_single_choice);
         mSpnCategory.setAdapter(adapter);
         mSpnCategory.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -259,7 +274,7 @@ public class AddIncomeActivity extends AppCompatActivity {
                     .addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
-                            Toast.makeText(AddIncomeActivity.this, "failllllll", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(AddIncomeActivity.this, "Fail", Toast.LENGTH_SHORT).show();
                         }
                     })
                     .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {

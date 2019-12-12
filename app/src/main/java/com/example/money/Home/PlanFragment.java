@@ -76,7 +76,6 @@ public class PlanFragment extends Fragment {
                     RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
                     myRecyclerView.setLayoutManager(layoutManager);
                     myRecyclerView.setAdapter(homeAdapter);
-                    Toast.makeText(getActivity(), "aa", Toast.LENGTH_SHORT).show();
                 }
             }
 

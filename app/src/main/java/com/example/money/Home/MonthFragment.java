@@ -54,7 +54,6 @@ public class MonthFragment extends Fragment {
 
         String month =  getArguments().getString("month");
         String year =  getArguments().getString("year");
-        Toast.makeText(getContext(), ""+month+ " "+year, Toast.LENGTH_SHORT).show();
 
         isDark = getThemeStatePref();
         if (isDark){
@@ -86,7 +85,7 @@ public class MonthFragment extends Fragment {
                     myRecyclerView.setLayoutManager(layoutManager);
                     myRecyclerView.setAdapter(homeAdapter);
                     homeAdapter.notifyDataSetChanged();
-                    Toast.makeText(getActivity(), "success", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "Success", Toast.LENGTH_SHORT).show();
                 }
             }
             @Override

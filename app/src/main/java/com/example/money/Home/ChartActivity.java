@@ -74,7 +74,6 @@ public class ChartActivity extends AppCompatActivity {
         final int year = calendar.get(Calendar.YEAR);
         String type = "Expense";
 
-        Toast.makeText(this, ""+(month) + "  "+ year, Toast.LENGTH_SHORT).show();
         mSelectTime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -92,7 +91,6 @@ public class ChartActivity extends AppCompatActivity {
                 if (isDateNoSelected){
                     String type2 = "Income";
                     getChartByMonth(String.valueOf(year),String.valueOf(month),type2);
-
                 }
 
             }
@@ -104,14 +102,9 @@ public class ChartActivity extends AppCompatActivity {
                 if (isDateSelected){
                     String type2 = "Expense";
                    // getChartByMonth(selectYear,String.valueOf(month),type2);
-
                 }
-
-
-
             }
         });
-
     }
 
     private void init() {
@@ -150,8 +143,7 @@ public class ChartActivity extends AppCompatActivity {
         datePickerDialog.show();
     }
 
-
-
+    // call api (select year, select month, type)
     private void getChartByMonth(String selectYear, String selectMonth,String type ) {
         final Chart chart = new Chart(selectMonth,selectYear,type);
         myService.getChartByMonth(chart)

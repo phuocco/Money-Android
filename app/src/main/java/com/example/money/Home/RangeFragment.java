@@ -56,7 +56,6 @@ public class RangeFragment extends Fragment {
         String endTime =  getArguments().getString("endDate");
 //        String startTime = "1572843600000";
 //        String endTime =   "1575003600000";
-        Toast.makeText(getContext(), ""+startTime+ " "+endTime, Toast.LENGTH_SHORT).show();
         Log.d("test",startTime+ " "+ endTime);
         isDark = getThemeStatePref();
         if (isDark){
