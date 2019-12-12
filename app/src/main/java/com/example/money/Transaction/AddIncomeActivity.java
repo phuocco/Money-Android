@@ -65,22 +65,14 @@ public class AddIncomeActivity extends AppCompatActivity {
     private boolean isDark =  false;
     public ArrayList<String> getIncomeList() {
         ArrayList<String> list= new ArrayList<>();
-        list.add("Food");
-        list.add("Water");
-        list.add("Entertainment");
-        list.add("Phone");
-        list.add("Electricity");
-        list.add("Internet");
-        list.add("Transportation");
-        list.add("Shopping");
-        list.add("Travel");
-        list.add("Health & Fitness");
-        list.add("Gift & Donations");
-        list.add("Family");
-        list.add("Education");
-        list.add("Investment");
-        list.add("Withdrawal");
+        list.add("Award");
+        list.add("Interest money");
+        list.add("Salary");
+        list.add("Gifts");
+        list.add("Selling");
+        list.add("Loan");
         list.add("Others");
+
         return list;
     }
     //firebase
@@ -116,8 +108,9 @@ public class AddIncomeActivity extends AppCompatActivity {
         mSpnCategory.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                ((TextView) parent.getChildAt(0)).setTextColor(Color.WHITE);
-
+                if(isDark){
+                    ((TextView) parent.getChildAt(0)).setTextColor(Color.WHITE);
+                }
                 mStrCategory = mSpnCategory.getSelectedItem().toString();
             }
 
